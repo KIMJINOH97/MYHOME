@@ -3,7 +3,7 @@ import React from 'react';
 import styled from 'styled-components/native';
 import { StyleSheet, Text, View, Button } from 'react-native';
 
-export default HomeScreen = () => {
+export default HomeScreen = ({ navigation }) => {
   return (
     <Wrapper>
       <MyhomeTitle>&#9924; 마이홈</MyhomeTitle>
@@ -16,7 +16,7 @@ export default HomeScreen = () => {
           대학생을 위한{'\n'}자취방 직거래 플랫폼{'\n'}'마이홈'입니다.
         </SubContent>
       </MyhomeSlogan>
-      <Button onPress />
+      <Button title="go about" onPress={() => navigation.navigate('About')} />
       {/* <UploadHome>집 내놓기 &gt;</UploadHome> */}
     </Wrapper>
   );
