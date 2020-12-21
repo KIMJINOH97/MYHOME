@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 //   StackViewTransitionConfigs
 import HomeScreen from '../../screen/HomeScreen.js';
-import AboutScreen from '../../screen/AboutScreen.js';
+import MapScreen from '../../screen/MapScreen.js';
 import MyHomeTab from './MyHomeTab.js';
 
 // const Navigation = createStackNavigator(
@@ -25,7 +25,7 @@ const MyHomeStack = () => {
           options={{ headerShown: false }}
         />
         <Stack.Screen name="Home" component={HomeScreen}></Stack.Screen>
-        <Stack.Screen name="About" component={AboutScreen}></Stack.Screen>
+        <Stack.Screen name="Map" component={MapScreen}></Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   );
