@@ -8,7 +8,7 @@ import MyHomeStack from './src/components/navigations/MyHomeStack.js';
 
 export default function App() {
   return (
-    <SafeAreaProvider>
+    <SafeAreaProvider style={{ backgroundColor: '#fff' }}>
       <MyHomeStack />
     </SafeAreaProvider>
   );
