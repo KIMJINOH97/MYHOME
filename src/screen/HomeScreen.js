@@ -12,18 +12,15 @@ import {
 
 import MyhomeTitle from '../components/Myhome/MyhomeTitle';
 
-export default HomeScreen = ({ navigation }) => {
+const HomeScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={{ backgroundColor: 'white', height: '100%' }}>
       <Wrapper>
         <MyhomeTitle />
         <MyhomeSlogan>
           <SloganContentContainer>
-            <SloganContent>
-              이 집 살아보니{'\n'}괜찮더라{'\n'}
-            </SloganContent>
+            <SloganContent>이 집 살아보니{'\n'}괜찮더라</SloganContent>
             <SubContent>
-              {'\n'}
               대학생을 위한{'\n'}자취방 직거래 플랫폼{'\n'}'마이홈'입니다.
             </SubContent>
           </SloganContentContainer>
@@ -32,29 +29,48 @@ export default HomeScreen = ({ navigation }) => {
           <MenuTitle>
             <MenuTitleContent>종합 계약 키트</MenuTitleContent>
           </MenuTitle>
-          <ButtonContainer>
-            <MapButton title="go about" onPress={() => navigation.push('Map')}>
-              <ButtonContent>
-                <Ionicons name="ios-map-outline" size={20} />
-              </ButtonContent>
-            </MapButton>
-            <MapButton title="go about" onPress={() => navigation.push('Map')}>
-              <ButtonContent>
-                <Ionicons name="ios-map-outline" size={20} />
-              </ButtonContent>
-            </MapButton>
-            <MapButton title="go about" onPress={() => navigation.push('Map')}>
-              <ButtonContent>
-                <Ionicons name="ios-map-outline" size={20} />
-              </ButtonContent>
-            </MapButton>
-          </ButtonContainer>
+          <MenuButton>
+            <ButtonContainer>
+              <MapButton title="map" onPress={() => navigation.push('Map')}>
+                <ButtonContent>
+                  <Ionicons name="ios-map-outline" size={20} />
+                </ButtonContent>
+              </MapButton>
+              <ButtonName>
+                <Text>지도</Text>
+              </ButtonName>
+            </ButtonContainer>
+            <ButtonContainer>
+              <MapButton title="map" onPress={() => navigation.push('Map')}>
+                <ButtonContent>
+                  <Ionicons name="ios-map-outline" size={20} />
+                </ButtonContent>
+              </MapButton>
+              <ButtonName>
+                <Text>지도</Text>
+              </ButtonName>
+            </ButtonContainer>
+            <ButtonContainer>
+              <MapButton
+                title="map"
+                onPress={() => navigation.push('HomeList')}
+              >
+                <ButtonContent>
+                  <Ionicons name="ios-map-outline" size={20} />
+                </ButtonContent>
+              </MapButton>
+              <ButtonName>
+                <Text>지도</Text>
+              </ButtonName>
+            </ButtonContainer>
+          </MenuButton>
         </MyhomeMenu>
-        {/* <UploadHome>집 내놓기 &gt;</UploadHome> */}
       </Wrapper>
     </SafeAreaView>
   );
 };
+
+export default HomeScreen;
 
 const Wrapper = styled.View`
   flex: 1;
@@ -67,9 +83,10 @@ const MyhomeSlogan = styled.View`
   background-color: red;
 `;
 
-const SloganContentContainer = styled.Text`
-  height: 230px;
-  padding: 15px;
+const SloganContentContainer = styled.View`
+  height: 220px;
+  padding-left: 18px;
+  padding-top: 20px;
   background-color: #ffb8b1;
   border-radius: 8px;
 `;
@@ -81,7 +98,7 @@ const SloganContent = styled.Text`
 `;
 
 const SubContent = styled.Text`
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 700;
 `;
 
@@ -101,7 +118,7 @@ const MenuTitleContent = styled.Text`
   font-weight: 700;
 `;
 
-const ButtonContainer = styled.View`
+const MenuButton = styled.View`
   flex: 5;
   flex-direction: row;
   justify-content: space-between;
@@ -109,11 +126,16 @@ const ButtonContainer = styled.View`
   margin-right: 25px;
 `;
 
+const ButtonContainer = styled.View`
+  background-color: red;
+  align-items: center;
+`;
+
 const MapButton = styled.TouchableOpacity`
-  height: 55px;
-  width: 55px;
-  background-color: blue;
-  border-radius: 10px;
+  height: 65px;
+  width: 65px;
+  background-color: rgba(255, 185, 177, 70);
+  border-radius: 35px;
   font-weight: 600;
   justify-content: center;
 `;
@@ -122,5 +144,9 @@ const ButtonContent = styled.Text`
   color: white;
   font-size: 25px;
   font-weight: 600;
-  margin-left: 16px;
+  margin-left: 21px;
+`;
+
+const ButtonName = styled.View`
+  margin-top: 5px;
 `;

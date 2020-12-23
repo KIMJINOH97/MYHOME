@@ -4,6 +4,9 @@ import { NavigationContainer } from '@react-navigation/native';
 //   StackViewTransitionConfigs
 import HomeScreen from '../../screen/HomeScreen.js';
 import MapScreen from '../../screen/MapScreen.js';
+import HomeListScreen from '../../screen/HomeListScreen.js';
+import HomeListFrame from '../../components/HomeList/HomeListFrame';
+
 import MyHomeTab from './MyHomeTab.js';
 
 // const Navigation = createStackNavigator(
@@ -18,14 +21,16 @@ const Stack = createStackNavigator();
 const MyHomeStack = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="MyHomeTa" headerMode="screen">
+      <Stack.Navigator initialRouteName="MyHomeTab" headerMode="screen">
         <Stack.Screen
-          name="MyHomeTa"
+          name="MyHomeTab"
           component={MyHomeTab}
           options={{ headerShown: false }}
         />
-        <Stack.Screen name="Home" component={HomeScreen}></Stack.Screen>
-        <Stack.Screen name="Map" component={MapScreen}></Stack.Screen>
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Map" component={MapScreen} />
+        <Stack.Screen name="HomeList" component={HomeListScreen} />
+        <Stack.Screen name="List" component={HomeListFrame} />
       </Stack.Navigator>
     </NavigationContainer>
   );
