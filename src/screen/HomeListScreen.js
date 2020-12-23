@@ -6,6 +6,7 @@ import HomeListFrame from '../components/HomeList/HomeListFrame';
 
 const DummyList = [
   {
+    id: '1',
     title: '신촌스테이하이',
     type: '월세',
     money: 100,
@@ -17,6 +18,7 @@ const DummyList = [
     sogae: '최저가 가성비 탑',
   },
   {
+    id: '2',
     title: '신촌스테이하이',
     type: '월세',
     money: 100,
@@ -28,6 +30,7 @@ const DummyList = [
     sogae: '최저가 가성비 탑',
   },
   {
+    id: '3',
     title: '신촌스테이하이',
     type: '월세',
     money: 100,
@@ -39,6 +42,7 @@ const DummyList = [
     sogae: '최저가 가성비 탑',
   },
   {
+    id: '4',
     title: '신촌스테이하이',
     type: '월세',
     money: 100,
@@ -50,6 +54,7 @@ const DummyList = [
     sogae: '최저가 가성비 탑',
   },
   {
+    id: '5',
     title: '신촌스테이하이',
     type: '월세',
     money: 100,
@@ -69,13 +74,14 @@ const HomeListScreen = ({ navigation }) => {
       <FilterBar></FilterBar>
       <HomeList
         data={list}
-        renderItem={({ item }) => {
+        renderItem={({ item, index }) => {
           return (
             <HomeListButton
               title="list"
               onPress={() => navigation.push('Map', item)}
             >
               <HomeListFrame
+                key={index}
                 title={item.title}
                 type={item.type}
                 money={item.money}
@@ -89,6 +95,7 @@ const HomeListScreen = ({ navigation }) => {
             </HomeListButton>
           );
         }}
+        keyExtractor={(item) => item.id}
       />
       {/* {list.map((v, i) => {
           return <HomeListFrame key={i} Content={v} />;
