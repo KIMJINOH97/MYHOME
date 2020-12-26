@@ -25,7 +25,7 @@ const HomeListFrame = ({
         </HomeImageTitle>
         <HomeImageMoney>
           <MoneyContent>
-            {type} {money}/{bojoung}
+            {type} {bojoung}/{money}
           </MoneyContent>
         </HomeImageMoney>
         <HomeImageSummaryContent>
