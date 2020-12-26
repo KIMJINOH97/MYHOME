@@ -22,7 +22,7 @@ const Wrapper = styled.View`
   background-color: yellow;
   flex-direction: row;
   align-items: flex-end;
-  margin-bottom: 10;
+  margin-bottom: 10px;
 `;
 
 const MyhomeIcon = styled.View``;

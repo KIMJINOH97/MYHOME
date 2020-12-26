@@ -3,7 +3,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import MapScreen from '../../screen/MapScreen';
 import HomeScreen from '../../screen/HomeScreen';
-import MyHomeStack from './MyHomeStack';
 
 // TabNavigator(RouteConfigs, TabNavigatorConfig)
 
