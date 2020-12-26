@@ -6,6 +6,7 @@ import HomeScreen from '../../screen/HomeScreen.js';
 import MapScreen from '../../screen/MapScreen.js';
 import HomeListScreen from '../../screen/HomeListScreen.js';
 import HomeListFrame from '../../components/HomeList/HomeListFrame';
+import ListInformationScreen from '../../screen/ListInformationScreen';
 
 import MyHomeTab from './MyHomeTab.js';
 
@@ -31,6 +32,7 @@ const MyHomeStack = () => {
         <Stack.Screen name="Map" component={MapScreen} />
         <Stack.Screen name="HomeList" component={HomeListScreen} />
         <Stack.Screen name="List" component={HomeListFrame} />
+        <Stack.Screen name="ListInformation" component={ListInformationScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
