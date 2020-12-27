@@ -32,10 +32,10 @@ const Map = () => {
   };
 
   useEffect(() => {
-    getData();
+    //getData();
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        console.log(position);
+        //console.log(position);
         setLong(position.coords.longitude);
         setLat(position.coords.latitude);
       },
