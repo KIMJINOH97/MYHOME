@@ -7,6 +7,8 @@ import MapScreen from '../../screen/MapScreen.js';
 import HomeListScreen from '../../screen/HomeListScreen.js';
 import HomeListFrame from '../../components/HomeList/HomeListFrame';
 import ListInformationScreen from '../../screen/ListInformationScreen';
+import MyPageScreen from '../../screen/MyPageScreen';
+import LoginScreen from '../../screen/LoginScreen';
 
 import MyHomeTab from './MyHomeTab.js';
 
@@ -29,10 +31,32 @@ const MyHomeStack = () => {
           options={{ headerShown: false }}
         />
         <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Map" component={MapScreen} />
-        <Stack.Screen name="HomeList" component={HomeListScreen} />
+        <Stack.Screen
+          name="Map"
+          component={MapScreen}
+          options={{ title: '지도' }}
+        />
+        <Stack.Screen
+          name="HomeList"
+          component={HomeListScreen}
+          options={{ title: '매물리스트' }}
+        />
         <Stack.Screen name="List" component={HomeListFrame} />
-        <Stack.Screen name="ListInformation" component={ListInformationScreen} />
+        <Stack.Screen
+          name="ListInformation"
+          component={ListInformationScreen}
+          options={{ title: '매물' }}
+        />
+        <Stack.Screen
+          name="MyPage"
+          component={MyPageScreen}
+          options={{ title: '마이페이지' }}
+        />
+        <Stack.Screen
+          name="Login"
+          component={LoginScreen}
+          options={{ title: '로그인' }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
