@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import { View, Text } from 'react-native';
+import { View, Text, StatusBar, Platform } from 'react-native';
 
 const MEMBER_INFO = '회원정보';
 const LOGIN_AND_SIGNIN = '로그인 & 가입하기';
@@ -9,40 +9,55 @@ const ETC = '로그인하고 마이홈 서비스를 자유롭게 이용해보세
 const MyPageScreen = ({ navigation }) => {
   return (
     <Wrapper>
-      <UserContainer>
-        <MyProfile>
-          <MyProfilePicture>
-            <ProfilePicture source={require('../pengsu.png')}></ProfilePicture>
-          </MyProfilePicture>
-        </MyProfile>
-        <ProfileInformation>
-          <MemberInformation>
-            <Text>{MEMBER_INFO}</Text>
-          </MemberInformation>
-          <LoginInformation>
-            <LoginButton
-              onPress={() => {
-                navigation.push('Login');
-              }}
-            >
-              <LoginContent>{LOGIN_AND_SIGNIN}</LoginContent>
-            </LoginButton>
-          </LoginInformation>
-          <MoreInformation>
-            <MoreContent>{ETC}</MoreContent>
-          </MoreInformation>
-        </ProfileInformation>
-      </UserContainer>
-      <DivideLine />
-      <ListContainer></ListContainer>
+      <MyPageTitle></MyPageTitle>
+      <MyPageContainer>
+        <UserContainer>
+          <MyProfile>
+            <MyProfilePicture>
+              <ProfilePicture
+                source={require('../pengsu.png')}
+              ></ProfilePicture>
+            </MyProfilePicture>
+          </MyProfile>
+          <ProfileInformation>
+            <MemberInformation>
+              <Text>{MEMBER_INFO}</Text>
+            </MemberInformation>
+            <LoginInformation>
+              <LoginButton
+                onPress={() => {
+                  navigation.push('Login');
+                }}
+              >
+                <LoginContent>{LOGIN_AND_SIGNIN}</LoginContent>
+              </LoginButton>
+            </LoginInformation>
+            <MoreInformation>
+              <MoreContent>{ETC}</MoreContent>
+            </MoreInformation>
+          </ProfileInformation>
+        </UserContainer>
+
+        <DivideLine />
+        <ListContainer></ListContainer>
+      </MyPageContainer>
     </Wrapper>
   );
 };
 
 export default MyPageScreen;
 
-const Wrapper = styled.View`
+const Wrapper = styled.SafeAreaView`
+  padding-top: ${Platform.OS === 'ios' ? 0 : StatusBar.currentHeight}px;
   flex: 1;
+`;
+
+const MyPageTitle = styled.View`
+  flex: 1;
+`;
+
+const MyPageContainer = styled.View`
+  flex: 11;
 `;
 
 const UserContainer = styled.View`
@@ -65,7 +80,8 @@ const ProfilePicture = styled.Image`
   height: 100%;
   width: 100%;
   border-radius: 45px;
-  border: 1px solid gray;
+  border-color: gray;
+  border-width: 1px;
 `;
 
 const ProfileInformation = styled.View`

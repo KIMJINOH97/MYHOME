@@ -14,9 +14,9 @@ import MyhomeTitle from '../components/Myhome/MyhomeTitle';
 
 const HomeScreen = ({ navigation }) => {
   return (
-    <SafeAreaView style={{ backgroundColor: 'white', height: '100%' }}>
-      <Wrapper>
-        <MyhomeTitle />
+    <Wrapper>
+      <MyhomeTitle />
+      <HomeContainer>
         <MyhomeSlogan>
           <SloganContentContainer>
             <SloganContent>이 집 살아보니{'\n'}괜찮더라</SloganContent>
@@ -60,22 +60,28 @@ const HomeScreen = ({ navigation }) => {
                 </ButtonContent>
               </MapButton>
               <ButtonName>
-                <Text>지도</Text>
+                <Text>매물</Text>
               </ButtonName>
             </ButtonContainer>
           </MenuButton>
         </MyhomeMenu>
-      </Wrapper>
-    </SafeAreaView>
+      </HomeContainer>
+    </Wrapper>
   );
 };
 
 export default HomeScreen;
 
-const Wrapper = styled.View`
+const Wrapper = styled.SafeAreaView`
+  background-color: white;
+  height: 100%;
   flex: 1;
   padding-left: 15px;
   padding-right: 15px;
+`;
+
+const HomeContainer = styled.View`
+  flex: 10;
 `;
 
 const MyhomeSlogan = styled.View`
@@ -104,7 +110,7 @@ const SubContent = styled.Text`
 
 const MyhomeMenu = styled.View`
   flex: 6;
-  background-color: yellow;
+  /* background-color: yellow; */
 `;
 
 const MenuTitle = styled.View`
@@ -127,7 +133,7 @@ const MenuButton = styled.View`
 `;
 
 const ButtonContainer = styled.View`
-  background-color: red;
+  /* background-color: red; */
   align-items: center;
 `;
 
