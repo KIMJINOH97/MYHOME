@@ -9,54 +9,74 @@ import HomeListFrame from '../../components/HomeList/HomeListFrame';
 import ListInformationScreen from '../../screen/ListInformationScreen';
 import MyPageScreen from '../../screen/MyPageScreen';
 import LoginScreen from '../../screen/LoginScreen';
+import SignUpScreen from '../../screen/SignUpScreen';
+import FindPasswordScreen from '../../screen/FindPasswordScreen';
 
 import MyHomeTab from './MyHomeTab.js';
 
-// const Navigation = createStackNavigator(
-//   { screenA: ComponentA, screenB: ComponentB },
-//   {
-//     mode: 'card',
-//     transitionConfig: () => StackViewTransitionConfigs.SlideFromRightIOS,
-//   }
-// );
 const Stack = createStackNavigator();
+const HomeRouter = [
+  {
+    name: 'MyHomeTab',
+    compoent: MyHomeTab,
+    options: { headerShown: false },
+  },
+  {
+    name: 'Home',
+    compoent: HomeScreen,
+    options: { headerShown: false },
+  },
+  {
+    name: 'Map',
+    compoent: MapScreen,
+    options: { headerShown: false },
+  },
+  {
+    name: 'HomeList',
+    compoent: HomeListScreen,
+    options: { headerShown: false },
+  },
+  {
+    name: 'ListInformation',
+    compoent: ListInformationScreen,
+    options: { headerShown: false },
+  },
+  {
+    name: 'MyPage',
+    compoent: MyPageScreen,
+    options: { headerShown: false },
+  },
+  {
+    name: 'Login',
+    compoent: LoginScreen,
+    options: { headerShown: true },
+  },
+  {
+    name: 'SignUp',
+    compoent: SignUpScreen,
+    options: { headerShown: false },
+  },
+  {
+    name: 'FindPassword',
+    compoent: FindPasswordScreen,
+    options: { headerShown: false },
+  },
+];
 
 const MyHomeStack = () => {
   return (
-    <NavigationContainer>
+    <NavigationContainer options={{ headerShown: false }}>
       <Stack.Navigator initialRouteName="MyHomeTab" headerMode="screen">
-        <Stack.Screen
-          name="MyHomeTab"
-          component={MyHomeTab}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen
-          name="Map"
-          component={MapScreen}
-          options={{ title: '지도' }}
-        />
-        <Stack.Screen
-          name="HomeList"
-          component={HomeListScreen}
-          options={{ title: '매물리스트' }}
-        />
-        <Stack.Screen name="List" component={HomeListFrame} />
-        <Stack.Screen
-          name="ListInformation"
-          component={ListInformationScreen}
-          options={{ title: '매물' }}
-        />
-        <Stack.Screen
-          name="MyPage"
-          component={MyPageScreen}
-          options={{ title: '마이페이지' }}
-        />
-        <Stack.Screen
-          name="Login"
-          component={LoginScreen}
-          options={{ title: '로그인' }}
-        />
+        {HomeRouter.map((stack) => {
+          return (
+            <Stack.Screen
+              key={`${stack.name} router`}
+              name={stack.name}
+              component={stack.compoent}
+              options={stack.options}
+            />
+          );
+        })}
       </Stack.Navigator>
     </NavigationContainer>
   );
