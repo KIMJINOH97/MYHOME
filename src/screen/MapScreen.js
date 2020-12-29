@@ -1,13 +1,17 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { SafeAreaView, StatusBar, Text } from 'react-native';
 
 import Map from './Map';
 
 const MapScreen = ({ navigation }) => {
   return (
-    <View>
+    <SafeAreaView
+      style={{
+        paddingTop: Platform.OS === 'ios' ? 0 : StatusBar.currentHeight,
+      }}
+    >
       <Map />
-    </View>
+    </SafeAreaView>
   );
 };
 
