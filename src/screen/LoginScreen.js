@@ -8,7 +8,13 @@ import {
   Keyboard,
 } from 'react-native';
 import Title from '../util/Title';
-// import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { InputStyle } from '../util/Input';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
+const TITLE_NAME = '로그인';
+const LOGIN = '로그인';
+const SIGNUP = '회원가입';
+const FIND_PASSWORD = '비밀번호 찾기';
 
 const LoginScreen = ({ navigation }) => {
   const [id, setId] = useState('');
@@ -34,60 +40,62 @@ const LoginScreen = ({ navigation }) => {
       }}
     >
       <Wrapper>
-        {/* <Title /> */}
-        <LoginContainer>
-          <MyHomeLogo>
-            <LogoImageView>
-              <LogoImage />
-            </LogoImageView>
-          </MyHomeLogo>
-          <IdPasswordContainer>
-            <IdBox>
-              <LoginInput
-                inputType="email"
-                placeholder="이메일을 입력해주세요"
-                onChangeText={onChangeId}
-              />
-            </IdBox>
-            <PasswordBox>
-              <LoginInput
-                inputType="password"
-                secureTextEntry={true}
-                placeholder="비밀번호를 입력해주세요"
-                onChangeText={onChangePassword}
-              />
-            </PasswordBox>
-            <SubmitLoginBox>
-              <SubmitButton
-                id={id}
-                password={password}
-                color={color}
-                onPress={submitData}
-              >
-                <ButtonContent>로그인</ButtonContent>
-              </SubmitButton>
-            </SubmitLoginBox>
-            <SignUpFindButtonContainer>
-              <SignUpButton
-                onPress={() => {
-                  navigation.navigate('SignUp');
-                }}
-              >
-                <SignUpContent>회원가입 </SignUpContent>
-              </SignUpButton>
-              <View>
-                <Text>{'|'}</Text>
-              </View>
-              <SignUpButton
-                onPress={() => {
-                  navigation.navigate('FindPassword');
-                }}
-              >
-                <SignUpContent> 비밀번호 찾기</SignUpContent>
-              </SignUpButton>
-            </SignUpFindButtonContainer>
-          </IdPasswordContainer>
-        </LoginContainer>
+        <KeyboardAwareScrollView style={{ flexGrow: 1, flexShrink: 0 }}>
+          <Title name={TITLE_NAME} />
+          <LoginContainer>
+            <MyHomeLogo>
+              <LogoImageView>
+                <LogoImage />
+              </LogoImageView>
+            </MyHomeLogo>
+            <IdPasswordContainer>
+              <IdBox>
+                <Input
+                  inputType="email"
+                  placeholder="이메일을 입력해주세요"
+                  onChangeText={onChangeId}
+                />
+              </IdBox>
+              <PasswordBox>
+                <Input
+                  inputType="password"
+                  secureTextEntry={true}
+                  placeholder="비밀번호를 입력해주세요"
+                  onChangeText={onChangePassword}
+                />
+              </PasswordBox>
+              <SubmitLoginBox>
+                <SubmitButton
+                  id={id}
+                  password={password}
+                  color={color}
+                  onPress={submitData}
+                >
+                  <ButtonContent>{LOGIN}</ButtonContent>
+                </SubmitButton>
+              </SubmitLoginBox>
+              <SignUpFindButtonContainer>
+                <SignUpFindPwButton
+                  onPress={() => {
+                    navigation.navigate('SignUp');
+                  }}
+                >
+                  <SignUpFindPwContent>{SIGNUP} </SignUpFindPwContent>
+                </SignUpFindPwButton>
+                <View>
+                  <Text>{'|'}</Text>
+                </View>
+                <SignUpFindPwButton
+                  onPress={() => {
+                    navigation.navigate('FindPassword');
+                  }}
+                >
+                  <SignUpFindPwContent> {FIND_PASSWORD}</SignUpFindPwContent>
+                </SignUpFindPwButton>
+              </SignUpFindButtonContainer>
+            </IdPasswordContainer>
+          </LoginContainer>
+        </KeyboardAwareScrollView>
       </Wrapper>
     </TouchableWithoutFeedback>
   );
@@ -101,26 +109,19 @@ const Wrapper = styled.SafeAreaView`
   background-color: #fff;
 `;
 
-const LoginTitle = styled.View`
-  flex: 1;
-  background-color: red;
-`;
-
 const LoginContainer = styled.View`
-  flex: 11;
-  background-color: white;
+  /* background-color: red; */
 `;
 
 const MyHomeLogo = styled.View`
-  flex: 1;
+  aspect-ratio: 3;
   justify-content: center;
   align-items: center;
 `;
 
 const LogoImageView = styled.View`
-  /* flex: 1; */
-  width: 150px;
-  height: 150px;
+  width: 100px;
+  height: 100px;
   background-color: blue;
 `;
 const LogoImage = styled.Image`
@@ -129,44 +130,43 @@ const LogoImage = styled.Image`
 `;
 
 const IdPasswordContainer = styled.View`
-  display: flex;
-  flex: 2.5;
-  background-color: red;
-  padding: 10px;
+  aspect-ratio: 1.6;
+  margin-horizontal: 10px;
+  padding-vertical: 5px;
   align-items: center;
 `;
-
+//    padding-vertical: 5
 const IdBox = styled.View`
+  width: 100%;
   margin-bottom: 8px;
 `;
 
-const LoginInput = styled.TextInput`
-  width: 310px;
-  height: 48px;
-  padding: 6px;
-  background-color: white;
-  border-radius: 5px;
-`;
+const Input = styled(InputStyle)``;
 
 const PasswordBox = styled.View`
+  width: 100%;
   margin-bottom: 8px;
 `;
 
-const SubmitLoginBox = styled.View``;
+const SubmitLoginBox = styled.View`
+  width: 100%;
+`;
 
 const SubmitButton = styled.TouchableOpacity`
-  width: 310px;
+  width: 100%;
   height: 48px;
   padding: 6px;
   background-color: ${(props) => {
-    return props.id !== '' && props.password !== '' ? '#FF766A' : '#BDBDBD';
+    return props.id !== '' && props.password !== '' ? '#FF766A' : '#dbdbdb';
   }};
+  border: 1px #dbdbdb;
   border-radius: 5px;
   align-items: center;
   justify-content: center;
 `;
 
 const ButtonContent = styled.Text`
+  color: white;
   font-size: 16px;
   font-weight: 700;
 `;
@@ -176,13 +176,9 @@ const SignUpFindButtonContainer = styled.View`
   flex-direction: row;
 `;
 
-const SignUpButton = styled.TouchableOpacity``;
+const SignUpFindPwButton = styled.TouchableOpacity``;
 
-const SignUpContent = styled.Text`
+const SignUpFindPwContent = styled.Text`
+  color: black;
   font-size: 16px;
 `;
-// const FindPasswordButton = styled.TouchableOpacity``;
-
-// const FindPasswordContent = styled.Text`
-//   font-size: 16px;
-// `;
