@@ -33,6 +33,8 @@ const LoginScreen = ({ navigation }) => {
     console.log(id, password);
   };
 
+  const nextPage = (page) => navigation.navigate(page);
+
   return (
     <TouchableWithoutFeedback
       onPress={() => {
@@ -74,22 +76,15 @@ const LoginScreen = ({ navigation }) => {
                   <ButtonContent>{LOGIN}</ButtonContent>
                 </SubmitButton>
               </SubmitLoginBox>
+              <DivideLine />
               <SignUpFindButtonContainer>
-                <SignUpFindPwButton
-                  onPress={() => {
-                    navigation.navigate('SignUp');
-                  }}
-                >
+                <SignUpFindPwButton onPress={() => nextPage('SignUp')}>
                   <SignUpFindPwContent>{SIGNUP} </SignUpFindPwContent>
                 </SignUpFindPwButton>
                 <View>
                   <Text>{'|'}</Text>
                 </View>
-                <SignUpFindPwButton
-                  onPress={() => {
-                    navigation.navigate('FindPassword');
-                  }}
-                >
+                <SignUpFindPwButton onPress={() => nextPage('FindPassword')}>
                   <SignUpFindPwContent> {FIND_PASSWORD}</SignUpFindPwContent>
                 </SignUpFindPwButton>
               </SignUpFindButtonContainer>
@@ -169,6 +164,10 @@ const ButtonContent = styled.Text`
   color: white;
   font-size: 16px;
   font-weight: 700;
+`;
+
+const DivideLine = styled.View`
+  height: 10px;
 `;
 
 const SignUpFindButtonContainer = styled.View`
