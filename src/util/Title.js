@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import styled from 'styled-components/native';
 
-const Title = () => {
+const Title = ({ name }) => {
   const navigation = useNavigation();
   return (
     <Wrapper>
@@ -12,10 +12,10 @@ const Title = () => {
         }}
       >
         <BackContent>{'<'}</BackContent>
-        <TitleName>
-          <TitleContent>로그인 </TitleContent>
-        </TitleName>
       </UtilButton>
+      <TitleName>
+        <TitleContent> {name} </TitleContent>
+      </TitleName>
     </Wrapper>
   );
 };
@@ -23,13 +23,20 @@ const Title = () => {
 export default Title;
 
 const Wrapper = styled.View`
-  flex: 1;
-  padding-left: 30px;
-  background-color: yellow;
+  aspect-ratio: 6;
+  padding-left: 20px;
+  border-bottom-color: #eeeeee;
+  border-bottom-width: 1px;
+  border-style: solid;
+  flex-direction: row;
+  /* justify-content: center; */
+  align-items: center;
 `;
 
 const UtilButton = styled.TouchableOpacity`
-  flex: 1;
+  /* flex: 1; */
+  width: 20px;
+  /* background-color: red; */
 `;
 
 const BackContent = styled.Text`

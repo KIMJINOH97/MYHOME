@@ -9,7 +9,7 @@ const MyhomeTitle = ({}) => {
     <Wrapper>
       <TitleContainer>
         <MyhomeIcon>
-          <Ionicons name="home" size={25} color="#ff766a" />
+          <MyhomeLogo source={require('../../logo.png')}></MyhomeLogo>
         </MyhomeIcon>
         <TitleContentBox>
           <TitleContent>마이홈</TitleContent>
@@ -32,9 +32,10 @@ export default MyhomeTitle;
 
 const Wrapper = styled.View`
   flex: 1;
-  background-color: yellow;
   flex-direction: row;
+  margin-top: 12px;
   margin-bottom: 10px;
+  /* background-color: yellow; */
 `;
 
 const TitleContainer = styled.View`
@@ -43,9 +44,20 @@ const TitleContainer = styled.View`
   align-items: flex-end;
 `;
 
-const MyhomeIcon = styled.View``;
+const MyhomeIcon = styled.View`
+  width: 40px;
+  height: 35px;
+  align-items: flex-end;
+`;
 
-const TitleContentBox = styled.View``;
+const MyhomeLogo = styled.Image`
+  width: 100%;
+  height: 100%;
+`;
+
+const TitleContentBox = styled.View`
+  margin-left: 5px;
+`;
 
 const TitleContent = styled.Text`
   height: 30px;
