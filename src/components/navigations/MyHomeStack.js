@@ -7,58 +7,70 @@ import MapScreen from '../../screen/MapScreen.js';
 import HomeListScreen from '../../screen/HomeListScreen.js';
 import HomeListFrame from '../../components/HomeList/HomeListFrame';
 import ListInformationScreen from '../../screen/ListInformationScreen';
-import MyPageScreen from '../../screen/MyPageScreen';
 import LoginScreen from '../../screen/LoginScreen';
 import SignUpScreen from '../../screen/SignUpScreen';
 import FindPasswordScreen from '../../screen/FindPasswordScreen';
 
 import MyHomeTab from './MyHomeTab.js';
+import FavoriteScreen from '../../screen/FavoriteScreen.js';
+import MoreScreen from '../../screen/MoreScreen.js';
+import FindMentoScreen from '../../screen/FindMentoScreen.js';
 
 const Stack = createStackNavigator();
 const HomeRouter = [
   {
     name: 'MyHomeTab',
-    compoent: MyHomeTab,
+    component: MyHomeTab,
     options: { headerShown: false },
   },
   {
     name: 'Home',
-    compoent: HomeScreen,
+    component: HomeScreen,
     options: { headerShown: false },
   },
   {
     name: 'Map',
-    compoent: MapScreen,
+    component: MapScreen,
     options: { headerShown: false },
   },
   {
     name: 'HomeList',
-    compoent: HomeListScreen,
+    component: HomeListScreen,
     options: { headerShown: false },
   },
   {
     name: 'ListInformation',
-    compoent: ListInformationScreen,
+    component: ListInformationScreen,
     options: { headerShown: false },
   },
   {
-    name: 'MyPage',
-    compoent: MyPageScreen,
+    name: 'More',
+    component: MoreScreen,
     options: { headerShown: false },
   },
   {
     name: 'Login',
-    compoent: LoginScreen,
-    options: { headerShown: true },
+    component: LoginScreen,
+    options: { headerShown: false },
   },
   {
     name: 'SignUp',
-    compoent: SignUpScreen,
+    component: SignUpScreen,
     options: { headerShown: false },
   },
   {
     name: 'FindPassword',
-    compoent: FindPasswordScreen,
+    component: FindPasswordScreen,
+    options: { headerShown: false },
+  },
+  {
+    name: 'Favorite',
+    component: FavoriteScreen,
+    options: { headerShown: false },
+  },
+  {
+    name: 'FindMento',
+    component: FindMentoScreen,
     options: { headerShown: false },
   },
 ];
@@ -72,7 +84,7 @@ const MyHomeStack = () => {
             <Stack.Screen
               key={`${stack.name} router`}
               name={stack.name}
-              component={stack.compoent}
+              component={stack.component}
               options={stack.options}
             />
           );
