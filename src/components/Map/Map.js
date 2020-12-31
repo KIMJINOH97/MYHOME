@@ -58,8 +58,9 @@ const Map = () => {
       style={styles.map}
     >
       <Marker
-        coordinate={{ latitude: 37.5326, longitude: 127.024612 }}
-        image={require('../pin.png')}
+        style={styles.marker}
+        coordinate={{ latitude: lat, longitude: long }}
+        image={require('../../pin.png')}
         title="Peng hi"
         description="my name is pengsu"
       >
@@ -79,7 +80,9 @@ export default Map;
 
 const styles = StyleSheet.create({
   map: {
+    flex: 1,
     height: '100%',
+    width: '100%',
   },
   bubble: {
     flexDirection: 'row',
