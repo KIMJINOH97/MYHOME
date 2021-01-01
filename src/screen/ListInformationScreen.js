@@ -4,8 +4,9 @@ import styled from 'styled-components/native';
 import Swiper from 'react-native-swiper';
 
 import DetailContent from '../components/ListInfromation/DetailContent';
+import { useNavigation } from '@react-navigation/native';
 
-const ListInformationScreen = ({ route, navigation }) => {
+const ListInformationScreen = ({ route }) => {
   const {
     title,
     type,
@@ -18,6 +19,7 @@ const ListInformationScreen = ({ route, navigation }) => {
     sogae,
     detail,
   } = route.params;
+  // const home = useNavigation().setParams('item');
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView>

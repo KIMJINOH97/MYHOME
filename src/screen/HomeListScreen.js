@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components/native';
-import { View, Text, FlatList } from 'react-native';
+import { View, Text, FlatList, StatusBar } from 'react-native';
 
 import HomeListFrame from '../components/HomeList/HomeListFrame';
+import Title from '../util/Title';
 
+const TITLE_NAME = '매물';
 const DummyList = [
   {
     id: '1',
@@ -74,6 +76,7 @@ const HomeListScreen = ({ navigation }) => {
   const [list, setList] = useState(DummyList);
   return (
     <Wrapper>
+      <Title name={TITLE_NAME} />
       <FilterBar></FilterBar>
       <HomeList
         data={list}
@@ -111,15 +114,16 @@ export default HomeListScreen;
 
 const Wrapper = styled.SafeAreaView`
   flex: 1;
+  padding-top: ${Platform.OS === 'ios' ? 0 : StatusBar.currentHeight}px;
+  background-color: #fff;
 `;
-
 const FilterBar = styled.View`
   flex: 1;
   background-color: yellow;
 `;
 
 const HomeList = styled.FlatList`
-  flex: 9;
+  flex: 10;
   background-color: red;
 `;
 
