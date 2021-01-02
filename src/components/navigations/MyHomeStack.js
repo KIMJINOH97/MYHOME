@@ -15,6 +15,7 @@ import MyHomeTab from './MyHomeTab.js';
 import FavoriteScreen from '../../screen/FavoriteScreen.js';
 import MoreScreen from '../../screen/MoreScreen.js';
 import FindMentoScreen from '../../screen/FindMentoScreen.js';
+import PutHomeScreen from '../../screen/PutHomeScreen.js';
 
 const Stack = createStackNavigator();
 const HomeRouter = [
@@ -71,6 +72,11 @@ const HomeRouter = [
   {
     name: 'FindMento',
     component: FindMentoScreen,
+    options: { headerShown: false },
+  },
+  {
+    name: 'PutHome',
+    component: PutHomeScreen,
     options: { headerShown: false },
   },
 ];
