@@ -59,12 +59,13 @@ const EnrollBox = styled.View`
 `;
 
 const PutHomeButtonBox = styled.View`
-  flex: 3;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
   justify-content: flex-end;
 `;
 
 const PutHomeButton = styled.TouchableOpacity`
-  width: 100%;
   height: 80px;
   align-items: center;
   padding-top: 10px;

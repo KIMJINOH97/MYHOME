@@ -16,6 +16,10 @@ import FavoriteScreen from '../../screen/FavoriteScreen.js';
 import MoreScreen from '../../screen/MoreScreen.js';
 import FindMentoScreen from '../../screen/FindMentoScreen.js';
 import PutHomeScreen from '../../screen/PutHomeScreen.js';
+import EnrollPictureScreen from '../../screen/EnrollPictureScreen';
+import EnrollAddressScreen from '../../screen/EnrollAddressScreen';
+import EnrollDetailsScreen from '../../screen/EnrollDetailsScreen';
+import ApplyMentoScreen from '../../screen/ApplyMentoScreen';
 
 const Stack = createStackNavigator();
 const HomeRouter = [
@@ -79,9 +83,29 @@ const HomeRouter = [
     component: PutHomeScreen,
     options: { headerShown: false },
   },
+  {
+    name: 'EnrollPicture',
+    component: EnrollPictureScreen,
+    options: { headerShown: false },
+  },
+  {
+    name: 'EnrollAddress',
+    component: EnrollAddressScreen,
+    options: { headerShown: false },
+  },
+  {
+    name: 'EnrollDetails',
+    component: EnrollDetailsScreen,
+    options: { headerShown: false },
+  },
+  {
+    name: 'ApplyMento',
+    component: ApplyMentoScreen,
+    options: { headerShown: false },
+  },
 ];
 
-const MyHomeStack = () => {
+const MyHomeStack = ({}) => {
   return (
     <NavigationContainer options={{ headerShown: false }}>
       <Stack.Navigator initialRouteName="MyHomeTab" headerMode="screen">
