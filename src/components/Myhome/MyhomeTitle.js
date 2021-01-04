@@ -1,29 +1,20 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import { Ionicons } from 'react-native-vector-icons';
-import { useNavigation } from '@react-navigation/native';
+
+import HOME_LOGO from '../../../assets/HOME_LOGO.png';
+import HOME_NAME from '../../../assets/HOME_NAME.png';
 
 const MyhomeTitle = ({}) => {
-  const navigation = useNavigation();
   return (
     <Wrapper>
       <TitleContainer>
         <MyhomeIcon>
-          <MyhomeLogo source={require('../../logo.png')}></MyhomeLogo>
+          <MyhomeLogo source={HOME_LOGO}></MyhomeLogo>
         </MyhomeIcon>
-        <TitleContentBox>
-          <TitleContent>마이홈</TitleContent>
-        </TitleContentBox>
+        <TitleIcon>
+          <TitleContent source={HOME_NAME} />
+        </TitleIcon>
       </TitleContainer>
-      <MyPageButton>
-        <ButtonIcon
-          onPress={() => {
-            navigation.push('MyPage');
-          }}
-        >
-          <Ionicons name="md-person" size={25} color="blue" />
-        </ButtonIcon>
-      </MyPageButton>
     </Wrapper>
   );
 };
@@ -34,8 +25,7 @@ const Wrapper = styled.View`
   flex: 1;
   flex-direction: row;
   margin-top: 12px;
-  margin-bottom: 10px;
-  /* background-color: yellow; */
+  margin-bottom: 16px;
 `;
 
 const TitleContainer = styled.View`
@@ -45,8 +35,8 @@ const TitleContainer = styled.View`
 `;
 
 const MyhomeIcon = styled.View`
-  width: 40px;
-  height: 35px;
+  width: 43px;
+  height: 37px;
   align-items: flex-end;
 `;
 
@@ -55,22 +45,11 @@ const MyhomeLogo = styled.Image`
   height: 100%;
 `;
 
-const TitleContentBox = styled.View`
-  margin-left: 5px;
+const TitleIcon = styled.View`
+  margin-left: 16px;
 `;
 
-const TitleContent = styled.Text`
-  height: 30px;
-  color: #ff766a;
-  font-size: 25px;
-  font-weight: 700;
-  letter-spacing: -2px;
-`;
-
-const MyPageButton = styled.View`
-  flex: 1;
-  justify-content: flex-end;
-`;
-const ButtonIcon = styled.TouchableOpacity`
-  align-items: flex-end;
+const TitleContent = styled.Image`
+  height: 26px;
+  width: 73px;
 `;
