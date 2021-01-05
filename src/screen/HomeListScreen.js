@@ -5,14 +5,17 @@ import { View, Text, FlatList, StatusBar } from 'react-native';
 import HomeListFrame from '../components/HomeList/HomeListFrame';
 import Title from '../util/Title';
 
+const HOME_PICTURE = require('../../assets/HOME_PICTURE.png');
 const TITLE_NAME = '매물';
 const DummyList = [
   {
     id: '1',
-    title: '신촌스테이하이',
+    title: '신촌 스테이 하이',
+    image: HOME_PICTURE,
     type: '월세',
     money: 45,
     bojoung: 1000,
+    pretenant: [{ 1: 'hi' }],
     roomType: '원룸',
     floor: '4층',
     size: '8평',
@@ -24,6 +27,8 @@ const DummyList = [
   {
     id: '2',
     title: '홍대 가성비 원룸',
+    image: HOME_PICTURE,
+    pretenant: [{ 1: 'hi' }],
     type: '월세',
     money: 50,
     bojoung: 1000,
@@ -36,7 +41,9 @@ const DummyList = [
   },
   {
     id: '3',
-    title: '신촌스테이하이',
+    title: '신촌 스테이 하이',
+    image: HOME_PICTURE,
+    pretenant: [{ 1: 'hi' }],
     type: '월세',
     money: 100,
     bojoung: 100,
@@ -48,7 +55,9 @@ const DummyList = [
   },
   {
     id: '4',
-    title: '신촌스테이하이',
+    title: '신촌 스테이 하이',
+    image: HOME_PICTURE,
+    pretenant: [{ 1: 'hi' }],
     type: '월세',
     money: 100,
     bojoung: 100,
@@ -61,6 +70,8 @@ const DummyList = [
   {
     id: '5',
     title: '신촌스테이하이',
+    image: HOME_PICTURE,
+    pretenant: [],
     type: '월세',
     money: 100,
     bojoung: 100,
@@ -87,8 +98,10 @@ const HomeListScreen = ({ navigation }) => {
               onPress={() => navigation.navigate('ListInformation', item)}
             >
               <HomeListFrame
+                image={item.image}
                 key={index}
                 title={item.title}
+                pretenant={item.pretenant}
                 type={item.type}
                 money={item.money}
                 bojoung={item.bojoung}
@@ -103,9 +116,6 @@ const HomeListScreen = ({ navigation }) => {
         }}
         keyExtractor={(item) => item.id}
       />
-      {/* {list.map((v, i) => {
-          return <HomeListFrame key={i} Content={v} />;
-        })} */}
     </Wrapper>
   );
 };
@@ -124,7 +134,6 @@ const FilterBar = styled.View`
 
 const HomeList = styled.FlatList`
   flex: 10;
-  background-color: red;
 `;
 
 const HomeListButton = styled.TouchableOpacity`

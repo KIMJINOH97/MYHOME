@@ -1,8 +1,16 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import { View, Text, StatusBar, Platform } from 'react-native';
+import {
+  View,
+  Text,
+  StatusBar,
+  Platform,
+  TouchableOpacity,
+} from 'react-native';
 
 import TabTitle from '../util/TabTitle';
+import { LIGHT_GRAY2 } from '../util/Color';
+import DivideLine from '../util/DivideLine';
 
 const MEMBER_INFO = '회원정보';
 const LOGIN_AND_SIGNIN = '로그인 & 가입하기';
@@ -44,11 +52,16 @@ const MoreScreen = ({ navigation }) => {
           <CheckList>
             <CheckContent>주의사항</CheckContent>
           </CheckList>
-          <DivideLine />
+          <DivideLine height="8px" color={LIGHT_GRAY2} />
           <CheckList>
             <CheckContent>체크리스트</CheckContent>
           </CheckList>
-          <DivideLine />
+          <DivideLine height="8px" color={LIGHT_GRAY2} />
+          <CheckList>
+            <CheckContent onPress={() => navigation.push('PutHome')}>
+              집 내놓기
+            </CheckContent>
+          </CheckList>
         </CheckContainer>
       </MyPageContainer>
     </Wrapper>
@@ -128,11 +141,6 @@ const MoreContent = styled.Text`
   font-weight: 700;
   font-size: 16px;
   color: #9e9e9e;
-`;
-
-const DivideLine = styled.View`
-  height: 8px;
-  background-color: #eeeeee;
 `;
 
 const CheckContainer = styled.View`

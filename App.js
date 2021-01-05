@@ -1,15 +1,40 @@
-import React from 'react';
-import styled from 'styled-components/native';
+import React, { useState } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-
+import AppLoading from 'expo-app-loading';
 import MyHomeStack from './src/components/navigations/MyHomeStack.js';
+import {
+  useFonts,
+  NotoSansKR_100Thin,
+  NotoSansKR_300Light,
+  NotoSansKR_400Regular,
+  NotoSansKR_500Medium,
+  NotoSansKR_700Bold,
+  NotoSansKR_900Black,
+} from '@expo-google-fonts/noto-sans-kr';
+
+// const getFonts = () =>
+//   Font.loadAsync({
+//     NotoKR_Bold: require('./assets/font/NotoSansKR-Bold.otf'),
+//   });
 
 export default function App() {
-  return (
-    <SafeAreaProvider style={{ backgroundColor: '#fff' }}>
-      <MyHomeStack />
-    </SafeAreaProvider>
-  );
+  let [fontsLoaded] = useFonts({
+    NotoSansKR_100Thin,
+    NotoSansKR_300Light,
+    NotoSansKR_400Regular,
+    NotoSansKR_500Medium,
+    NotoSansKR_700Bold,
+    NotoSansKR_900Black,
+  });
+
+  if (fontsLoaded) {
+    return (
+      <SafeAreaProvider>
+        <MyHomeStack />
+      </SafeAreaProvider>
+    );
+  } else {
+    return <AppLoading />;
+  }
 }

@@ -5,7 +5,7 @@ import { View, Text, StatusBar } from 'react-native';
 import Title from '../util/Title';
 import EnrollButton from '../util/EnrollButton';
 import DivideLine from '../util/DivideLine';
-import { PRIMARY_NOMAL, LIGHT_GRAY2 } from '../util/Color';
+import { PRIMARY_NORMAL, LIGHT_GRAY2 } from '../util/Color';
 
 const TITLE_NAME = '집 내놓기';
 
@@ -69,7 +69,7 @@ const PutHomeButton = styled.TouchableOpacity`
   height: 80px;
   align-items: center;
   padding-top: 10px;
-  background-color: ${PRIMARY_NOMAL};
+  background-color: ${PRIMARY_NORMAL};
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
   border-bottom-right-radius: 5px;
