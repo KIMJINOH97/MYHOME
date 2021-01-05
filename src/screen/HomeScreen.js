@@ -1,69 +1,88 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import styled from 'styled-components/native';
-import { Ionicons } from 'react-native-vector-icons';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  SafeAreaView,
-} from 'react-native';
+import { Text, View, StyleSheet, StatusBar, FlatList } from 'react-native';
 
 import MyhomeTitle from '../components/Myhome/MyhomeTitle';
+import MyhomeSlogan from '../components/Myhome/MyhomeSlogan';
+import MyhomeMenuName from '../components/Myhome/MyhomeMenuName';
+import LookHomeList from '../components/Myhome/LookHomeList';
+import MentoBox from '../components/Myhome/MentoBox';
+import { PRIMARY_NORMAL, LIGHT_GRAY, NK700, NK500 } from '../util/Color';
+import HOMIF from '../../assets/HOMIF.png';
+
+const MENTO_DUMMY = [
+  { id: '1', name: '호미들', comment: '안전한 부동산 거래를 도와드립니다.' },
+  { id: '2', name: '미호들', comment: '안전한 부동산 거래를 도와드립니다.' },
+  { id: '3', name: '들호미', comment: '안전한 부동산 거래를 도와드립니다.' },
+];
+
+const HOME_DUMMY = [
+  {
+    id: '1',
+    name: '신촌스테이하이',
+    money: '1000/60',
+  },
+  {
+    id: '2',
+    name: '홍대스테이하이',
+    money: '1000/60',
+  },
+  {
+    id: '3',
+    name: '서강스테이하이',
+    money: '1000/60',
+  },
+  {
+    id: '4',
+    name: '이대스테이하이',
+    money: '1000/60',
+  },
+];
 
 const HomeScreen = ({ navigation }) => {
   return (
     <Wrapper>
       <MyhomeTitle />
+      <HomiImage source={HOMIF} />
       <HomeContainer>
-        <MyhomeSlogan>
-          <SloganContentContainer>
-            <SloganContent>이 집 살아보니{'\n'}괜찮더라</SloganContent>
-            <SubContent>
-              대학생을 위한{'\n'}자취방 직거래 플랫폼{'\n'}'마이홈'입니다.
-            </SubContent>
-          </SloganContentContainer>
-        </MyhomeSlogan>
+        <MyhomeSlogan navigation={navigation} />
         <MyhomeMenu>
-          <MenuTitle>
-            <MenuTitleContent>종합 계약 키트</MenuTitleContent>
-          </MenuTitle>
-          <MenuButton>
-            <ButtonContainer>
-              <MapButton title="map" onPress={() => navigation.push('Map')}>
-                <ButtonContent>
-                  <Ionicons name="ios-map-outline" size={20} />
-                </ButtonContent>
-              </MapButton>
-              <ButtonName>
-                <Text>지도</Text>
-              </ButtonName>
-            </ButtonContainer>
-            <ButtonContainer>
-              <MapButton title="map" onPress={() => navigation.push('Map')}>
-                <ButtonContent>
-                  <Ionicons name="ios-map-outline" size={20} />
-                </ButtonContent>
-              </MapButton>
-              <ButtonName>
-                <Text>지도</Text>
-              </ButtonName>
-            </ButtonContainer>
-            <ButtonContainer>
-              <MapButton
-                title="map"
-                onPress={() => navigation.push('HomeList')}
-              >
-                <ButtonContent>
-                  <Ionicons name="ios-map-outline" size={20} />
-                </ButtonContent>
-              </MapButton>
-              <ButtonName>
-                <Text>매물</Text>
-              </ButtonName>
-            </ButtonContainer>
-          </MenuButton>
+          <RecommandMento>
+            <MyhomeMenuName name="추천 멘토" />
+            <FlatList
+              data={MENTO_DUMMY}
+              horizontal={true}
+              renderItem={({ item, index }) => {
+                return (
+                  <MentoBox
+                    key={index}
+                    name={item.name}
+                    comment={item.comment}
+                  />
+                );
+              }}
+              keyExtractor={(item) => item.id}
+              showsHorizontalScrollIndicator={false}
+            />
+          </RecommandMento>
+          <LookHome>
+            <MyhomeMenuName name="매물 보기" />
+            <FlatList
+              data={HOME_DUMMY}
+              horizontal={true}
+              renderItem={({ item, index }) => {
+                return (
+                  <LookHomeList
+                    key={index}
+                    name={item.name}
+                    money={item.money}
+                  />
+                );
+              }}
+              keyExtractor={(item) => item.id}
+              showsHorizontalScrollIndicator={false}
+            />
+          </LookHome>
         </MyhomeMenu>
       </HomeContainer>
     </Wrapper>
@@ -76,7 +95,7 @@ const Wrapper = styled.SafeAreaView`
   background-color: white;
   height: 100%;
   flex: 1;
-  padding-left: 15px;
+  padding-left: 16px;
   padding-right: 15px;
 `;
 
@@ -84,75 +103,23 @@ const HomeContainer = styled.View`
   flex: 10;
 `;
 
-const MyhomeSlogan = styled.View`
-  flex: 5;
-  background-color: red;
-`;
-
-const SloganContentContainer = styled.View`
-  height: 220px;
-  padding-left: 18px;
-  padding-top: 20px;
-  background-color: #ffb8b1;
-  border-radius: 8px;
-`;
-
-const SloganContent = styled.Text`
-  font-size: 35px;
-  font-weight: 700;
-  letter-spacing: -2px;
-`;
-
-const SubContent = styled.Text`
-  font-size: 16px;
-  font-weight: 700;
+const HomiImage = styled.Image`
+  height: 182px;
+  width: 144px;
+  position: absolute;
+  top: 95px;
+  right: 32px;
+  z-index: 999;
 `;
 
 const MyhomeMenu = styled.View`
-  flex: 6;
-  /* background-color: yellow; */
+  flex: 6.2;
 `;
 
-const MenuTitle = styled.View`
+const RecommandMento = styled.View`
   flex: 1;
-  background-color: purple;
-  justify-content: center;
 `;
 
-const MenuTitleContent = styled.Text`
-  font-size: 18px;
-  font-weight: 700;
-`;
-
-const MenuButton = styled.View`
-  flex: 5;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-left: 25px;
-  margin-right: 25px;
-`;
-
-const ButtonContainer = styled.View`
-  /* background-color: red; */
-  align-items: center;
-`;
-
-const MapButton = styled.TouchableOpacity`
-  height: 65px;
-  width: 65px;
-  background-color: rgba(255, 185, 177, 70);
-  border-radius: 35px;
-  font-weight: 600;
-  justify-content: center;
-`;
-
-const ButtonContent = styled.Text`
-  color: white;
-  font-size: 25px;
-  font-weight: 600;
-  margin-left: 21px;
-`;
-
-const ButtonName = styled.View`
-  margin-top: 5px;
+const LookHome = styled.View`
+  flex: 1;
 `;
