@@ -9,7 +9,7 @@ import InfoText from '../util/InfoText';
 import Input, { InputStyle } from '../util/Input';
 import { TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 import CompleteButton from '../util/CompleteButton';
-import { PRIMARY_NOMAL, MEDIUM_GRAY } from '../util/Color';
+import { PRIMARY_NORMAL, MEDIUM_GRAY } from '../util/Color';
 
 const EnrollAddressScreen = ({ user }) => {
   const [addr, setAddr] = useState('주소지를 입력해주세요.');
@@ -111,11 +111,11 @@ const PostNumberButtonView = styled.View`
   justify-content: center;
   align-items: center;
   background-color: white;
-  border: 1px solid ${PRIMARY_NOMAL};
+  border: 1px solid ${PRIMARY_NORMAL};
   border-radius: 5px;
 `;
 const PostNumberButtonText = styled.Text`
-  color: ${PRIMARY_NOMAL};
+  color: ${PRIMARY_NORMAL};
 `;
 
 const AddressView = styled(PostNumberView)`

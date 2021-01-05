@@ -1,6 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import styled from 'styled-components/native';
+import { View } from 'react-native';
 
 const Title = ({ name }) => {
   const navigation = useNavigation();
@@ -16,6 +17,7 @@ const Title = ({ name }) => {
       <TitleName>
         <TitleContent> {name} </TitleContent>
       </TitleName>
+      <View style={{ width: 20 }}></View>
     </Wrapper>
   );
 };
@@ -24,12 +26,12 @@ export default Title;
 
 const Wrapper = styled.View`
   aspect-ratio: 6;
-  padding-left: 20px;
+  padding-horizontal: 20px;
   border-bottom-color: #eeeeee;
   border-bottom-width: 1px;
   border-style: solid;
   flex-direction: row;
-  /* justify-content: center; */
+  justify-content: space-between;
   align-items: center;
 `;
 
@@ -47,4 +49,5 @@ const BackContent = styled.Text`
 const TitleName = styled.View``;
 const TitleContent = styled.Text`
   font-size: 20px;
+  font-weight: 700;
 `;

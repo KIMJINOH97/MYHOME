@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   comment: {
-    fontFamily: NK700,
+    fontFamily: NK500,
     fontSize: 12,
   },
 });

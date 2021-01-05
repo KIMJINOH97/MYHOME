@@ -9,7 +9,7 @@ export default Input;
 
 export const InputStyle = styled.TextInput`
   width: 100%;
-  height: 48px;
+  height: 40px;
   padding: 6px;
   background-color: white;
   border: 1px solid #dbdbdb;
