@@ -1,10 +1,23 @@
 import React from 'react';
 import styled from 'styled-components/native';
-const PENGSU_IMAGE = require('../../pengsu.png');
+
+import {
+  DARK_GRAY,
+  LIGHT_GRAY,
+  LIGHT_GRAY2,
+  MEDIUM_GRAY,
+  NK400,
+  NK500,
+  NK700,
+  PRIMARY_NORMAL,
+} from '../../util/Color.js';
+import TENANT from '../../../assets/TENANT.png';
 
 const HomeListFrame = ({
   navigation,
   title,
+  image,
+  pretenant,
   type,
   money,
   bojoung,
@@ -17,7 +30,7 @@ const HomeListFrame = ({
   return (
     <Wrapper>
       <HomeImageContainer>
-        <HomeImage source={PENGSU_IMAGE}></HomeImage>
+        <HomeImage source={image}></HomeImage>
       </HomeImageContainer>
       <HomeImageInformation>
         <HomeImageTitle>
@@ -36,8 +49,19 @@ const HomeListFrame = ({
         <HomeImageSay>
           <SayContent>{sogae}</SayContent>
         </HomeImageSay>
+        {pretenant.length ? (
+          <PreTenantNumber>
+            <PreTenantImageView>
+              <PreTenantImage source={TENANT} />
+            </PreTenantImageView>
+            <PreTenantContent>
+              전 세입자 후기 {pretenant.length}개
+            </PreTenantContent>
+          </PreTenantNumber>
+        ) : (
+          <></>
+        )}
       </HomeImageInformation>
-      <PreTenantContent></PreTenantContent>
     </Wrapper>
   );
 };
@@ -47,50 +71,88 @@ export default HomeListFrame;
 const Wrapper = styled.View`
   flex: 1;
   flex-direction: row;
-  background-color: purple;
+  /* background-color: purple; */
   height: 150px;
-  padding: 12px;
-  margin-bottom: 10px;
+  padding-left: 16px;
+  padding-vertical: 10px;
+  margin-bottom: 4px;
   justify-content: space-around;
+  border-bottom-color: ${LIGHT_GRAY2};
+  border-bottom-width: 1px;
 `;
 
 const HomeImageContainer = styled.View`
   flex: 1;
-  background-color: gray;
+  /* background-color: gray; */
 `;
 
 const HomeImage = styled.Image`
-  aspect-ratio: 1.2;
   border-radius: 10px;
-  height: 100%;
-  width: 100%;
+  height: 130px;
+  width: 150px;
 `;
 
 const HomeImageInformation = styled.View`
   flex: 1;
   background-color: white;
 `;
+
 const HomeImageTitle = styled.View``;
+
 const TitleContent = styled.Text`
-  font-weight: 700;
-  color: #616161;
+  font-family: ${NK500};
+  letter-spacing: -0.48px;
+  font-size: 14px;
+  margin-top: -10px;
+  color: ${DARK_GRAY};
 `;
 
 const HomeImageMoney = styled.View``;
+
 const MoneyContent = styled.Text`
-  font-size: 22px;
-  font-weight: 700;
+  font-family: ${NK500};
+  letter-spacing: -0.48px;
+  font-size: 18px;
+  margin-top: -20px;
 `;
 
 const HomeImageSummaryContent = styled.View``;
+
 const SummaryContent = styled.Text`
-  font-weight: 700;
-  color: #9e9e9e;
+  font-family: ${NK700};
+  font-size: 15px;
+  margin-top: -15px;
+  color: ${MEDIUM_GRAY};
+  letter-spacing: -0.45px;
 `;
 
 const HomeImageSay = styled.View``;
+
 const SayContent = styled.Text`
-  color: #9e9e9e;
+  font-family: ${NK400};
+  color: ${LIGHT_GRAY};
+  font-size: 14px;
+  margin-top: -22px;
+  letter-spacing: -0.14px;
 `;
 
-const PreTenantContent = styled.View``;
+const PreTenantNumber = styled.View`
+  flex-direction: row;
+  align-items: center;
+  margin-top: -8px;
+`;
+
+const PreTenantImageView = styled.View`
+  margin-right: 10px;
+`;
+
+const PreTenantImage = styled.Image`
+  height: 16px;
+  width: 16px;
+`;
+
+const PreTenantContent = styled.Text`
+  font-family: ${NK500};
+  font-size: 12px;
+  color: ${PRIMARY_NORMAL};
+`;
