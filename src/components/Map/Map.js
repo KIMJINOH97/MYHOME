@@ -13,6 +13,8 @@ import { Callout, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
+import MAP_PIN from '../../../assets/MAP_PIN.png';
+
 // https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=
 /*componentDidMount() {
   setLat(37.566535)
@@ -21,12 +23,6 @@ import { useNavigation } from '@react-navigation/native';
 const ADDRESS = '1600+Amphitheatre+Parkway,+Mountain+View';
 const GEO_API = 'AIzaSyD6RJg-Ul1eU863W7kYa9PDkMJpR1bmUis';
 const URL = `https://maps.googleapis.com/maps/api/geocode/json?address=서울시 마포구 독막로19길 30,+CA&key=${GEO_API}`;
-const INITIAL_REGION = {
-  latitude: 52.5,
-  longitude: 19.2,
-  latitudeDelta: 8.5,
-  longitudeDelta: 8.5,
-};
 
 const Map = ({ locations }) => {
   const [lat, setLat] = useState();
@@ -77,19 +73,9 @@ const Map = ({ locations }) => {
           latitudeDelta: 1.5,
           longitudeDelta: 1.5,
         }}
-        image={require('../../pin.png')}
-        title="Peng hi"
-        description="my name is pengsu"
+        image={MAP_PIN}
         key={index}
-      >
-        <Callout tooltip>
-          <View>
-            <View style={styles.bubble}>
-              <Text>ihihi</Text>
-            </View>
-          </View>
-        </Callout>
-      </Marker>
+      ></Marker>
     );
   });
 
@@ -179,8 +165,8 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
   },
-  bubble: {
-    flexDirection: 'row',
-    backgroundColor: '#fff',
+  marker: {
+    width: 20,
+    height: 20,
   },
 });
