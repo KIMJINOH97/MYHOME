@@ -104,11 +104,11 @@ const HomeContainer = styled.View`
 `;
 
 const HomiImage = styled.Image`
-  height: 182px;
-  width: 144px;
+  height: 168px;
+  width: 133px;
   position: absolute;
   top: 95px;
-  right: 32px;
+  right: 6%;
   z-index: 999;
 `;
 

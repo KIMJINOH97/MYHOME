@@ -15,7 +15,7 @@ const DummyList = [
     type: '월세',
     money: 45,
     bojoung: 1000,
-    pretenant: [{ 1: 'hi' }],
+    pretenant: [{ 1: 'hi' }, { 2: 'hi' }, { 3: 'hi' }],
     roomType: '원룸',
     floor: '4층',
     size: '8평',
@@ -28,7 +28,7 @@ const DummyList = [
     id: '2',
     title: '홍대 가성비 원룸',
     image: HOME_PICTURE,
-    pretenant: [{ 1: 'hi' }],
+    pretenant: [],
     type: '월세',
     money: 50,
     bojoung: 1000,
@@ -127,6 +127,7 @@ const Wrapper = styled.SafeAreaView`
   padding-top: ${Platform.OS === 'ios' ? 0 : StatusBar.currentHeight}px;
   background-color: #fff;
 `;
+
 const FilterBar = styled.View`
   flex: 1;
   background-color: yellow;
