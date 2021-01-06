@@ -2,16 +2,23 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import styled from 'styled-components/native';
 import MORE from '../../../assets/MORE.png';
-import { PRIMARY_NORMAL, LIGHT_GRAY, NK700, NK500 } from '../../util/Color';
+import { TextStyle } from '../../util/TextStyle';
+import {
+  PRIMARY_NORMAL,
+  LIGHT_GRAY,
+  NK700,
+  NK500,
+  LIGHT_GRAY2,
+} from '../../util/Color';
 
 const MyhomeMenuName = ({ name }) => {
   return (
     <Wrapper>
       <MenuTitle>
-        <Text style={styles.menuTitle}>{name}</Text>
+        <MenuTitleContent>{name}</MenuTitleContent>
       </MenuTitle>
       <MoreSee>
-        <Text style={styles.more}>더 보기</Text>
+        <MoreSeeContent>더 보기</MoreSeeContent>
         <MoreImage source={MORE} />
       </MoreSee>
     </Wrapper>
@@ -20,6 +27,7 @@ const MyhomeMenuName = ({ name }) => {
 export default MyhomeMenuName;
 
 const Wrapper = styled.View`
+  display: flex;
   flex-direction: row;
   justify-content: space-between;
 `;
@@ -29,6 +37,12 @@ const MenuTitle = styled.View`
   justify-content: center;
 `;
 
+const MenuTitleContent = styled(TextStyle)`
+  font-family: ${NK700};
+  font-size: 16px;
+  color: ${PRIMARY_NORMAL};
+`;
+
 const MoreSee = styled.TouchableOpacity`
   height: 24px;
   flex-direction: row;
@@ -36,20 +50,13 @@ const MoreSee = styled.TouchableOpacity`
   justify-content: center;
 `;
 
+const MoreSeeContent = styled(TextStyle)`
+  font-family: ${NK700};
+  font-size: 12px;
+  color: ${LIGHT_GRAY};
+`;
+
 const MoreImage = styled.Image`
   height: 16px;
   width: 16px;
 `;
-
-const styles = StyleSheet.create({
-  menuTitle: {
-    fontFamily: NK700,
-    fontSize: 16,
-    color: PRIMARY_NORMAL,
-  },
-  more: {
-    fontFamily: NK700,
-    fontSize: 12,
-    color: LIGHT_GRAY,
-  },
-});
