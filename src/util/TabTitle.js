@@ -1,6 +1,9 @@
 import React from 'react';
 import styled from 'styled-components/native';
 
+import { NK500 } from '../util/Color';
+import { TextStyle } from '../util/TextStyle';
+
 const TabTitle = ({ name }) => {
   return (
     <Wrapper>
@@ -24,7 +27,7 @@ const Wrapper = styled.View`
 
 const TitleName = styled.View``;
 
-const TitleContent = styled.Text`
+const TitleContent = styled(TextStyle)`
+  font-family: ${NK500};
   font-size: 20px;
-  font-weight: 700;
 `;

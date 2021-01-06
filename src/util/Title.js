@@ -3,6 +3,10 @@ import React from 'react';
 import styled from 'styled-components/native';
 import { View } from 'react-native';
 
+import { TextStyle } from '../util/TextStyle';
+import { NK500 } from '../util/Color';
+import LEFT from '../../assets/LEFT.png';
+
 const Title = ({ name }) => {
   const navigation = useNavigation();
   return (
@@ -12,12 +16,12 @@ const Title = ({ name }) => {
           navigation.pop();
         }}
       >
-        <BackContent>{'<'}</BackContent>
+        <BackContent source={LEFT} />
       </UtilButton>
       <TitleName>
         <TitleContent> {name} </TitleContent>
       </TitleName>
-      <View style={{ width: 20 }}></View>
+      <View style={{ width: 24 }}></View>
     </Wrapper>
   );
 };
@@ -36,18 +40,19 @@ const Wrapper = styled.View`
 `;
 
 const UtilButton = styled.TouchableOpacity`
-  /* flex: 1; */
-  width: 20px;
+  width: 24px;
+  height: 24px;
   /* background-color: red; */
 `;
 
-const BackContent = styled.Text`
-  font-size: 20px;
-  font-weight: 700;
+const BackContent = styled.Image`
+  width: 100%;
+  height: 100%;
 `;
 
 const TitleName = styled.View``;
-const TitleContent = styled.Text`
+
+const TitleContent = styled(TextStyle)`
+  font-family: ${NK500};
   font-size: 20px;
-  font-weight: 700;
 `;

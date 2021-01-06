@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import styled from 'styled-components/native';
+import { TextStyle } from '../../util/TextStyle';
 
 import { PRIMARY_NORMAL, LIGHT_GRAY, NK700, NK500 } from '../../util/Color';
 import my from '../../../assets/my.png';
@@ -12,12 +12,12 @@ const MentoBox = ({ name, comment }) => {
         <ProfileImageView>
           <ProfileImage source={my} />
         </ProfileImageView>
-        <View>
-          <Text style={styles.mentoName}>{name}</Text>
-        </View>
+        <MentoNameView>
+          <MentoNameContent>{name}</MentoNameContent>
+        </MentoNameView>
       </Profile>
       <CommentView>
-        <Text style={styles.comment}>{comment}</Text>
+        <CommentContent>{comment}</CommentContent>
       </CommentView>
       <Star></Star>
     </Wrapper>
@@ -27,6 +27,7 @@ const MentoBox = ({ name, comment }) => {
 export default MentoBox;
 
 const Wrapper = styled.View`
+  display: flex;
   width: 150px;
   height: 120px;
   padding-left: 15px;
@@ -39,21 +40,18 @@ const Wrapper = styled.View`
   elevation: 2.3;
 `;
 
-const styles = StyleSheet.create({
-  mentoName: {
-    fontFamily: NK700,
-    fontSize: 12,
-  },
-  comment: {
-    fontFamily: NK500,
-    fontSize: 12,
-  },
-});
+const MentoNameView = styled.View``;
+
+const MentoNameContent = styled(TextStyle)`
+  font-family: ${NK700};
+  font-size: 12px;
+`;
 
 const Profile = styled.View`
   height: 24px;
   flex-direction: row;
   align-items: center;
+  margin-bottom: 5px;
 `;
 
 const ProfileImageView = styled.View`
@@ -70,6 +68,12 @@ const ProfileImage = styled.Image`
 
 const CommentView = styled.View`
   height: 35px;
+  padding-left: 2px;
+`;
+
+const CommentContent = styled(TextStyle)`
+  font-family: ${NK500};
+  font-size: 12px;
 `;
 
 const Star = styled.View`

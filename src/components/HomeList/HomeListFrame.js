@@ -49,7 +49,7 @@ const HomeListFrame = ({
         <HomeImageSay>
           <SayContent>{sogae}</SayContent>
         </HomeImageSay>
-        {pretenant.length ? (
+        {pretenant ? (
           <PreTenantNumber>
             <PreTenantImageView>
               <PreTenantImage source={TENANT} />
