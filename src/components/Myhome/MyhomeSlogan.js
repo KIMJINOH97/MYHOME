@@ -1,7 +1,6 @@
-import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import styled from 'styled-components/native';
-import { StyleSheet, Text, View } from 'react-native';
+import { TextStyle } from '../../util/TextStyle';
 import { PRIMARY_LIGHT2, DARK_GRAY, NK500, NK700 } from '../../util/Color';
 
 const MyhomeSlogan = ({ navigation }) => {
@@ -29,40 +28,34 @@ const MyhomeSlogan = ({ navigation }) => {
 
 export default MyhomeSlogan;
 
-const SloganContentFirst = styled.Text`
-  font-family: ${NK700};
-  font-size: 22px;
-  letter-spacing: -1.1px;
-  margin-bottom: -14px;
-`;
-
-const SloganContentSecond = styled.Text`
-  font-family: ${NK700};
-  font-size: 15px;
-  letter-spacing: -0.17px;
-  color: ${DARK_GRAY};
-`;
-
-const MentoApplyButtonContent = styled.Text`
-  font-family: ${NK700};
-  font-size: 16px;
-`;
-
 const Wrapper = styled.View`
-  flex: 5;
-  /* background-color: red; */
+  flex: 4.3;
 `;
 
 const SloganView = styled.View`
   display: flex;
-  height: 240px;
+  height: 216px;
   padding-horizontal: 16px;
+  padding-top: 23px;
+  padding-bottom: 21px;
   background-color: ${PRIMARY_LIGHT2};
   border-radius: 6px;
-  padding-top: 8px;
-  padding-bottom: 21px;
   justify-content: space-between;
   margin-bottom: 16px;
+`;
+
+const SloganContentFirst = styled(TextStyle)`
+  font-family: ${NK700};
+  font-size: 22px;
+  letter-spacing: -1.1px;
+  margin-bottom: 8px;
+`;
+
+const SloganContentSecond = styled(TextStyle)`
+  font-family: ${NK500};
+  font-size: 15px;
+  letter-spacing: -0.17px;
+  color: ${DARK_GRAY};
 `;
 
 const SloganContentView = styled.View``;
@@ -78,4 +71,10 @@ const MentoApplyButton = styled.TouchableOpacity`
   justify-content: center;
   align-items: center;
   border-radius: 8px;
+`;
+
+const MentoApplyButtonContent = styled(TextStyle)`
+  align-items: center;
+  font-family: ${NK700};
+  font-size: 16px;
 `;
