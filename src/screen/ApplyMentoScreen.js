@@ -6,6 +6,8 @@ import { NK700, NK500, NK100, LIGHT_GRAY2, DARK_GRAY } from '../util/Color';
 import Title from '../util/Title';
 import WantListFrame from '../components/ApplyMento/WantListFrame';
 
+import APPLY_MAIL from '../../assets/APPLY_MAIL.png';
+
 const ApplyMento = () => {
   return (
     <Wrapper>
@@ -19,7 +21,7 @@ const ApplyMento = () => {
         <Mail>
           <MailAddress>
             <MailIcon>
-              <MailIconImage></MailIconImage>
+              <MailIconImage source={APPLY_MAIL} />
             </MailIcon>
             <MailAddressView>
               <MailAddressContnet>myhome@gmail.com</MailAddressContnet>
@@ -75,7 +77,7 @@ const MailAddress = styled.View`
   height: 40px;
   width: 100%;
   flex-direction: row;
-  padding-horizontal: 16px;
+  padding-horizontal: 12px;
   background-color: ${LIGHT_GRAY2};
   align-items: center;
 
@@ -85,7 +87,7 @@ const MailAddress = styled.View`
 const MailIcon = styled.View`
   width: 20px;
   height: 16px;
-  background-color: red;
+  margin-right: 12px;
 `;
 
 const MailIconImage = styled.Image`
