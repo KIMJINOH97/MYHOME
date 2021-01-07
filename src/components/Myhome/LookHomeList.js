@@ -9,6 +9,7 @@ import {
   NK100,
 } from '../../util/Color';
 import HOME_PICTURE from '../../../assets/HOME_PICTURE.png';
+import { TextStyle } from '../../util/TextStyle';
 
 const LookHome = ({ name, money }) => {
   return (
@@ -55,24 +56,23 @@ const ProfileImage = styled.Image`
 `;
 
 const HomeNameView = styled.View`
+  display: flex;
+  height: 12px;
   align-items: center;
-  height: 15px;
 `;
 
-const HomeNameContent = styled.Text`
+const HomeNameContent = styled(TextStyle)`
   font-family: ${NK500};
   font-size: 12px;
   color: ${MEDIUM_GRAY};
-  margin-top: -8px;
 `;
 
 const MoneyView = styled.View`
+  display: flex;
   align-items: center;
-  height: 16px;
 `;
 
-const MoneyContent = styled.Text`
-  font-family: ${NK700};
-  font-size: 14px;
-  margin-top: -10px;
+const MoneyContent = styled(TextStyle)`
+  font-family: ${NK500};
+  font-size: 16px;
 `;
