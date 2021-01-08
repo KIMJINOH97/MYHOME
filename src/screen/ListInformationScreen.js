@@ -150,6 +150,7 @@ const ListInformationScreen = ({ route }) => {
                 }}
                 style={{
                   backgroundColor: '#ffeae8',
+                  elevation: 0,
                 }}
                 labelStyle={{
                   alignItems: 'center',
