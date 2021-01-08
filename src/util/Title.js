@@ -7,7 +7,7 @@ import { TextStyle } from '../util/TextStyle';
 import { NK500 } from '../util/Color';
 import LEFT from '../../assets/LEFT.png';
 
-const Title = ({ name }) => {
+const Title = ({ name, onPressback = null }) => {
   const navigation = useNavigation();
   return (
     <Wrapper>

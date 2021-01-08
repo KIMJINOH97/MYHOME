@@ -23,6 +23,7 @@ const Wrapper = styled.View`
   border-bottom-color: #eeeeee;
   border-bottom-width: 1px;
   border-style: solid;
+  background-color: white;
 `;
 
 const TitleName = styled.View``;
