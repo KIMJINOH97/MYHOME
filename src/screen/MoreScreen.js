@@ -9,14 +9,33 @@ import {
 } from 'react-native';
 
 import TabTitle from '../util/TabTitle';
-import { LIGHT_GRAY2 } from '../util/Color';
-import DivideLine from '../util/DivideLine';
+import { LIGHT_GRAY, LIGHT_GRAY2, MEDIUM_GRAY, NK500 } from '../util/Color';
+import { TextStyle } from '../util/TextStyle';
+import CheckList from '../components/More/CheckList';
+
+import my from '../../assets/my.png';
+import MORE_CHECK from '../../assets/MORE_CHECK.png';
+import MORE_ALERT from '../../assets/MORE_ALERT.png';
+import MORE_HOME from '../../assets/MORE_HOME.png';
 
 const MEMBER_INFO = '회원정보';
 const LOGIN_AND_SIGNIN = '로그인 & 가입하기';
-const ETC = '로그인하고 마이홈 서비스를 자유롭게 이용해보세요';
+const ETC = `로그인하고 마이홈 서비스를 ${'\n'}자유롭게 이용해보세요`;
+
+const CHECK_LIST = [
+  {
+    height: '8px',
+    content: '직거래 시 주의사항',
+    img: MORE_ALERT,
+    page: 'PutHome',
+  },
+  { content: '직거래 시 체크리스트', img: MORE_CHECK, page: 'PutHome' },
+  { height: '8px', content: '집 내놓기', img: MORE_HOME, page: 'PutHome' },
+];
 
 const MoreScreen = ({ navigation }) => {
+  const nextPage = (page) => navigation.push(page);
+
   return (
     <Wrapper>
       <TabTitle name="더보기" />
@@ -24,9 +43,7 @@ const MoreScreen = ({ navigation }) => {
         <UserContainer>
           <MyProfile>
             <MyProfilePicture>
-              <ProfilePicture
-                source={require('../pengsu.png')}
-              ></ProfilePicture>
+              <ProfilePicture source={my}></ProfilePicture>
             </MyProfilePicture>
           </MyProfile>
           <ProfileInformation>
@@ -36,7 +53,7 @@ const MoreScreen = ({ navigation }) => {
             <LoginInformation>
               <LoginButton
                 onPress={() => {
-                  navigation.push('Login');
+                  nextPage('Login');
                 }}
               >
                 <LoginContent>{LOGIN_AND_SIGNIN}</LoginContent>
@@ -47,21 +64,18 @@ const MoreScreen = ({ navigation }) => {
             </MoreInformation>
           </ProfileInformation>
         </UserContainer>
-        <DivideLine />
         <CheckContainer>
-          <CheckList>
-            <CheckContent>주의사항</CheckContent>
-          </CheckList>
-          <DivideLine height="8px" color={LIGHT_GRAY2} />
-          <CheckList>
-            <CheckContent>체크리스트</CheckContent>
-          </CheckList>
-          <DivideLine height="8px" color={LIGHT_GRAY2} />
-          <CheckList>
-            <CheckContent onPress={() => navigation.push('PutHome')}>
-              집 내놓기
-            </CheckContent>
-          </CheckList>
+          {CHECK_LIST.map((list, index) => {
+            return (
+              <TouchableOpacity key={index} onPress={() => nextPage(list.page)}>
+                <CheckList
+                  height={list.height ? list.height : '1px'}
+                  content={list.content}
+                  img={list.img}
+                />
+              </TouchableOpacity>
+            );
+          })}
         </CheckContainer>
       </MyPageContainer>
     </Wrapper>
@@ -82,80 +96,62 @@ const MyPageContainer = styled.View`
 
 const UserContainer = styled.View`
   flex: 1;
-  /* background-color: red; */
+  background-color: white;
   flex-direction: row;
 `;
 
 const MyProfile = styled.View`
   flex: 1;
-  justify-content: center;
   align-items: flex-start;
-  margin-left: 15px;
+  margin-left: 16px;
+  padding-top: 24px;
 `;
 
 const MyProfilePicture = styled.View`
-  height: 90px;
-  width: 90px;
+  height: 56px;
+  width: 56px;
 `;
+
 const ProfilePicture = styled.Image`
   height: 100%;
   width: 100%;
   border-radius: 45px;
-  border-color: gray;
+  border-color: ${LIGHT_GRAY};
   border-width: 1px;
 `;
 
 const ProfileInformation = styled.View`
-  flex: 2;
+  flex: 3.5;
 `;
 
 const MemberInformation = styled.View`
-  flex: 1;
   padding-right: 10px;
   justify-content: center;
   align-items: flex-end;
-  /* background-color: purple; */
+  height: 24px;
 `;
 
-const LoginButton = styled.TouchableOpacity`
-  flex: 1;
-`;
+const LoginButton = styled.TouchableOpacity``;
 
 const LoginInformation = styled.View`
-  flex: 1.3;
-  /* background-color: yellow; */
   letter-spacing: -1px;
 `;
 
-const LoginContent = styled.Text`
+const LoginContent = styled(TextStyle)`
+  font-family: ${NK500};
   font-size: 18px;
-  font-weight: 700;
+  letter-spacing: -0.54px;
 `;
 
-const MoreInformation = styled.View`
-  flex: 3;
-  /* background-color: pink; */
-`;
+const MoreInformation = styled.View``;
 
-const MoreContent = styled.Text`
-  font-weight: 700;
+const MoreContent = styled(TextStyle)`
+  font-family: ${NK500};
   font-size: 16px;
-  color: #9e9e9e;
+  color: ${MEDIUM_GRAY};
 `;
 
 const CheckContainer = styled.View`
   flex: 3.5;
-  /* background-color: blue; */
-`;
-
-const CheckList = styled.View`
-  height: 48px;
-  padding-left: 15px;
-  align-items: flex-start;
-  justify-content: center;
-`;
-
-const CheckContent = styled.Text`
-  font-size: 18px;
-  font-weight: 700;
+  background-color: ${LIGHT_GRAY2};
 `;
