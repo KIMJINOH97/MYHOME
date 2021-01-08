@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
+import { useRecoilState } from 'recoil';
+import { isLoginState } from '../states/Auth';
 import {
   View,
   Text,
@@ -17,10 +19,7 @@ import my from '../../assets/my.png';
 import MORE_CHECK from '../../assets/MORE_CHECK.png';
 import MORE_ALERT from '../../assets/MORE_ALERT.png';
 import MORE_HOME from '../../assets/MORE_HOME.png';
-
-const MEMBER_INFO = '회원정보';
-const LOGIN_AND_SIGNIN = '로그인 & 가입하기';
-const ETC = `로그인하고 마이홈 서비스를 ${'\n'}자유롭게 이용해보세요`;
+import axios from 'axios';
 
 const CHECK_LIST = [
   {
@@ -35,6 +34,12 @@ const CHECK_LIST = [
 
 const MoreScreen = ({ navigation }) => {
   const nextPage = (page) => navigation.push(page);
+  const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLoginState);
+
+  const logOut = () => {
+    setIsLoggedIn(false);
+    axios.defaults.headers.common['Authorization'] = '';
+  };
 
   return (
     <Wrapper>
@@ -48,19 +53,27 @@ const MoreScreen = ({ navigation }) => {
           </MyProfile>
           <ProfileInformation>
             <MemberInformation>
-              <Text>{MEMBER_INFO}</Text>
+              <Text>회원정보</Text>
             </MemberInformation>
             <LoginInformation>
-              <LoginButton
-                onPress={() => {
-                  nextPage('Login');
-                }}
-              >
-                <LoginContent>{LOGIN_AND_SIGNIN}</LoginContent>
-              </LoginButton>
+              {isLoggedIn ? (
+                <LoginContent>김호미</LoginContent>
+              ) : (
+                <LoginButton
+                  onPress={() => {
+                    nextPage('Login');
+                  }}
+                >
+                  <LoginContent>로그인 {'&'} 가입하기</LoginContent>
+                </LoginButton>
+              )}
             </LoginInformation>
             <MoreInformation>
-              <MoreContent>{ETC}</MoreContent>
+              <MoreContent>
+                {isLoggedIn
+                  ? 'user@naver.com'
+                  : `로그인하고 마이홈 서비스를 ${'\n'}자유롭게 이용해보세요`}
+              </MoreContent>
             </MoreInformation>
           </ProfileInformation>
         </UserContainer>
@@ -77,6 +90,20 @@ const MoreScreen = ({ navigation }) => {
             );
           })}
         </CheckContainer>
+        {isLoggedIn && (
+          <LogOutWithdraw>
+            <WithdrawButtonView>
+              <WithdrawButton>
+                <LogOutWithdrawContent>회원탈퇴 |</LogOutWithdrawContent>
+              </WithdrawButton>
+            </WithdrawButtonView>
+            <LogOutButtonView>
+              <LogOutButton onPress={logOut}>
+                <LogOutWithdrawContent> 로그아웃</LogOutWithdrawContent>
+              </LogOutButton>
+            </LogOutButtonView>
+          </LogOutWithdraw>
+        )}
       </MyPageContainer>
     </Wrapper>
   );
@@ -92,6 +119,7 @@ const Wrapper = styled.SafeAreaView`
 
 const MyPageContainer = styled.View`
   flex: 11;
+  background-color: ${LIGHT_GRAY2};
 `;
 
 const UserContainer = styled.View`
@@ -153,5 +181,27 @@ const MoreContent = styled(TextStyle)`
 
 const CheckContainer = styled.View`
   flex: 3.5;
-  background-color: ${LIGHT_GRAY2};
 `;
+
+const LogOutWithdraw = styled.View`
+  height: 50px;
+  padding-bottom: 20px;
+  flex-direction: row;
+  justify-content: center;
+`;
+
+const LogOutButtonView = styled.View`
+  width: 80px;
+`;
+
+const LogOutButton = styled.TouchableOpacity``;
+
+const LogOutWithdrawContent = styled(TextStyle)`
+  font-family: ${NK500};
+  font-size: 16px;
+  color: ${MEDIUM_GRAY};
+`;
+
+const WithdrawButtonView = styled.View``;
+
+const WithdrawButton = styled.TouchableOpacity``;
