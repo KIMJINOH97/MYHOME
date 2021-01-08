@@ -13,6 +13,8 @@ import {
   NotoSansKR_900Black,
 } from '@expo-google-fonts/noto-sans-kr';
 
+import { RecoilRoot } from 'recoil';
+
 // const getFonts = () =>
 //   Font.loadAsync({
 //     NotoKR_Bold: require('./assets/font/NotoSansKR-Bold.otf'),
@@ -30,9 +32,11 @@ export default function App() {
 
   if (fontsLoaded) {
     return (
-      <SafeAreaProvider>
-        <MyHomeStack />
-      </SafeAreaProvider>
+      <RecoilRoot>
+        <SafeAreaProvider>
+          <MyHomeStack />
+        </SafeAreaProvider>
+      </RecoilRoot>
     );
   } else {
     return <AppLoading />;
