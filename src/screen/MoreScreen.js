@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
+import { authApi } from '../api/index';
 import TabTitle from '../util/TabTitle';
 import { LIGHT_GRAY, LIGHT_GRAY2, MEDIUM_GRAY, NK500 } from '../util/Color';
 import { TextStyle } from '../util/TextStyle';
@@ -19,7 +20,6 @@ import my from '../../assets/my.png';
 import MORE_CHECK from '../../assets/MORE_CHECK.png';
 import MORE_ALERT from '../../assets/MORE_ALERT.png';
 import MORE_HOME from '../../assets/MORE_HOME.png';
-import axios from 'axios';
 
 const CHECK_LIST = [
   {
@@ -36,9 +36,10 @@ const MoreScreen = ({ navigation }) => {
   const nextPage = (page) => navigation.push(page);
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLoginState);
 
-  const logOut = () => {
+  const logout = () => {
+    authApi.logout();
     setIsLoggedIn(false);
-    axios.defaults.headers.common['Authorization'] = '';
+    //console.log(axios.defaults.headers);
   };
 
   return (
@@ -98,7 +99,7 @@ const MoreScreen = ({ navigation }) => {
               </WithdrawButton>
             </WithdrawButtonView>
             <LogOutButtonView>
-              <LogOutButton onPress={logOut}>
+              <LogOutButton onPress={logout}>
                 <LogOutWithdrawContent> 로그아웃</LogOutWithdrawContent>
               </LogOutButton>
             </LogOutButtonView>

@@ -1,20 +1,56 @@
 import React, { useState } from 'react';
 import styled from 'styled-components/native';
-import { Keyboard, StatusBar } from 'react-native';
+import {
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  Keyboard,
+  StatusBar,
+} from 'react-native';
 import Postcode from 'react-native-daum-postcode';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import Title from '../util/Title';
 import InfoText from '../util/InfoText';
-import Input, { InputStyle } from '../util/Input';
-import { TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
+import { InputStyle } from '../util/Input';
 import CompleteButton from '../util/CompleteButton';
-import { PRIMARY_NORMAL, MEDIUM_GRAY } from '../util/Color';
 
-const EnrollAddressScreen = ({ user }) => {
-  const [addr, setAddr] = useState('주소지를 입력해주세요.');
+import { useRecoilState } from 'recoil';
+import {
+  putHomeState,
+  addressState,
+  postNumberState,
+  detailAddressState,
+} from '../states/PutHomeState';
+import { TextStyle } from '../util/TextStyle';
+import { PRIMARY_NORMAL, MEDIUM_GRAY, LIGHT_GRAY } from '../util/Color';
+
+const EnrollAddressScreen = ({ navigation }) => {
+  const [detailAddress, setDetailAddress] = useRecoilState(detailAddressState);
+  const [address, setAddress] = useRecoilState(addressState);
+  const [postNumber, setPostNumber] = useRecoilState(postNumberState);
+  const [home, setHome] = useRecoilState(putHomeState);
   const [isOpen, setIsOpen] = useState(false);
-  const [postNumber, setPostNumber] = useState('우편번호');
+  const [detail, setDetail] = useState('');
+
+  const onChangeDetail = (detail) => {
+    setHome({ ...home, address_detail: detail });
+  };
+
+  const writeAddr = async () => {
+    console.log(home.address, home.zip_code);
+    if (
+      home.address === '주소지를 입력해주세요.' ||
+      home.zip_code === '우편번호'
+    ) {
+      alert('우편번호 찾기로 주소를 입력해주세요');
+      return;
+    } else if (home.detailAddress === '') {
+      alert('상세주소를 입력해주세요.');
+      return;
+    }
+    navigation.pop();
+  };
+
   return (
     <Wrapper>
       <Title name="주소 등록"></Title>
@@ -29,44 +65,55 @@ const EnrollAddressScreen = ({ user }) => {
               jibunAddress,
               zonecode,
             } = data;
-            if (userSelectedType === 'R') setAddr(roadAddress);
-            else setAddr(jibunAddress);
+            console.log({ ...home, address: roadAddress });
+            // if (userSelectedType === 'R')
+            //   setHome({ ...home, address: roadAddress });
+            // else setHome({ ...home, address: jibunAddress });
             setIsOpen(!isOpen);
-            setPostNumber(zonecode);
-            console.log(jibunAddress, roadAddress);
-            return console.log(JSON.stringify(data));
+            setHome({
+              ...home,
+              address: userSelectedType === 'R' ? roadAddress : jibunAddress,
+              zip_code: zonecode,
+            });
+            return;
           }}
         />
       ) : (
         <>
           <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-            <AddressContainer>
-              <InfoText name="우편번호" />
-              <PostNumberBox>
-                <TouchableOpacity
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                  }}
-                  onPress={() => setIsOpen(!isOpen)}
-                >
-                  <PostNumberView>
-                    <PostNumberText>{postNumber}</PostNumberText>
-                  </PostNumberView>
-                  <PostNumberButtonView>
-                    <PostNumberButtonText>우편번호 찾기</PostNumberButtonText>
-                  </PostNumberButtonView>
-                </TouchableOpacity>
-              </PostNumberBox>
-              <InfoText name="주소지" />
-              <AddressView>
-                <AddressText>{addr}</AddressText>
-              </AddressView>
-              <InfoText name="상세주소" />
-              <DetailInput placeholder="상세주소를 입력해주세요." />
-            </AddressContainer>
+            <KeyboardAwareScrollView>
+              <AddressContainer>
+                <InfoText name="우편번호" />
+                <PostNumberBox>
+                  <TouchableOpacity
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                    }}
+                    onPress={() => setIsOpen(!isOpen)}
+                  >
+                    <PostNumberView>
+                      <PostNumberText>{home.zip_code}</PostNumberText>
+                    </PostNumberView>
+                    <PostNumberButtonView>
+                      <PostNumberButtonText>우편번호 찾기</PostNumberButtonText>
+                    </PostNumberButtonView>
+                  </TouchableOpacity>
+                </PostNumberBox>
+                <InfoText name="주소지" />
+                <AddressView>
+                  <AddressText>{home.address}</AddressText>
+                </AddressView>
+                <InfoText name="상세주소" />
+                <DetailInput
+                  placeholder="상세주소를 입력해주세요."
+                  onChangeText={onChangeDetail}
+                  value={home.address_detail ? home.address_detail : ''}
+                />
+              </AddressContainer>
+            </KeyboardAwareScrollView>
           </TouchableWithoutFeedback>
-          <CompleteButton name="주소 등록 완료" />
+          <CompleteButton onPress={writeAddr} name="주소 등록 완료" />
         </>
       )}
     </Wrapper>
@@ -96,11 +143,11 @@ const PostNumberView = styled.View`
   padding: 6px;
   justify-content: center;
   background-color: white;
-  border: 1px solid #dbdbdb;
+  border: 1px solid ${LIGHT_GRAY};
   border-radius: 7px;
 `;
 
-const PostNumberText = styled.Text`
+const PostNumberText = styled(TextStyle)`
   color: ${MEDIUM_GRAY};
 `;
 
@@ -114,7 +161,7 @@ const PostNumberButtonView = styled.View`
   border: 1px solid ${PRIMARY_NORMAL};
   border-radius: 5px;
 `;
-const PostNumberButtonText = styled.Text`
+const PostNumberButtonText = styled(TextStyle)`
   color: ${PRIMARY_NORMAL};
 `;
 
@@ -122,8 +169,10 @@ const AddressView = styled(PostNumberView)`
   width: 100%;
 `;
 
-const AddressText = styled.Text`
+const AddressText = styled(TextStyle)`
   color: ${MEDIUM_GRAY};
 `;
 
-const DetailInput = styled(InputStyle)``;
+const DetailInput = styled(InputStyle)`
+  height: 40px;
+`;

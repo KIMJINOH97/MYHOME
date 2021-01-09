@@ -6,14 +6,21 @@ import Title from '../util/Title';
 import EnrollButton from '../util/EnrollButton';
 import DivideLine from '../util/DivideLine';
 import { PRIMARY_NORMAL, LIGHT_GRAY2 } from '../util/Color';
+import CompleteButton from '../util/CompleteButton';
+import { homeApi } from '../api/index';
+import { putHomeState } from '../states/PutHomeState';
+import { useRecoilState } from 'recoil';
 
 const TITLE_NAME = '집 내놓기';
 
 const PutHomeScreen = ({ navigation }) => {
-  const [home, setHome] = useState([]);
+  const [home, setHome] = useRecoilState(putHomeState);
 
   const nextPage = (page) => navigation.push(page);
-
+  const onComplete = async () => {
+    // console.log(home);
+    const result = await homeApi.putHome(home);
+  };
   return (
     <Wrapper>
       <Title name={TITLE_NAME} />
@@ -37,11 +44,7 @@ const PutHomeScreen = ({ navigation }) => {
         />
         <DivideLine height="8px" color={LIGHT_GRAY2} />
       </EnrollBox>
-      <PutHomeButtonBox>
-        <PutHomeButton>
-          <ButtonContent>집내놓기 완료</ButtonContent>
-        </PutHomeButton>
-      </PutHomeButtonBox>
+      <CompleteButton onPress={onComplete} name="집내놓기 완료" />
     </Wrapper>
   );
 };
@@ -56,28 +59,4 @@ const Wrapper = styled.SafeAreaView`
 
 const EnrollBox = styled.View`
   flex: 8;
-`;
-
-const PutHomeButtonBox = styled.View`
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  justify-content: flex-end;
-`;
-
-const PutHomeButton = styled.TouchableOpacity`
-  height: 80px;
-  align-items: center;
-  padding-top: 10px;
-  background-color: ${PRIMARY_NORMAL};
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-  border-bottom-right-radius: 5px;
-  border-bottom-left-radius: 5px;
-`;
-
-const ButtonContent = styled.Text`
-  font-size: 20px;
-  color: white;
-  font-weight: 700;
 `;
