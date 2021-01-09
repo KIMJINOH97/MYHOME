@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components/native';
 
-import { PRIMARY_NORMAL } from '../util/Color';
-const CompleteButton = ({ name }) => {
+import { TextStyle } from '../util/TextStyle';
+import { NK500, PRIMARY_NORMAL } from '../util/Color';
+const CompleteButton = ({ name, onPress }) => {
   return (
     <PutHomeButtonBox>
-      <PutHomeButton>
+      <PutHomeButton onPress={onPress}>
         <ButtonContent>{name}</ButtonContent>
       </PutHomeButton>
     </PutHomeButtonBox>
@@ -15,8 +16,6 @@ const CompleteButton = ({ name }) => {
 export default CompleteButton;
 
 const PutHomeButtonBox = styled.View`
-  position: absolute;
-  bottom: 0;
   width: 100%;
   justify-content: flex-end;
 `;
@@ -33,8 +32,9 @@ const PutHomeButton = styled.TouchableOpacity`
   border-bottom-left-radius: 5px;
 `;
 
-const ButtonContent = styled.Text`
+const ButtonContent = styled(TextStyle)`
+  font-family: ${NK500};
   font-size: 20px;
+  letter-spacing: -1px;
   color: white;
-  font-weight: 700;
 `;

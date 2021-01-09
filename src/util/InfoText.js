@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
+import { TextStyle } from '../util/TextStyle';
+import { NK500 } from '../util/Color';
 
 const InfoText = ({ name }) => {
   return (
@@ -17,7 +19,8 @@ const Wrapper = styled.View`
   align-items: flex-start;
 `;
 
-const InfoName = styled.Text`
-  font-size: 15px;
-  font-weight: 700;
+const InfoName = styled(TextStyle)`
+  font-family: ${NK500};
+  font-size: 16px;
+  letter-spacing: -0.48px;
 `;
