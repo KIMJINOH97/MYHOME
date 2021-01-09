@@ -7,8 +7,8 @@ export default (axios) => ({
       });
       const { token } = data;
       if (data) {
-        axios.defaults.headers.common['Authorization'] = token;
-        //console.log(axios.defaults.headers);
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        console.log(axios.defaults.headers);
         return data;
       } else {
         alert('정보가 일치하지 않습니다.');
@@ -20,7 +20,7 @@ export default (axios) => ({
 
   logout: async () => {
     try {
-      axios.defaults.headers.common['Authorization'] = '';
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     } catch (e) {
       console.error(e);
     }
@@ -36,7 +36,7 @@ export default (axios) => ({
         birth,
         gender,
       } = user;
-      const data = axios.post('/api/users/', {
+      const { data } = await axios.post('/api/users/', {
         email,
         password,
         name,
@@ -45,7 +45,6 @@ export default (axios) => ({
         gender,
       });
       console.log(data);
-
       if (data) {
         return true;
       }
