@@ -19,6 +19,7 @@ import PutHomeScreen from '../../screen/PutHomeScreen.js';
 import EnrollPictureScreen from '../../screen/EnrollPictureScreen';
 import EnrollAddressScreen from '../../screen/EnrollAddressScreen';
 import EnrollDetailsScreen from '../../screen/EnrollDetailsScreen';
+import EnrollCompleteScreen from '../../screen/EnrollCompleteScreen';
 import ApplyMentoScreen from '../../screen/ApplyMentoScreen';
 
 const Stack = createStackNavigator();
@@ -101,6 +102,11 @@ const HomeRouter = [
   {
     name: 'ApplyMento',
     component: ApplyMentoScreen,
+    options: { headerShown: false },
+  },
+  {
+    name: 'EnrollComplete',
+    component: EnrollCompleteScreen,
     options: { headerShown: false },
   },
 ];
