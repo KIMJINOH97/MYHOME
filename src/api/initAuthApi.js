@@ -1,14 +1,15 @@
 export default (axios) => ({
   login: async (email, password) => {
     try {
+      console.log(email, password);
       const { data } = await axios.post('/api/login/', {
         email,
         password,
       });
       const { token } = data;
+      console.log('결과 데이터', data);
       if (data) {
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        console.log(axios.defaults.headers);
         return data;
       } else {
         alert('정보가 일치하지 않습니다.');

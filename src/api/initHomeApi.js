@@ -8,64 +8,32 @@ export default (axios) => ({
       const { data: DD } = await axios.get(
         `${URL}${home.address},+CA&key=${GEO_API}`
       );
-      console.log(DD);
-      console.log(axios.defaults.headers);
-      const {
-        address,
-        address_detail,
-        zip_code,
-        room_type,
-        deposit,
-        monthly_rent,
-        management_fee,
-        total_floor,
-        floor,
-        structure,
-        space,
-        completion_year,
-        elevator,
-        desk,
-        bed,
-        refrigerator,
-        induction,
-        air_conditioner,
-        washer,
-        short_term,
-        heating,
-        occupancy_date,
-        introduction,
-        detail,
-      } = home;
+      const location = DD.results[0].geometry.location;
+      console.log(DD.results[0].geometry.location);
+
+      //console.log(axios.defaults.headers);
+      const { heating } = home;
       const { data } = await axios.post('/api/rooms/', {
-        address,
-        address_detail,
-        zip_code,
-        room_type,
-        deposit,
-        monthly_rent,
-        management_fee,
-        total_floor,
-        floor,
-        structure,
-        space,
-        completion_year,
-        elevator,
-        desk,
-        bed,
-        refrigerator,
-        induction,
-        air_conditioner,
-        washer,
-        short_term,
+        ...home,
         heating: heating ? '중앙난방' : '개별난방',
-        occupancy_date,
-        introduction,
-        detail,
+        latitude: location.lat,
+        longitude: location.lng,
       });
       if (data) return data;
       else return false;
     } catch (e) {
       console.error(e);
+    }
+  },
+  getHome: async () => {
+    try {
+      const { data } = await axios.get('/api/rooms/');
+      console.log(data);
+
+      if (data) return data;
+      else return false;
+    } catch (error) {
+      console.error(error);
     }
   },
 });
