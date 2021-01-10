@@ -42,7 +42,6 @@ const Wrapper = styled.View`
 const UtilButton = styled.TouchableOpacity`
   width: 24px;
   height: 24px;
-  /* background-color: red; */
 `;
 
 const BackContent = styled.Image`

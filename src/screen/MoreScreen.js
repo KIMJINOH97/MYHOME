@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import { useRecoilState } from 'recoil';
-import { isLoginState } from '../states/Auth';
+import { userState } from '../states/LoginState';
 import {
   View,
   Text,
@@ -34,12 +34,11 @@ const CHECK_LIST = [
 
 const MoreScreen = ({ navigation }) => {
   const nextPage = (page) => navigation.push(page);
-  const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLoginState);
+  const [user, setUser] = useRecoilState(userState);
 
   const logout = () => {
     authApi.logout();
-    setIsLoggedIn(false);
-    //console.log(axios.defaults.headers);
+    setUser(null);
   };
 
   return (
@@ -57,8 +56,8 @@ const MoreScreen = ({ navigation }) => {
               <Text>회원정보</Text>
             </MemberInformation>
             <LoginInformation>
-              {isLoggedIn ? (
-                <LoginContent>김호미</LoginContent>
+              {user ? (
+                <LoginContent>{user.name}</LoginContent>
               ) : (
                 <LoginButton
                   onPress={() => {
@@ -71,8 +70,8 @@ const MoreScreen = ({ navigation }) => {
             </LoginInformation>
             <MoreInformation>
               <MoreContent>
-                {isLoggedIn
-                  ? 'user@naver.com'
+                {user
+                  ? user.email
                   : `로그인하고 마이홈 서비스를 ${'\n'}자유롭게 이용해보세요`}
               </MoreContent>
             </MoreInformation>
@@ -91,7 +90,7 @@ const MoreScreen = ({ navigation }) => {
             );
           })}
         </CheckContainer>
-        {isLoggedIn && (
+        {user && (
           <LogOutWithdraw>
             <WithdrawButtonView>
               <WithdrawButton>

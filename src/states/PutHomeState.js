@@ -23,7 +23,7 @@ export const putHomeState = atom({
     air_conditioner: false,
     washer: false,
     short_term: false,
-    heating: false,
+    heating: '',
     occupancy_date: '',
     introduction: '',
     detail: '',
