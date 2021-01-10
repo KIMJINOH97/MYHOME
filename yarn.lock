@@ -5038,6 +5038,11 @@ react-native-screens@^2.16.1:
   resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-2.16.1.tgz#b105a127378d90018a46daf0c2f6518fca60c06f"
   integrity sha512-WZ7m0sBDVaHbBnlHxwQnUlI6KNfQKHq+Unfw+VBuAlnSXvT+aw6Bb/K2bUlHzBgvrPjwY3Spc7ZERFuTwRLLwg==
 
+react-native-stars@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/react-native-stars/-/react-native-stars-1.2.2.tgz#33be6890264df418f0b9f321ce4351de0744c533"
+  integrity sha512-ROoluqPqv93ycUV3Mwf/p1fFW2TOcb6juhGrMb5oNYYTa0aTe4WgnboipNWLe5viDlC8XYLS+g5WpZBvCzwFkw==
+
 react-native-swiper@^1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/react-native-swiper/-/react-native-swiper-1.6.0.tgz#59fdbdf95addee49630312f27077622c27776819"
