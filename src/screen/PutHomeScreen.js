@@ -20,6 +20,11 @@ const PutHomeScreen = ({ navigation }) => {
   const onComplete = async () => {
     // console.log(home);
     const result = await homeApi.putHome(home);
+    if (result) {
+      navigation.replace('EnrollComplete');
+    } else {
+      alert('빈 칸을 채워주세요');
+    }
   };
   return (
     <Wrapper>
