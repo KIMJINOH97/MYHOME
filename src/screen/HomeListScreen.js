@@ -5,6 +5,9 @@ import { View, Text, FlatList, StatusBar } from 'react-native';
 import HomeListFrame from '../components/HomeList/HomeListFrame';
 import Title from '../util/Title';
 
+import { useRecoilState } from 'recoil';
+import { homeListState } from '../states/HomeListState';
+
 const HOME_PICTURE = require('../../assets/HOME_PICTURE.png');
 const TITLE_NAME = '매물';
 const DummyList = [
@@ -84,7 +87,8 @@ const DummyList = [
 ];
 
 const HomeListScreen = ({ navigation }) => {
-  const [list, setList] = useState(DummyList);
+  const [hlist, setHList] = useState(DummyList);
+  const [list, setList] = useRecoilState(homeListState);
   return (
     <Wrapper>
       <Title name={TITLE_NAME} />
@@ -97,24 +101,11 @@ const HomeListScreen = ({ navigation }) => {
               title="list"
               onPress={() => navigation.navigate('ListInformation', item)}
             >
-              <HomeListFrame
-                image={item.image}
-                key={index}
-                title={item.title}
-                pretenant={item.pretenant}
-                type={item.type}
-                money={item.money}
-                bojoung={item.bojoung}
-                roomType={item.roomType}
-                floor={item.floor}
-                size={item.size}
-                kuanri={item.kuanri}
-                sogae={item.sogae}
-              />
+              <HomeListFrame item={item} />
             </HomeListButton>
           );
         }}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => `${item.id}`}
       />
     </Wrapper>
   );
