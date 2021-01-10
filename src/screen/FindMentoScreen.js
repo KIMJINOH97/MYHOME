@@ -1,33 +1,63 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   FlatList,
   SafeAreaView,
   StyleSheet,
   StatusBar,
-  Text,
+  Image,
 } from 'react-native';
 import styled from 'styled-components/native';
+import Stars from 'react-native-stars';
 import TabTitle from '../util/TabTitle';
 import { TextStyle } from '../util/TextStyle';
-import { NK400, NK700 } from '../util/Color';
+import { LIGHT_GRAY2, NK400, NK700 } from '../util/Color';
 
 import my from '../../assets/my.png';
+import MENTO_MAP from '../../assets/MENTO_MAP.png';
+import STAR_FULL from '../../assets/STAR_FULL.png';
+import STAR_EMPTY from '../../assets/STAR_EMPTY.png';
+import { useRecoilState } from 'recoil';
+import { mentoState } from '../states/MentoState';
+import { mentoApi } from '../api/index';
 
 const FindMentoList = ({ item }) => {
-  const { name, comment } = item;
+  const { name, introduction } = item;
   return (
     <FindMentoListFrame style={styles.container}>
       <FindMentoComment>
-        <CommentContent>{comment}</CommentContent>
+        <CommentContent>{introduction}</CommentContent>
       </FindMentoComment>
-      <FindMentoProfile>
-        <MentoProfile>
-          <ProfileImage source={my} />
-        </MentoProfile>
-        <MentoName>
-          <MentoNameContent>{item.name}</MentoNameContent>
-        </MentoName>
-      </FindMentoProfile>
+      <ProfileBox>
+        <FindMentoProfile>
+          <MentoProfile>
+            <ProfileImage source={my} />
+          </MentoProfile>
+          <MentoName>
+            <MentoNameContent>{name}</MentoNameContent>
+          </MentoName>
+          <Stars
+            display={5}
+            default={0}
+            count={5}
+            half={true}
+            starSize={5}
+            fullStar={
+              <Image style={{ width: 13, height: 12 }} source={STAR_FULL} />
+            }
+            emptyStar={
+              <Image style={{ width: 13, height: 12 }} source={STAR_EMPTY} />
+            }
+          />
+        </FindMentoProfile>
+        <RegionView>
+          <MapPinView>
+            <MapPinImage source={MENTO_MAP} />
+          </MapPinView>
+          <RegionContentView>
+            <RegionContent>신촌</RegionContent>
+          </RegionContentView>
+        </RegionView>
+      </ProfileBox>
     </FindMentoListFrame>
   );
 };
@@ -47,7 +77,7 @@ const FindMentoListFrame = styled.View`
   border-radius: 8px;
   padding-bottom: 16px;
   padding-top: 24px;
-  padding-horizontal: 10px;
+  padding-horizontal: 16px;
   margin-horizontal: 6px;
   margin-vertical: 8px;
   margin-bottom: 8px;
@@ -60,6 +90,13 @@ const FindMentoComment = styled.View``;
 const CommentContent = styled(TextStyle)`
   font-family: ${NK700};
   font-size: 14px;
+`;
+
+const ProfileBox = styled.View`
+  flex: 1;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const FindMentoProfile = styled.View`
@@ -78,7 +115,7 @@ const ProfileImage = styled.Image`
 `;
 
 const MentoName = styled.View`
-  margin-left: 10px;
+  margin-horizontal: 10px;
 `;
 
 const MentoNameContent = styled(TextStyle)`
@@ -87,64 +124,61 @@ const MentoNameContent = styled(TextStyle)`
   color: #333333;
 `;
 
-const DUMMY_DATA = [
-  {
-    id: '1',
-    name: '박지성',
-    star: 4,
-    region: '신촌',
-    comment: '안전한 부동산 거래를 도와드립니다.',
-  },
-  {
-    id: '2',
-    name: '박지성',
-    star: 4,
-    region: '신촌',
-    comment: '안전한 부동산 거래를 도와드립니다.',
-  },
-  {
-    id: '3',
-    name: '박지성',
-    star: 4,
-    region: '신촌',
-    comment: '안전한 부동산 거래를 도와드립니다.',
-  },
-  {
-    id: '4',
-    name: '박지성',
-    star: 4,
-    region: '신촌',
-    comment: '안전한 부동산 거래를 도와드립니다.',
-  },
-  {
-    id: '5',
-    name: '박지성',
-    star: 4,
-    region: '신촌',
-    comment: '안전한 부동산 거래를 도와드립니다.',
-  },
-  {
-    id: '6',
-    name: '박지성',
-    star: 4,
-    region: '신촌',
-    comment: '안전한 부동산 거래를 도와드립니다.',
-  },
-];
+const RegionView = styled.View`
+  flex-direction: row;
+  background-color: ${LIGHT_GRAY2};
+  height: 30px;
+  align-items: center;
+  justify-content: center;
+  width: 62px;
+  border-radius: 8px;
+`;
+
+const MapPinView = styled.View``;
+
+const MapPinImage = styled.Image`
+  width: 16px;
+  height: 15px;
+`;
+
+const RegionContentView = styled.View``;
+
+const RegionContent = styled(TextStyle)`
+  font-family: ${NK400};
+  font-size: 12px;
+`;
 
 const FindMentoScreen = ({ navigation }) => {
+  const [mentoList, setMentoList] = useRecoilState(mentoState);
+
+  const getData = async () => {
+    try {
+      const result = await mentoApi.getMento();
+      setMentoList(result);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+  useEffect(() => {
+    getData();
+  }, []);
+
   return (
     <Wrapper>
       <TabTitle name="멘토찾기" />
       <MentoListContainer>
-        <FlatList
-          data={DUMMY_DATA}
-          style={{ flex: 11 }}
-          renderItem={({ item, index }) => {
-            return <FindMentoList id={index} item={item} />;
-          }}
-          showsVerticalScrollIndicator={false}
-        />
+        {mentoList ? (
+          <FlatList
+            data={mentoList}
+            style={{ flex: 11 }}
+            renderItem={({ item, index }) => {
+              return <FindMentoList key={index} item={item} />;
+            }}
+            showsVerticalScrollIndicator={false}
+          />
+        ) : (
+          <></>
+        )}
       </MentoListContainer>
     </Wrapper>
   );
