@@ -16,12 +16,12 @@ import { NK500, PRIMARY_NORMAL, LIGHT_GRAY, MEDIUM_GRAY } from '../util/Color';
 import LOGIN_LOGO from '../../assets/LOGIN_LOGO.png';
 import LOGIN_HOME from '../../assets/LOGIN_HOME.png';
 import { useRecoilState } from 'recoil';
-import { isLoginState } from '../states/Auth';
+import { userState } from '../states/LoginState';
 
 const LoginScreen = ({ navigation }) => {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
-  const [isLogin, setIsLogin] = useRecoilState(isLoginState);
+  const [userInfo, setUserInfo] = useRecoilState(userState);
   const [color, setColor] = useState('gray');
 
   const onChangeId = (e) => {
@@ -43,10 +43,10 @@ const LoginScreen = ({ navigation }) => {
     }
     const result = await authApi.login(id, password);
     console.log(result);
-    const { message } = result;
-    console.log(message);
-    if (message === 'success') {
-      setIsLogin(true);
+    const { user } = result;
+    console.log(user);
+    if (user) {
+      setUserInfo(user);
       alert('로그인에 성공하셨습니다.');
       navigation.pop();
     } else {
