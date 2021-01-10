@@ -11,52 +11,55 @@ import {
   NK700,
   PRIMARY_NORMAL,
 } from '../../util/Color.js';
+import { TextStyle } from '../../util/TextStyle';
 import TENANT from '../../../assets/TENANT.png';
 
-const HomeListFrame = ({
-  navigation,
-  title,
-  image,
-  pretenant,
-  type,
-  money,
-  bojoung,
-  roomType,
-  floor,
-  size,
-  kuanri,
-  sogae,
-}) => {
+const HomeListFrame = ({ item }) => {
+  const {
+    image,
+    room_type,
+    deposit,
+    monthly_rent,
+    floor,
+    space,
+    management_fee,
+    introduction,
+    comments,
+  } = item;
   return (
     <Wrapper>
       <HomeImageContainer>
-        <HomeImage source={image}></HomeImage>
+        <HomeImage
+          source={require('../../../assets/HOME_PICTURE.png')}
+        ></HomeImage>
       </HomeImageContainer>
       <HomeImageInformation>
         <HomeImageTitle>
-          <TitleContent>{title}</TitleContent>
+          <TitleContent>신촌 신축 원룸</TitleContent>
         </HomeImageTitle>
         <HomeImageMoney>
           <MoneyContent>
-            {type} {bojoung}/{money}
+            월세 {deposit}/{monthly_rent}
           </MoneyContent>
         </HomeImageMoney>
         <HomeImageSummaryContent>
           <SummaryContent>
-            {roomType} {floor} | {size} | 관리비 {kuanri}
+            {room_type} {floor}층 | {space}평 | 관리비 {management_fee}만
           </SummaryContent>
         </HomeImageSummaryContent>
         <HomeImageSay>
-          <SayContent>{sogae}</SayContent>
+          <SayContent>{introduction}</SayContent>
         </HomeImageSay>
-        {pretenant ? (
+        {comments ? (
           <PreTenantNumber>
             <PreTenantImageView>
               <PreTenantImage source={TENANT} />
             </PreTenantImageView>
-            <PreTenantContent>
-              전 세입자 후기 {pretenant.length}개
-            </PreTenantContent>
+            <PreTenantContentView>
+              <PreTenantContent>
+                전 세입자 후기 {comments.length}개
+              </PreTenantContent>
+            </PreTenantContentView>
           </PreTenantNumber>
         ) : (
           <></>
@@ -93,53 +96,49 @@ const HomeImage = styled.Image`
 `;
 
 const HomeImageInformation = styled.View`
-  flex: 1;
+  flex: 1.05;
   background-color: white;
+  justify-content: space-between;
 `;
 
 const HomeImageTitle = styled.View``;
 
-const TitleContent = styled.Text`
+const TitleContent = styled(TextStyle)`
   font-family: ${NK500};
   letter-spacing: -0.48px;
   font-size: 14px;
-  margin-top: -10px;
   color: ${DARK_GRAY};
 `;
 
 const HomeImageMoney = styled.View``;
 
-const MoneyContent = styled.Text`
+const MoneyContent = styled(TextStyle)`
   font-family: ${NK500};
   letter-spacing: -0.48px;
   font-size: 18px;
-  margin-top: -20px;
 `;
 
 const HomeImageSummaryContent = styled.View``;
 
-const SummaryContent = styled.Text`
+const SummaryContent = styled(TextStyle)`
   font-family: ${NK700};
   font-size: 15px;
-  margin-top: -15px;
   color: ${MEDIUM_GRAY};
   letter-spacing: -0.45px;
 `;
 
 const HomeImageSay = styled.View``;
 
-const SayContent = styled.Text`
+const SayContent = styled(TextStyle)`
   font-family: ${NK400};
   color: ${LIGHT_GRAY};
   font-size: 14px;
-  margin-top: -22px;
   letter-spacing: -0.14px;
 `;
 
 const PreTenantNumber = styled.View`
   flex-direction: row;
   align-items: center;
-  margin-top: -8px;
 `;
 
 const PreTenantImageView = styled.View`
@@ -151,7 +150,8 @@ const PreTenantImage = styled.Image`
   width: 16px;
 `;
 
-const PreTenantContent = styled.Text`
+const PreTenantContentView = styled.View``;
+const PreTenantContent = styled(TextStyle)`
   font-family: ${NK500};
   font-size: 12px;
   color: ${PRIMARY_NORMAL};
