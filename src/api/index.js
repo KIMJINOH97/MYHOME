@@ -1,10 +1,12 @@
 import axios from 'axios';
 import initAuthApi from './initAuthApi';
 import initHomeApi from './initHomeApi';
+import initMentoApi from './initMentoApi';
 
 export const instance = axios.create({
-  baseURL: 'http://ec2-13-209-153-100.ap-northeast-2.compute.amazonaws.com',
+  baseURL: 'https://www.myhome-go.com',
 });
 
 export const authApi = initAuthApi(instance);
 export const homeApi = initHomeApi(instance);
+export const mentoApi = initMentoApi(instance);
