@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components/native';
-import {
-  View,
-  Text,
-  ActivityIndicator,
-  TouchableOpacity,
-  Button,
-} from 'react-native';
+import { View, Text, ActivityIndicator } from 'react-native';
 import MapView from 'react-native-map-clustering';
-import { Callout, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+import { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
+import { TextStyle } from '../../util/TextStyle';
+import { NK500, NK700 } from '../../util/Color';
+
+import { useRecoilState } from 'recoil';
+import { homeListState } from '../../states/HomeListState';
+import { homeApi } from '../../api/index';
 import MAP_PIN from '../../../assets/MAP_PIN.png';
 
 // https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=
@@ -20,34 +20,44 @@ import MAP_PIN from '../../../assets/MAP_PIN.png';
   setLat(37.566535)
   setLong(126.977969);
 }*/
-const ADDRESS = '1600+Amphitheatre+Parkway,+Mountain+View';
 const GEO_API = 'AIzaSyD6RJg-Ul1eU863W7kYa9PDkMJpR1bmUis';
 const URL = `https://maps.googleapis.com/maps/api/geocode/json?address=서울시 마포구 독막로19길 30,+CA&key=${GEO_API}`;
 
-const Map = ({ locations }) => {
+const locations = [
+  { lat: 37.5489504, long: 126.9246969 },
+  { lat: 37.5489504, long: 126.9246969 },
+  { lat: 37.5489404, long: 126.9346969 },
+  { lat: 37.5488304, long: 126.9446969 },
+  { lat: 37.5486204, long: 126.9256969 },
+  { lat: 37.5487104, long: 126.9266969 },
+  { lat: 37.4781294, long: 127.0449741 },
+  // { lat: 37.5489504, long: 148.662905 },
+  // { lat: 37.5489504, long: 175.699196 },
+  // { lat: 37.5489504, long: 175.790222 },
+];
+
+const Map = ({}) => {
   const [lat, setLat] = useState();
   const [long, setLong] = useState();
+  const [homeList, setHomeList] = useRecoilState(homeListState);
   const navigation = useNavigation();
+
   const pushPage = (next) => {
     return navigation.push(next);
   };
+
   const getData = async () => {
-    console.log('dkdkdkdkdk');
+    console.log('get homelist');
     try {
-      const { data } = await axios.get(URL);
-      console.log(URL);
-      console.log(data.results);
-      console.log(data.results[0].geometry.location.lat);
-      console.log(data.results[0].geometry.location.lng);
-      setLat(data.results[0].geometry.location.lat);
-      setLong(data.results[0].geometry.location.lng);
+      const result = await homeApi.getHome();
+      setHomeList(result);
     } catch (e) {
       console.log(e);
     }
   };
 
   useEffect(() => {
-    //getData();
+    getData();
     navigator.geolocation.getCurrentPosition(
       (position) => {
         console.log(position);
@@ -63,13 +73,13 @@ const Map = ({ locations }) => {
     );
   }, []);
 
-  const markers = locations.map((location, index) => {
+  const markers = homeList.map((list, index) => {
     return (
       <Marker
         style={styles.marker}
         coordinate={{
-          latitude: location.lat,
-          longitude: location.long,
+          latitude: list.latitude,
+          longitude: list.longitude,
           latitudeDelta: 1.5,
           longitudeDelta: 1.5,
         }}
@@ -81,7 +91,7 @@ const Map = ({ locations }) => {
 
   return (
     <View style={{ flex: 1 }}>
-      {lat === undefined ? (
+      {lat === undefined && homeList ? (
         <View
           style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
         >
@@ -153,10 +163,10 @@ const ShowButton = styled.TouchableOpacity`
   align-items: center;
 `;
 
-const ButtonContent = styled.Text`
+const ButtonContent = styled(TextStyle)`
+  font-family: ${NK500};
   color: white;
-  font-weight: 700;
-  font-size: 20px;
+  font-size: 18px;
 `;
 
 const styles = StyleSheet.create({
