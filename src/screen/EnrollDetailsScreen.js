@@ -216,7 +216,7 @@ const EnrollDetailsScreen = ({ navigation }) => {
             <MoveIn>
               <InfoText name="입주가능일" />
               <Input
-                value={home.occupancy_date ? home.occupancy_date : ''}
+                defaultValue={home.occupancy_date ? home.occupancy_date : ''}
                 onChangeText={(occupancy_date) =>
                   setHome({ ...home, occupancy_date })
                 }
@@ -226,7 +226,7 @@ const EnrollDetailsScreen = ({ navigation }) => {
             <DetailExplain>
               <InfoText name="상세설명" />
               <Input
-                value={home.detail ? home.detail : ''}
+                defaultValue={home.detail ? home.detail : ''}
                 style={{ textAlignVertical: 'top' }}
                 onChangeText={(detail) => setHome({ ...home, detail })}
                 multiline={true}
@@ -237,7 +237,7 @@ const EnrollDetailsScreen = ({ navigation }) => {
             <OneLineInfo>
               <InfoText name="한줄소개" />
               <Input
-                value={home.introduction ? home.introduction : ''}
+                defaultValue={home.introduction ? home.introduction : ''}
                 onChangeText={(introduction) =>
                   setHome({ ...home, introduction })
                 }
@@ -248,7 +248,7 @@ const EnrollDetailsScreen = ({ navigation }) => {
             <HostName>
               <InfoText name="집주인 이름" />
               <Input
-                value={home.host_name ? home.host_name : ''}
+                defaultValue={home.host_name ? home.host_name : ''}
                 onChangeText={(host_name) => setHome({ ...home, host_name })}
                 multiline={true}
                 placeholder="한글 또는 영문만 입력 가능"
@@ -257,7 +257,7 @@ const EnrollDetailsScreen = ({ navigation }) => {
             <HostPhone>
               <InfoText name="집주인 전화번호" />
               <Input
-                value={home.host_phone ? home.host_phone : ''}
+                defaultValue={home.host_phone ? home.host_phone : ''}
                 onChangeText={(host_phone) => setHome({ ...home, host_phone })}
                 placeholder="-없이 입력"
               />

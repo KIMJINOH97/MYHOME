@@ -108,7 +108,7 @@ const EnrollAddressScreen = ({ navigation }) => {
                 <DetailInput
                   placeholder="상세주소를 입력해주세요."
                   onChangeText={onChangeDetail}
-                  value={home.address_detail ? home.address_detail : ''}
+                  defaultValue={home.address_detail ? home.address_detail : ''}
                 />
               </AddressContainer>
             </KeyboardAwareScrollView>
