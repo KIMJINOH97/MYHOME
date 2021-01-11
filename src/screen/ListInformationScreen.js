@@ -1,8 +1,17 @@
-import React, { useState } from 'react';
-import { SafeAreaView, ScrollView, Dimensions, Image } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import {
+  SafeAreaView,
+  ScrollView,
+  Dimensions,
+  Image,
+  View,
+} from 'react-native';
 import styled from 'styled-components/native';
 import Swiper from 'react-native-swiper';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
+import { useRecoilState } from 'recoil';
+import { presentHomeState } from '../states/HomeListState';
+import { homeApi } from '../api/index';
 
 import DetailContent from '../components/ListInfromation/DetailContent';
 import SimpleList from '../components/ListInfromation/SimpleList';
@@ -19,6 +28,8 @@ import {
 } from '../util/Color';
 
 import CommentTitle from '../components/ListInfromation/CommentTitle';
+import Review from '../util/Review';
+import Star from '../util/Star';
 import my from '../../assets/my.png';
 import LIST_HOME from '../../assets/LIST_HOME.png';
 import LIST_MANAGE from '../../assets/LIST_MANAGE.png';
@@ -79,33 +90,26 @@ const FirstRoute = ({ information }) => {
 
 const SecondRoute = ({ information }) => {
   const { comments } = information;
+  const navigation = useNavigation();
   return (
     <DetailInformation>
-      <ReviewTitle>
-        <TitleBox>
-          <DetailTitleContent>거주 후기 </DetailTitleContent>
-          <DetailCount>
-            <DetailCountContent>{comments.length}개</DetailCountContent>
-          </DetailCount>
-        </TitleBox>
-        <ReviewButtonView>
-          <ReviewButton>
-            <ReviewButtonContent>리뷰 작성</ReviewButtonContent>
-          </ReviewButton>
-        </ReviewButtonView>
-      </ReviewTitle>
-
+      <Review
+        name="거주후기 "
+        length={comments.length}
+        onPress={() => navigation.push('Review')}
+      />
       {comments.length ? (
         comments.map((comment, index) => {
           return (
-            <>
-              <CommentContainer key={index}>
+            <View key={index}>
+              <CommentContainer>
                 <CommentUser>
                   <CommentUserProfile>
                     <CommentUserProfileImage source={my} />
                   </CommentUserProfile>
                   <CommentUserEmail>
                     <EmailContent>{comment.user_email}</EmailContent>
+                    <Star score={comment.rate} />
                   </CommentUserEmail>
                 </CommentUser>
                 <CommentTitle name="장점" comment={comment.pros} />
@@ -113,8 +117,8 @@ const SecondRoute = ({ information }) => {
                 <CommentTitle name="한줄 평" comment={comment.content} />
                 <DivideLine height="5px" color={'white'} />
               </CommentContainer>
-              <DivideLine key={`d ${index}`} height="1px" color={LIGHT_GRAY2} />
-            </>
+              <DivideLine height="1px" color={LIGHT_GRAY2} />
+            </View>
           );
         })
       ) : (
@@ -124,49 +128,9 @@ const SecondRoute = ({ information }) => {
   );
 };
 
-const DetailCount = styled.View``;
-
-const DetailCountContent = styled(TextStyle)`
-  font-family: ${NK400};
-  font-size: 14px;
-  color: ${MEDIUM_GRAY};
-  letter-spacing: -0.14px;
+const CommentContainer = styled.View`
+  margin-top: 8px;
 `;
-
-const ReviewTitle = styled.View`
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: space-between;
-  margin-bottom: 15px;
-  width: 100%;
-  height: 32px;
-`;
-
-const TitleBox = styled.View``;
-
-const ReviewButtonView = styled.View`
-  width: 80px;
-  height: 32px;
-`;
-
-const ReviewButton = styled.TouchableOpacity`
-  width: 80px;
-  height: 32px;
-  border-color: ${PRIMARY_NORMAL};
-  border-width: 1px;
-  border-radius: 8px;
-  justify-content: center;
-  align-items: center;
-`;
-
-const ReviewButtonContent = styled(TextStyle)`
-  font-family: ${NK700};
-  font-size: 15px;
-  letter-spacing: -0.45px;
-  color: ${PRIMARY_NORMAL};
-`;
-
-const CommentContainer = styled.View``;
 
 const CommentUser = styled.View`
   flex-direction: row;
@@ -258,6 +222,22 @@ const HostPhoneContent = styled(TextStyle)`
 const initialLayout = { width: Dimensions.get('window').width };
 
 const ListInformationScreen = ({ route }) => {
+  const [presenthome, setPresentHome] = useRecoilState(presentHomeState);
+
+  const getData = async () => {
+    try {
+      const home = await homeApi.getPresentHome(route.params.id);
+      setPresentHome(home);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+    //setPresentHome(route.params);
+  }, []);
+
   const {
     room_type,
     deposit,
@@ -286,68 +266,69 @@ const ListInformationScreen = ({ route }) => {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
-      <ScrollView>
-        <Back>
-          <BackButton onPress={() => navigation.pop()}>
-            <ButtonImage source={BACK} />
-          </BackButton>
-        </Back>
-        <Swiper height={240}>
-          <Red>
-            <Image
-              source={INFO_PICTURE}
-              style={{ width: '100%', height: '100%' }}
-            />
-          </Red>
-          <Yellow />
-          <Blue />
-        </Swiper>
-
-        <InfromationContainer>
-          <ListTitle>
-            <TitleContent>
-              {room_type} {deposit}/{monthly_rent}
-            </TitleContent>
-            <SubContent>신촌 신축 원룸</SubContent>
-          </ListTitle>
-          <SimpleInformation>
-            <SimpleList img={LIST_HOME} info={room_type} />
-            <SimpleList img={LIST_SIZE} info={`${space}평`} />
-            <SimpleList img={LIST_FLOOR} info={`${floor}층`} />
-            <SimpleList img={LIST_MANAGE} info={`${management_fee}만`} />
-          </SimpleInformation>
-          <TabView
-            renderTabBar={(props) => (
-              <TabBar
-                {...props}
-                indicatorStyle={{
-                  backgroundColor: PRIMARY_NORMAL,
-                }}
-                style={{
-                  backgroundColor: '#ffeae8',
-                  elevation: 0,
-                }}
-                labelStyle={{
-                  alignItems: 'center',
-                  fontFamily: NK700,
-                  fontSize: 14,
-                  includeFontPadding: false,
-                }}
-                activeColor={PRIMARY_NORMAL}
-                inactiveColor={MEDIUM_GRAY}
+      {presenthome && (
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <Back>
+            <BackButton onPress={() => navigation.pop()}>
+              <ButtonImage source={BACK} />
+            </BackButton>
+          </Back>
+          <Swiper height={240} dotColor="white" activeDotColor={PRIMARY_NORMAL}>
+            <Red>
+              <Image
+                source={INFO_PICTURE}
+                style={{ width: '100%', height: '100%' }}
               />
-            )}
-            navigationState={{ index, routes }}
-            renderScene={SceneMap({
-              first: () => <FirstRoute information={route.params} />,
-              second: () => <SecondRoute information={route.params} />,
-              third: () => <ThirdRoute information={route.params} />,
-            })}
-            onIndexChange={setIndex}
-            initialLayout={initialLayout}
-          />
-        </InfromationContainer>
-      </ScrollView>
+            </Red>
+            <Yellow />
+            <Blue />
+          </Swiper>
+          <InfromationContainer>
+            <ListTitle>
+              <TitleContent>
+                {room_type} {deposit}/{monthly_rent}
+              </TitleContent>
+              <SubContent>신촌 신축 원룸</SubContent>
+            </ListTitle>
+            <SimpleInformation>
+              <SimpleList img={LIST_HOME} info={room_type} />
+              <SimpleList img={LIST_SIZE} info={`${space}평`} />
+              <SimpleList img={LIST_FLOOR} info={`${floor}층`} />
+              <SimpleList img={LIST_MANAGE} info={`${management_fee}만`} />
+            </SimpleInformation>
+            <TabView
+              renderTabBar={(props) => (
+                <TabBar
+                  {...props}
+                  indicatorStyle={{
+                    backgroundColor: PRIMARY_NORMAL,
+                  }}
+                  style={{
+                    backgroundColor: '#ffeae8',
+                    elevation: 0,
+                  }}
+                  labelStyle={{
+                    alignItems: 'center',
+                    fontFamily: NK700,
+                    fontSize: 14,
+                    includeFontPadding: false,
+                  }}
+                  activeColor={PRIMARY_NORMAL}
+                  inactiveColor={MEDIUM_GRAY}
+                />
+              )}
+              navigationState={{ index, routes }}
+              renderScene={SceneMap({
+                first: () => <FirstRoute information={presenthome} />,
+                second: () => <SecondRoute information={presenthome} />,
+                third: () => <ThirdRoute information={presenthome} />,
+              })}
+              onIndexChange={setIndex}
+              initialLayout={initialLayout}
+            />
+          </InfromationContainer>
+        </ScrollView>
+      )}
     </SafeAreaView>
   );
 };
@@ -391,6 +372,7 @@ const InfromationContainer = styled.View`
 `;
 
 const ListTitle = styled.View`
+  margin-top: 15px;
   justify-content: center;
   align-items: center;
 `;
@@ -411,6 +393,7 @@ const SimpleInformation = styled.View`
   flex-direction: row;
   justify-content: space-around;
   margin-top: 20px;
+  margin-bottom: 8px;
   border-top-color: ${LIGHT_GRAY2};
   border-top-width: 1px;
   padding: 10px;
