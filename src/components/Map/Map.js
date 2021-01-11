@@ -23,19 +23,6 @@ import MAP_PIN from '../../../assets/MAP_PIN.png';
 const GEO_API = 'AIzaSyD6RJg-Ul1eU863W7kYa9PDkMJpR1bmUis';
 const URL = `https://maps.googleapis.com/maps/api/geocode/json?address=서울시 마포구 독막로19길 30,+CA&key=${GEO_API}`;
 
-const locations = [
-  { lat: 37.5489504, long: 126.9246969 },
-  { lat: 37.5489504, long: 126.9246969 },
-  { lat: 37.5489404, long: 126.9346969 },
-  { lat: 37.5488304, long: 126.9446969 },
-  { lat: 37.5486204, long: 126.9256969 },
-  { lat: 37.5487104, long: 126.9266969 },
-  { lat: 37.4781294, long: 127.0449741 },
-  // { lat: 37.5489504, long: 148.662905 },
-  // { lat: 37.5489504, long: 175.699196 },
-  // { lat: 37.5489504, long: 175.790222 },
-];
-
 const Map = ({}) => {
   const [lat, setLat] = useState();
   const [long, setLong] = useState();
@@ -43,7 +30,7 @@ const Map = ({}) => {
   const navigation = useNavigation();
 
   const pushPage = (next) => {
-    return navigation.push(next);
+    return navigation.navigate(next);
   };
 
   const getData = async () => {
@@ -60,7 +47,7 @@ const Map = ({}) => {
     getData();
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        console.log(position);
+        //console.log(position);
         setLong(position.coords.longitude);
         setLat(position.coords.latitude);
       },

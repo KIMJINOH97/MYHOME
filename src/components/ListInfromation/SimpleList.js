@@ -19,13 +19,13 @@ const SimpleListView = styled.View`
   align-items: center;
 `;
 const SimpleListImage = styled.Image`
-  height: 48px;
-  width: 48px;
+  height: 40px;
+  width: 40px;
 `;
 
 const SimpleContent = styled(TextStyle)`
   font-family: ${NK500};
-  font-size: 16px;
+  font-size: 14px;
   letter-spacing: -0.48px;
   color: ${DARK_GRAY};
 `;
