@@ -9,7 +9,7 @@ export default (axios) => ({
         `${URL}${home.address},+CA&key=${GEO_API}`
       );
       const location = DD.results[0].geometry.location;
-      console.log(DD.results[0].geometry.location);
+      //console.log(DD.results[0].geometry.location);
 
       //console.log(axios.defaults.headers);
       const { heating } = home;
@@ -25,15 +25,40 @@ export default (axios) => ({
       console.error(e);
     }
   },
+
   getHome: async () => {
     try {
       const { data } = await axios.get('/api/rooms/');
-      console.log(data);
+      //console.log(data);
 
       if (data) return data;
       else return false;
     } catch (error) {
       console.error(error);
+    }
+  },
+
+  postReview: async (id, rate, pros, cons, content) => {
+    try {
+      const { data } = await axios.post(`/api/rooms/${id}/post-comment/`, {
+        pros,
+        cons,
+        content,
+        rate,
+      });
+      //console.log(data);
+      if (data) return data;
+    } catch (e) {
+      console.error(e);
+    }
+  },
+
+  getPresentHome: async (id) => {
+    try {
+      const { data } = await axios.get(`/api/rooms/${id}/`);
+      if (data) return data;
+    } catch (e) {
+      console.error(e);
     }
   },
 });
