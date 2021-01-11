@@ -21,6 +21,8 @@ import EnrollAddressScreen from '../../screen/EnrollAddressScreen';
 import EnrollDetailsScreen from '../../screen/EnrollDetailsScreen';
 import EnrollCompleteScreen from '../../screen/EnrollCompleteScreen';
 import ApplyMentoScreen from '../../screen/ApplyMentoScreen';
+import MentoDetailScreen from '../../screen/MentoDetailScreen';
+import ReviewScreen from '../../screen/ReviewScreen';
 
 const Stack = createStackNavigator();
 const HomeRouter = [
@@ -107,6 +109,16 @@ const HomeRouter = [
   {
     name: 'EnrollComplete',
     component: EnrollCompleteScreen,
+    options: { headerShown: false },
+  },
+  {
+    name: 'MentoDetail',
+    component: MentoDetailScreen,
+    options: { headerShown: false },
+  },
+  {
+    name: 'Review',
+    component: ReviewScreen,
     options: { headerShown: false },
   },
 ];
