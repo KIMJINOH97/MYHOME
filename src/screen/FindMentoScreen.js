@@ -5,6 +5,7 @@ import {
   StyleSheet,
   StatusBar,
   Image,
+  TouchableHighlight,
 } from 'react-native';
 import styled from 'styled-components/native';
 import Stars from 'react-native-stars';
@@ -19,6 +20,7 @@ import STAR_EMPTY from '../../assets/STAR_EMPTY.png';
 import { useRecoilState } from 'recoil';
 import { mentoState } from '../states/MentoState';
 import { mentoApi } from '../api/index';
+import Star from '../util/Star';
 
 const FindMentoList = ({ item }) => {
   const { name, introduction } = item;
@@ -35,19 +37,7 @@ const FindMentoList = ({ item }) => {
           <MentoName>
             <MentoNameContent>{name}</MentoNameContent>
           </MentoName>
-          <Stars
-            display={5}
-            default={0}
-            count={5}
-            half={true}
-            starSize={5}
-            fullStar={
-              <Image style={{ width: 13, height: 12 }} source={STAR_FULL} />
-            }
-            emptyStar={
-              <Image style={{ width: 13, height: 12 }} source={STAR_EMPTY} />
-            }
-          />
+          <Star score={4.5} />
         </FindMentoProfile>
         <RegionView>
           <MapPinView>
@@ -172,8 +162,16 @@ const FindMentoScreen = ({ navigation }) => {
             data={mentoList}
             style={{ flex: 11 }}
             renderItem={({ item, index }) => {
-              return <FindMentoList key={index} item={item} />;
+              return (
+                <TouchableHighlight
+                  underlayColor="white"
+                  onPress={() => navigation.push('MentoDetail', item)}
+                >
+                  <FindMentoList key={index} item={item} />
+                </TouchableHighlight>
+              );
             }}
+            keyExtractor={(item) => `${item.id}`}
             showsVerticalScrollIndicator={false}
           />
         ) : (
