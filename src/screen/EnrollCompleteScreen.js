@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components/native';
 import { View, Text, StatusBar, Image } from 'react-native';
 import Title from '../util/Title';
@@ -7,8 +7,24 @@ import COMPLETE from '../../assets/COMPLETE.png';
 import CHECK_CIRCLE from '../../assets/CHECK_CIRCLE.png';
 import { TextStyle } from '../util/TextStyle';
 import { NK700, PRIMARY_NORMAL } from '../util/Color';
+import { useRecoilState } from 'recoil';
+import { homeListState } from '../states/HomeListState';
+import { homeApi } from '../api/index';
 
 const EnrollCompleteScreen = () => {
+  const getData = async () => {
+    try {
+      const result = await homeApi.getHome();
+      setHome(result);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const [home, setHome] = useRecoilState(homeListState);
+  useEffect(() => {
+    getData();
+  }, []);
   return (
     <Wrapper>
       <Title name="집 내놓기"></Title>
