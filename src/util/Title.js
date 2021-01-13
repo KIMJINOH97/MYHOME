@@ -6,17 +6,14 @@ import { View } from 'react-native';
 import { TextStyle } from '../util/TextStyle';
 import { NK500 } from '../util/Color';
 import LEFT from '../../assets/LEFT.png';
+import CLOSE from '../../assets/CLOSE.png';
 
-const Title = ({ name, onPressback = null }) => {
+const Title = ({ name, onPress = null, close = false }) => {
   const navigation = useNavigation();
   return (
     <Wrapper>
-      <UtilButton
-        onPress={() => {
-          navigation.pop();
-        }}
-      >
-        <BackContent source={LEFT} />
+      <UtilButton onPress={onPress ? onPress : () => navigation.pop()}>
+        <BackContent source={close ? CLOSE : LEFT} />
       </UtilButton>
       <TitleName>
         <TitleContent> {name} </TitleContent>
