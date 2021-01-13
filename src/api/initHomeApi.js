@@ -61,4 +61,27 @@ export default (axios) => ({
       console.error(e);
     }
   },
+
+  postFavorate: async (roomId) => {
+    try {
+      console.log('보내는 중');
+      console.log(`/api/interest-rooms/${roomId}/`);
+      const { status, data } = await axios.post(
+        `/api/interest-rooms/${roomId}/`
+      );
+      console.log(status);
+      return status;
+    } catch (e) {
+      console.error(e);
+    }
+  },
+
+  getFavorite: async (id) => {
+    try {
+      const { data } = await axios.get(`/api/users/${id}/interest-room-list/`);
+      return data;
+    } catch (e) {
+      console.error(e);
+    }
+  },
 });
