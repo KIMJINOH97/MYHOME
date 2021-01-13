@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components/native';
 import { StatusBar } from 'react-native';
 import { useRecoilState } from 'recoil';
+import { presentMentoState } from '../states/MentoState';
+import { mentoApi } from '../api/index';
+
 import { TextStyle } from '../util/TextStyle';
 import {
   DARK_GRAY,
@@ -9,7 +12,6 @@ import {
   MEDIUM_GRAY,
   NK400,
   NK500,
-  NK700,
   PRIMARY_NORMAL,
 } from '../util/Color';
 
@@ -19,71 +21,92 @@ import Title from '../util/Title';
 import DivideLine from '../util/DivideLine';
 import Review from '../util/Review';
 import Star from '../util/Star';
-import { FlatList } from 'react-native-gesture-handler';
 
-const MentoDetailScreen = ({ route }) => {
+const MentoDetailScreen = ({ route, navigation }) => {
   const { reviews, name, introduction } = route.params;
+  const [mento, setMento] = useRecoilState(presentMentoState);
+
+  const getData = async () => {
+    try {
+      const result = await mentoApi.getPresentMento(route.params.id);
+      if (result) {
+        //console.log('결과', result);
+        setMento(result);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
   return (
     <Wrapper>
       <Title name="멘토 세부사항" />
-      <MentoDetailContainer>
-        <MentoProfile>
-          <ProfileImageView>
-            <ProfileImage source={MENTO_IMAGE} />
-          </ProfileImageView>
-          <MentoContent>
-            <MentoName>
-              <Name>{name} 멘토</Name>
-            </MentoName>
-            <MentoComment>
-              <Comment>{introduction}</Comment>
-            </MentoComment>
-          </MentoContent>
-        </MentoProfile>
-        <DivideLine height="1px" color={LIGHT_GRAY2} />
-        <MentoringCountBox>
-          <MentoringCount>
-            <Count>0회</Count>
-            <Content>멘토링 횟수</Content>
-          </MentoringCount>
-        </MentoringCountBox>
-        <DivideLine height="8px" color={LIGHT_GRAY2} />
-        <CarrerInfoBox>
-          <InfoTitle>
-            <TitleContent>경력사항</TitleContent>
-          </InfoTitle>
-          <InfoView>
-            <AwardImageView>
-              <AwardImage source={MENTO_AWARD} />
-            </AwardImageView>
-            <AwardInfo>
-              <AwardInfoContent>공인중개사 획득</AwardInfoContent>
-            </AwardInfo>
-          </InfoView>
-        </CarrerInfoBox>
-        <DivideLine height="8px" color={LIGHT_GRAY2} />
-        <ReviewBox>
-          <Review name="멘토 후기 " length={reviews.length} review="후기" />
-          {reviews.length &&
-            reviews.map((list, index) => {
-              return (
-                <ReviewList key={index}>
-                  <StarView>
-                    <Star score={list.rate} width={24} height={24} />
-                  </StarView>
-                  <ReviewContentView>
-                    <ReviewContentText>{list.content}</ReviewContentText>
-                  </ReviewContentView>
-                </ReviewList>
-              );
-            })}
-        </ReviewBox>
-      </MentoDetailContainer>
-      <ReserveButtonView>
-        <ReserveButton>
-          <ButtonContent>예약하기</ButtonContent>
-        </ReserveButton>
-      </ReserveButtonView>
+      {mento && (
+        <>
+          <MentoDetailContainer>
+            <MentoProfile>
+              <ProfileImageView>
+                <ProfileImage source={MENTO_IMAGE} />
+              </ProfileImageView>
+              <MentoContent>
+                <MentoName>
+                  <Name>{name} 멘토</Name>
+                </MentoName>
+                <MentoComment>
+                  <Comment>{introduction}</Comment>
+                </MentoComment>
+              </MentoContent>
+            </MentoProfile>
+            <DivideLine height="1px" color={' rgba(238, 238, 238, 0.5)'} />
+            <MentoringCountBox>
+              <MentoringCount>
+                <Count>0회</Count>
+                <Content>멘토링 횟수</Content>
+              </MentoringCount>
+            </MentoringCountBox>
+            <DivideLine height="8px" color={' rgba(238, 238, 238, 0.5)'} />
+            <CarrerInfoBox>
+              <InfoTitle>
+                <TitleContent>경력사항</TitleContent>
+              </InfoTitle>
+              <InfoView>
+                <AwardImageView>
+                  <AwardImage source={MENTO_AWARD} />
+                </AwardImageView>
+                <AwardInfo>
+                  <AwardInfoContent>공인중개사 획득</AwardInfoContent>
+                </AwardInfo>
+              </InfoView>
+            </CarrerInfoBox>
+            <DivideLine height="8px" color={' rgba(238, 238, 238, 0.5)'} />
+            <ReviewBox>
+              <Review name="멘토 후기 " length={reviews.length} review="후기" />
+              {reviews.length &&
+                reviews.map((list, index) => {
+                  return (
+                    <ReviewList key={index}>
+                      <StarView>
+                        <Star score={list.rate} width={24} height={24} />
+                      </StarView>
+                      <ReviewContentView>
+                        <ReviewContentText>{list.content}</ReviewContentText>
+                      </ReviewContentView>
+                    </ReviewList>
+                  );
+                })}
+            </ReviewBox>
+          </MentoDetailContainer>
+          <ReserveButtonView>
+            <ReserveButton onPress={() => navigation.navigate('Reserve')}>
+              <ButtonContent>예약하기</ButtonContent>
+            </ReserveButton>
+          </ReserveButtonView>
+        </>
+      )}
     </Wrapper>
   );
 };
@@ -144,7 +167,7 @@ const MentoringCountBox = styled.View`
 const MentoringCount = styled.View`
   width: 72px;
   height: 64px;
-  background-color: ${LIGHT_GRAY2};
+  background-color: rgba(238, 238, 238, 0.5);
   border-radius: 8px;
   justify-content: center;
   align-items: center;

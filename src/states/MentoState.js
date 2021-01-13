@@ -4,3 +4,8 @@ export const mentoState = atom({
   key: 'mentoState',
   default: [],
 });
+
+export const presentMentoState = atom({
+  key: 'presentMentoState',
+  defautl: {},
+});
