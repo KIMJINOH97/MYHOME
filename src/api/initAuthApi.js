@@ -25,6 +25,15 @@ export default (axios) => ({
     }
   },
 
+  withdraw: async (id) => {
+    try {
+      const data = await axios.delete(`/api/users/${id}`);
+      console.log('삭제', data);
+    } catch (e) {
+      console.error(e);
+    }
+  },
+
   signup: async (user) => {
     try {
       const {

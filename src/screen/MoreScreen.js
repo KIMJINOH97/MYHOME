@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 import { userState } from '../states/LoginState';
+import { putHomeState } from '../states/PutHomeState';
 import {
-  View,
+  Alert,
   Text,
   StatusBar,
   Platform,
@@ -35,10 +36,34 @@ const CHECK_LIST = [
 const MoreScreen = ({ navigation }) => {
   const nextPage = (page) => navigation.push(page);
   const [user, setUser] = useRecoilState(userState);
+  const [putHome, setPutHome] = useRecoilState(putHomeState);
 
   const logout = () => {
-    authApi.logout();
-    setUser(null);
+    Alert.alert('', '로그아웃 하시겠습니까?', [
+      {
+        text: '예',
+        onPress: () => {
+          authApi.logout();
+          setUser(null);
+          return;
+        },
+      },
+      { text: '아니오' },
+    ]);
+  };
+
+  const withdraw = () => {
+    Alert.alert('', '정말 회원을 탈퇴 하시겠습니까?', [
+      {
+        text: '예',
+        onPress: () => {
+          authApi.withdraw(user.id);
+          setUser(null);
+          return;
+        },
+      },
+      { text: '아니오' },
+    ]);
   };
 
   return (
@@ -53,7 +78,7 @@ const MoreScreen = ({ navigation }) => {
           </MyProfile>
           <ProfileInformation>
             <MemberInformation>
-              <Text>회원정보</Text>
+              <Text></Text>
             </MemberInformation>
             <LoginInformation>
               {user ? (
@@ -93,7 +118,7 @@ const MoreScreen = ({ navigation }) => {
         {user && (
           <LogOutWithdraw>
             <WithdrawButtonView>
-              <WithdrawButton>
+              <WithdrawButton onPress={withdraw}>
                 <LogOutWithdrawContent>회원탈퇴 |</LogOutWithdrawContent>
               </WithdrawButton>
             </WithdrawButtonView>
@@ -119,7 +144,7 @@ const Wrapper = styled.SafeAreaView`
 
 const MyPageContainer = styled.View`
   flex: 11;
-  background-color: ${LIGHT_GRAY2};
+  background-color: rgba(238, 238, 238, 0.4);
 `;
 
 const UserContainer = styled.View`
@@ -145,6 +170,7 @@ const ProfilePicture = styled.Image`
   width: 100%;
   border-radius: 45px;
   border-color: ${LIGHT_GRAY};
+
   border-width: 1px;
 `;
 
