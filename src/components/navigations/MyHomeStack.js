@@ -25,6 +25,7 @@ import MentoDetailScreen from '../../screen/MentoDetailScreen';
 import ReviewScreen from '../../screen/ReviewScreen';
 import ReserveScreen from '../../screen/ReserveScreen';
 import PayScreen from '../../screen/PayScreen';
+import PayCompleteScreen from '../../screen/PayCompleteScreen';
 
 const Stack = createStackNavigator();
 const HomeRouter = [
@@ -131,6 +132,11 @@ const HomeRouter = [
   {
     name: 'Pay',
     component: PayScreen,
+    options: { headerShown: false },
+  },
+  {
+    name: 'PayComplete',
+    component: PayCompleteScreen,
     options: { headerShown: false },
   },
 ];
