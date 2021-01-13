@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components/native';
-import { View, Text, StatusBar } from 'react-native';
+import { Alert, Text, StatusBar } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import Title from '../util/Title';
@@ -8,6 +8,7 @@ import { InputStyle } from '../util/Input';
 import InfoText from '../util/InfoText';
 import { NK500, LIGHT_GRAY2, MEDIUM_GRAY, PRIMARY_NORMAL } from '../util/Color';
 import { TextStyle } from '../util/TextStyle';
+import UtilButton from '../util/UtilButton';
 
 import { authApi } from '../api/index';
 
@@ -25,53 +26,52 @@ const SignUpScreen = ({ navigation }) => {
   });
   const [color, setColor] = useState('gray');
 
-  const onChangeId = (email) => {
-    setUser({ ...user, email });
-  };
+  const onChangeId = (email) => setUser({ ...user, email });
 
-  const onChangePassword = (password) => {
-    setUser({ ...user, password });
-  };
+  const onChangePassword = (password) => setUser({ ...user, password });
 
-  const onChangePasswordCheck = (passwordCheck) => {
+  const onChangePasswordCheck = (passwordCheck) =>
     setUser({ ...user, passwordCheck });
-  };
 
-  const onChangeName = (name) => {
-    setUser({ ...user, name });
-  };
+  const onChangeName = (name) => setUser({ ...user, name });
 
-  const onChangePhoneNumber = (phoneNumber) => {
+  const onChangePhoneNumber = (phoneNumber) =>
     setUser({ ...user, phoneNumber });
-  };
 
-  const onChangeBirth = (birth) => {
-    setUser({ ...user, birth });
-  };
+  const onChangeBirth = (birth) => setUser({ ...user, birth });
 
   const handleOnSignUp = async () => {
     if (!user.email) {
+      Alert.alert('', '이메일을 입력해주세요');
       return;
     } else if (!user.password) {
-      return;
-    } else if (!user.passwordCheck) {
+      Alert.alert('', '비밀번호를 입력해주세요');
       return;
     } else if (!user.name) {
+      Alert.alert('', '이름을 입력해주세요');
       return;
     } else if (!user.birth) {
+      Alert.alert('', '생일을 입력해주세요');
       return;
     } else if (!user.gender) {
+      Alert.alert('', '성별을 입력해주세요');
       return;
     } else if (!user.phoneNumber) {
+      Alert.alert('', '휴대폰 번호를 입력해주세요');
       return;
     }
 
     if (user.password !== user.passwordCheck) {
+      Alert.alert('', '비밀번호와 비밀번호 확인이 일치하지 않습니다.');
+      return;
+    } else if (user.phoneNumber.length !== 11) {
+      Alert.alert('', '휴대폰 번호를 확인해주세요.');
       return;
     }
+
     const result = await authApi.signup(user);
     if (result) {
-      alert('회원가입 성공');
+      Alert.alert('회원가입에 성공하였습니다.');
       navigation.pop();
     }
     return;
@@ -115,10 +115,16 @@ const SignUpScreen = ({ navigation }) => {
           />
           <InfoText name="성별" />
           <ButtonBox>
-            <Button onPress={() => setUser({ ...user, gender: '여성' })}>
+            <Button
+              who={user.gender === '여성' ? true : false}
+              onPress={() => setUser({ ...user, gender: '여성' })}
+            >
               <ButtonContent>여성</ButtonContent>
             </Button>
-            <Button onPress={() => setUser({ ...user, gender: '남성' })}>
+            <Button
+              who={user.gender === '남성' ? true : false}
+              onPress={() => setUser({ ...user, gender: '남성' })}
+            >
               <ButtonContent>남성</ButtonContent>
             </Button>
           </ButtonBox>
@@ -128,11 +134,7 @@ const SignUpScreen = ({ navigation }) => {
             placeholder="-없이 입력"
             onChangeText={onChangePhoneNumber}
           />
-          <SignUpButtonBox>
-            <SignUpButton onPress={handleOnSignUp}>
-              <SignUpButtonContent>회원가입</SignUpButtonContent>
-            </SignUpButton>
-          </SignUpButtonBox>
+          <UtilButton name="회원가입" onPress={handleOnSignUp} />
         </SignUpContainer>
       </KeyboardAwareScrollView>
     </Wrapper>
@@ -171,29 +173,11 @@ const Button = styled.TouchableOpacity`
   width: 48%;
   height: 40px;
   border-radius: 8px;
-  background-color: ${LIGHT_GRAY2};
+  background-color: ${({ who }) => (who ? PRIMARY_NORMAL : LIGHT_GRAY2)};
 `;
 
 const ButtonContent = styled(TextStyle)`
   font-family: ${NK500};
   font-size: 15px;
   color: ${MEDIUM_GRAY};
-`;
-
-const SignUpButtonBox = styled.View`
-  margin-top: 10px;
-  height: 48px;
-`;
-
-const SignUpButton = styled.TouchableOpacity`
-  height: 100%;
-  background-color: ${PRIMARY_NORMAL};
-  border-radius: 8px;
-  justify-content: center;
-  align-items: center;
-`;
-
-const SignUpButtonContent = styled(TextStyle)`
-  font-family: ${NK500};
-  color: white;
 `;
