@@ -9,4 +9,13 @@ export default (axios) => ({
       console.error(e);
     }
   },
+
+  getPresentMento: async (id) => {
+    try {
+      const { data } = await axios.get(`/api/mentors/${id}/`);
+      if (data) return data;
+    } catch (e) {
+      console.error(e);
+    }
+  },
 });
