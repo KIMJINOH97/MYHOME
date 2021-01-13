@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components/native';
 import {
   View,
-  Text,
+  Alert,
   StatusBar,
   TouchableWithoutFeedback,
   Keyboard,
@@ -21,36 +21,64 @@ import { putHomeState } from '../states/PutHomeState';
 const EnrollDetailsScreen = ({ navigation }) => {
   const [home, setHome] = useRecoilState(putHomeState);
 
-  const onChangeDeposit = (e) => {
-    setHome({ ...home, deposit: parseInt(e) });
-  };
+  const onChangeDeposit = (e) => setHome({ ...home, deposit: parseInt(e) });
 
-  const onChangeMonthly = (e) => {
+  const onChangeMonthly = (e) =>
     setHome({ ...home, monthly_rent: parseInt(e) });
-  };
 
-  const onChangeManage = (e) => {
+  const onChangeManage = (e) =>
     setHome({ ...home, management_fee: parseInt(e) });
-  };
 
-  const onChangeTotalFloor = (e) => {
+  const onChangeTotalFloor = (e) =>
     setHome({ ...home, total_floor: parseInt(e) });
-  };
 
-  const onChangeFloor = (e) => {
-    setHome({ ...home, floor: parseInt(e) });
-  };
+  const onChangeFloor = (e) => setHome({ ...home, floor: parseInt(e) });
 
-  const onChangeCompletion = (e) => {
+  const onChangeCompletion = (e) =>
     setHome({ ...home, completion_year: parseInt(e) });
-  };
 
-  const onChangeSpace = (e) => {
-    setHome({ ...home, space: parseInt(e) });
-  };
+  const onChangeSpace = (e) => setHome({ ...home, space: parseInt(e) });
 
   const onComplete = async () => {
     console.log(home);
+    if (home.room_type === '') {
+      Alert.alert('', '방종류를 선택해주세요.');
+      return;
+    } else if (
+      home.deposit === null ||
+      home.management_fee === null ||
+      home.monthly_rent === null
+    ) {
+      Alert.alert('', '가격 및 관리비를 입력해주세요.');
+      return;
+    } else if (home.floor === null || home.total_floor === null) {
+      Alert.alert('', '층수를 입력해주세요.');
+      return;
+    } else if (home.space === null) {
+      Alert.alert('', '전용면적을 입력해주세요.');
+      return;
+    } else if (home.completion_year === null) {
+      Alert.alert('', '준공년도를 입력해주세요.');
+      return;
+    } else if (home.heating === '') {
+      Alert.alert('', '난방을 선택해주세요.');
+      return;
+    } else if (home.occupancy_date === '') {
+      Alert.alert('', '입주가능일을 입력해주세요.');
+      return;
+    } else if (home.detail === '') {
+      Alert.alert('', '상세설명을 입력해주세요.');
+      return;
+    } else if (home.introduction === '') {
+      Alert.alert('', '한줄 소개를 입력해주세요.');
+      return;
+    } else if (home.host_name === '') {
+      Alert.alert('', '집주인을 입력해주세요.');
+      return;
+    } else if (home.host_phone === '') {
+      Alert.alert('', '집주인 전화번호를 입력해주세요.');
+      return;
+    }
     navigation.pop();
   };
 
