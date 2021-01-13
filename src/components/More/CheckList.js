@@ -9,7 +9,7 @@ import MORE_RIGHT from '../../../assets/MORE_RIGHT.png';
 const CheckList = ({ height = '1px', content, img }) => {
   return (
     <>
-      <DivideLine height={height} color={LIGHT_GRAY2} />
+      <DivideLine height={height} color={'rgba(238, 238, 238, 0.4)'} />
       <Wrapper>
         <CheckIcon>
           <CheckImage source={img} />

@@ -8,21 +8,18 @@ import {
   TouchableHighlight,
 } from 'react-native';
 import styled from 'styled-components/native';
-import Stars from 'react-native-stars';
 import TabTitle from '../util/TabTitle';
 import { TextStyle } from '../util/TextStyle';
 import { LIGHT_GRAY2, NK400, NK700 } from '../util/Color';
 
 import my from '../../assets/my.png';
 import MENTO_MAP from '../../assets/MENTO_MAP.png';
-import STAR_FULL from '../../assets/STAR_FULL.png';
-import STAR_EMPTY from '../../assets/STAR_EMPTY.png';
 import { useRecoilState } from 'recoil';
 import { mentoState } from '../states/MentoState';
 import { mentoApi } from '../api/index';
 import Star from '../util/Star';
 
-const FindMentoList = ({ item }) => {
+export const FindMentoList = ({ item }) => {
   const { name, introduction } = item;
   return (
     <FindMentoListFrame style={styles.container}>
@@ -116,7 +113,7 @@ const MentoNameContent = styled(TextStyle)`
 
 const RegionView = styled.View`
   flex-direction: row;
-  background-color: ${LIGHT_GRAY2};
+  background-color: rgba(248, 248, 248, 1);
   height: 30px;
   align-items: center;
   justify-content: center;

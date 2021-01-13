@@ -38,7 +38,7 @@ const SloganView = styled.View`
   padding-horizontal: 16px;
   padding-top: 23px;
   padding-bottom: 21px;
-  background-color: ${PRIMARY_LIGHT2};
+  background-color: rgba(255, 184, 177, 0.5);
   border-radius: 6px;
   justify-content: space-between;
   margin-bottom: 16px;
