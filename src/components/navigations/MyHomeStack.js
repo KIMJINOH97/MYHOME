@@ -23,6 +23,8 @@ import EnrollCompleteScreen from '../../screen/EnrollCompleteScreen';
 import ApplyMentoScreen from '../../screen/ApplyMentoScreen';
 import MentoDetailScreen from '../../screen/MentoDetailScreen';
 import ReviewScreen from '../../screen/ReviewScreen';
+import ReserveScreen from '../../screen/ReserveScreen';
+import PayScreen from '../../screen/PayScreen';
 
 const Stack = createStackNavigator();
 const HomeRouter = [
@@ -119,6 +121,16 @@ const HomeRouter = [
   {
     name: 'Review',
     component: ReviewScreen,
+    options: { headerShown: false },
+  },
+  {
+    name: 'Reserve',
+    component: ReserveScreen,
+    options: { headerShown: false },
+  },
+  {
+    name: 'Pay',
+    component: PayScreen,
     options: { headerShown: false },
   },
 ];
