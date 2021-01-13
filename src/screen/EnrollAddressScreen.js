@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components/native';
 import {
+  Alert,
   TouchableOpacity,
   TouchableWithoutFeedback,
   Keyboard,
@@ -42,10 +43,10 @@ const EnrollAddressScreen = ({ navigation }) => {
       home.address === '주소지를 입력해주세요.' ||
       home.zip_code === '우편번호'
     ) {
-      alert('우편번호 찾기로 주소를 입력해주세요');
+      Alert.alert('', '우편번호 찾기로 주소를 입력해주세요');
       return;
     } else if (home.detailAddress === '') {
-      alert('상세주소를 입력해주세요.');
+      Alert.alert('', '상세주소를 입력해주세요.');
       return;
     }
     navigation.pop();

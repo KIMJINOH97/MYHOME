@@ -7,6 +7,7 @@ import {
   StatusBar,
   TouchableWithoutFeedback,
   Keyboard,
+  Alert,
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Title from '../util/Title';
@@ -35,22 +36,20 @@ const LoginScreen = ({ navigation }) => {
   const handleOnLogin = async (e) => {
     e.preventDefault();
     if (!id) {
-      alert('id를 입력해주세요');
+      Alert.alert('로그인 실패', '이메일을 입력해주세요.');
       return;
     } else if (!password) {
-      alert('password를 입력해주세요');
+      Alert.alert('로그인 실패', '비밀번호를 입력해주세요');
       return;
     }
     const result = await authApi.login(id, password);
-    console.log(result);
-    const { user } = result;
-    console.log(user);
-    if (user) {
+
+    if (result) {
+      const { user } = result;
       setUserInfo(user);
-      alert('로그인에 성공하셨습니다.');
       navigation.pop();
     } else {
-      alert('아이디 및 비밀번호가 일치하지 않습니다.');
+      Alert.alert('로그인 실패', '아이디 및 비밀번호가 일치하지 않습니다.');
     }
   };
 
