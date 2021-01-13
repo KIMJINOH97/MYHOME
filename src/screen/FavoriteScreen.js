@@ -1,23 +1,39 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components/native';
-import { StatusBar, Text, Platform } from 'react-native';
+import { StatusBar, Text, View, Platform } from 'react-native';
 
 import TabTitle from '../util/TabTitle';
 import { TextStyle } from '../util/TextStyle';
 import { useRecoilState } from 'recoil';
 import { userState } from '../states/LoginState';
+import { homeApi } from '../api/index';
 import { LIGHT_GRAY, NK500 } from '../util/Color';
+import HomeListFrame from '../components/HomeList/HomeListFrame';
 
 import PLEASE_LOGIN from '../../assets/PLEASE_LOGIN.png';
+import { favoriteHomeState } from '../states/HomeListState';
 
-const FavoriteScreen = () => {
+const FavoriteScreen = ({ navigation }) => {
   const [user] = useRecoilState(userState);
+  const [list, setList] = useRecoilState(favoriteHomeState);
+
   return (
     <Wrapper>
       <TabTitle name="관심매물" />
       <FavoriteContainer>
         {user ? (
-          <></>
+          list &&
+          list.map((v, i) => {
+            return (
+              <HomeListButton
+                key={i}
+                title="list"
+                onPress={() => navigation.navigate('ListInformation', v)}
+              >
+                <HomeListFrame item={v} />
+              </HomeListButton>
+            );
+          })
         ) : (
           <>
             <PleaseLoginView>
@@ -41,12 +57,16 @@ const Wrapper = styled.SafeAreaView`
   flex: 1;
 `;
 
-const FavoriteContainer = styled.View`
+const FavoriteContainer = styled.ScrollView`
   flex: 11;
 `;
 
+const HomeListButton = styled.TouchableOpacity`
+  flex: 1;
+`;
+
 const PleaseLoginView = styled.View`
-  flex: 2;
+  height: 100px;
   justify-content: center;
   align-items: center;
 `;

@@ -9,3 +9,8 @@ export const presentHomeState = atom({
   key: 'presentHomeState',
   default: null,
 });
+
+export const favoriteHomeState = atom({
+  key: 'favoriteHomeState',
+  default: null,
+});

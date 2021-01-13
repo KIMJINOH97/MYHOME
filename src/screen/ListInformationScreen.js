@@ -5,13 +5,15 @@ import {
   Dimensions,
   Image,
   View,
+  Alert,
 } from 'react-native';
 import styled from 'styled-components/native';
 import Swiper from 'react-native-swiper';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import { useRecoilState } from 'recoil';
-import { presentHomeState } from '../states/HomeListState';
-import { homeApi } from '../api/index';
+import { presentHomeState, favoriteHomeState } from '../states/HomeListState';
+import { userState } from '../states/LoginState';
+import { authApi, homeApi } from '../api/index';
 
 import DetailContent from '../components/ListInfromation/DetailContent';
 import SimpleList from '../components/ListInfromation/SimpleList';
@@ -35,6 +37,8 @@ import LIST_HOME from '../../assets/LIST_HOME.png';
 import LIST_MANAGE from '../../assets/LIST_MANAGE.png';
 import LIST_SIZE from '../../assets/LIST_SIZE.png';
 import LIST_FLOOR from '../../assets/LIST_FLOOR.png';
+import FAVORATE from '../../assets/FAVORATE.png';
+import FAVORATE_FILLED from '../../assets/FAVORATE_FILLED.png';
 import BACK from '../../assets/BACK.png';
 import INFO_PICTURE from '../../assets/INFO_PICTURE.png';
 import HOST from '../../assets/HOST.png';
@@ -223,9 +227,13 @@ const initialLayout = { width: Dimensions.get('window').width };
 
 const ListInformationScreen = ({ route }) => {
   const [presenthome, setPresentHome] = useRecoilState(presentHomeState);
+  const [favList, setFavList] = useRecoilState(favoriteHomeState);
+
+  const [user, setUser] = useRecoilState(userState);
 
   const getData = async () => {
     try {
+      console.log('매물 상세정보');
       const home = await homeApi.getPresentHome(route.params.id);
       setPresentHome(home);
     } catch (e) {
@@ -237,6 +245,26 @@ const ListInformationScreen = ({ route }) => {
     getData();
     //setPresentHome(route.params);
   }, []);
+
+  const postFavorate = async () => {
+    try {
+      if (user === null) {
+        Alert.alert('로그인 후 이용해주세요.');
+        return;
+      }
+      console.log('좋아요');
+      const result = await homeApi.postFavorate(route.params.id);
+      if (result) {
+        const res = await homeApi.getFavorite(user.id);
+        const u = await authApi.getUser(user.id);
+        setUser(u);
+        // console.log('getFav', res);
+        setFavList(res);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const {
     room_type,
@@ -268,11 +296,26 @@ const ListInformationScreen = ({ route }) => {
     <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
       {presenthome && (
         <ScrollView showsVerticalScrollIndicator={false}>
-          <Back>
-            <BackButton onPress={() => navigation.pop()}>
-              <ButtonImage source={BACK} />
-            </BackButton>
-          </Back>
+          <BackAndHeart>
+            <Back>
+              <BackButton onPress={() => navigation.pop()}>
+                <ButtonImage source={BACK} />
+              </BackButton>
+            </Back>
+            <Heart>
+              <BackButton onPress={postFavorate}>
+                <ButtonImage
+                  source={
+                    user
+                      ? user.interest_rooms.includes(route.params.id)
+                        ? FAVORATE_FILLED
+                        : FAVORATE
+                      : FAVORATE
+                  }
+                />
+              </BackButton>
+            </Heart>
+          </BackAndHeart>
           <Swiper height={240} dotColor="white" activeDotColor={PRIMARY_NORMAL}>
             <Red>
               <Image
@@ -350,6 +393,12 @@ const Blue = styled.View`
   background-color: blue;
 `;
 
+const BackAndHeart = styled.View`
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+`;
+
 const Back = styled.View`
   position: relative;
   left: 16px;
@@ -360,6 +409,15 @@ const Back = styled.View`
 `;
 
 const BackButton = styled.TouchableOpacity``;
+
+const Heart = styled.View`
+  position: relative;
+  top: 40px;
+  right: 16px;
+  width: 24px;
+  height: 24px;
+  z-index: 1;
+`;
 
 const ButtonImage = styled.Image`
   width: 24px;
