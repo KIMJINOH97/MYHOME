@@ -27,8 +27,19 @@ export default (axios) => ({
 
   withdraw: async (id) => {
     try {
-      const data = await axios.delete(`/api/users/${id}`);
+      const data = await axios.delete(`/api/users/${id}/`);
+      axios.defaults.headers.common['Authorization'] = '';
       console.log('삭제', data);
+    } catch (e) {
+      console.error(e);
+    }
+  },
+
+  getUser: async (id) => {
+    try {
+      const { data } = await axios.get(`/api/users/${id}/`);
+      console.log(data);
+      return data;
     } catch (e) {
       console.error(e);
     }
