@@ -24,7 +24,7 @@ const ApplyMento = () => {
               <MailIconImage source={APPLY_MAIL} />
             </MailIcon>
             <MailAddressView>
-              <MailAddressContnet>myhome@gmail.com</MailAddressContnet>
+              <MailAddressContnet>myhome.go.seoul@gmail.com</MailAddressContnet>
             </MailAddressView>
           </MailAddress>
         </Mail>
