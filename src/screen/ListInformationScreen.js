@@ -267,6 +267,7 @@ const ListInformationScreen = ({ route }) => {
   };
 
   const {
+    photos,
     room_type,
     deposit,
     monthly_rent,
@@ -317,14 +318,23 @@ const ListInformationScreen = ({ route }) => {
             </Heart>
           </BackAndHeart>
           <Swiper height={240} dotColor="white" activeDotColor={PRIMARY_NORMAL}>
-            <Red>
-              <Image
-                source={INFO_PICTURE}
-                style={{ width: '100%', height: '100%' }}
-              />
-            </Red>
-            <Yellow />
-            <Blue />
+            {photos.length ? (
+              photos.map((photo, index) => (
+                <Red key={index}>
+                  <Image
+                    source={{ uri: photo.photo_file }}
+                    style={{ width: '100%', height: '100%' }}
+                  />
+                </Red>
+              ))
+            ) : (
+              <Red>
+                <Image
+                  source={INFO_PICTURE}
+                  style={{ width: '100%', height: '100%' }}
+                />
+              </Red>
+            )}
           </Swiper>
           <InfromationContainer>
             <ListTitle>
@@ -380,7 +390,6 @@ export default ListInformationScreen;
 
 const Red = styled.View`
   flex: 1;
-  background-color: red;
 `;
 
 const Yellow = styled.View`

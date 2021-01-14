@@ -11,12 +11,12 @@ import {
 import HOME_PICTURE from '../../../assets/HOME_PICTURE.png';
 import { TextStyle } from '../../util/TextStyle';
 
-const LookHome = ({ name, money }) => {
+const LookHome = ({ name, money, photo }) => {
   return (
     <Wrapper>
       <Profile>
         <ProfileImageView>
-          <ProfileImage source={HOME_PICTURE} />
+          <ProfileImage source={photo ? { uri: photo } : HOME_PICTURE} />
         </ProfileImageView>
       </Profile>
       <HomeNameView>

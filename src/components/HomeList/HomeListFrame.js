@@ -13,10 +13,11 @@ import {
 } from '../../util/Color.js';
 import { TextStyle } from '../../util/TextStyle';
 import TENANT from '../../../assets/TENANT.png';
+import HOME_PICTURE from '../../../assets/HOME_PICTURE.png';
 
 const HomeListFrame = ({ item }) => {
   const {
-    image,
+    photos,
     room_type,
     deposit,
     monthly_rent,
@@ -30,7 +31,7 @@ const HomeListFrame = ({ item }) => {
     <Wrapper>
       <HomeImageContainer>
         <HomeImage
-          source={require('../../../assets/HOME_PICTURE.png')}
+          source={photos[0] ? { uri: photos[0].photo_file } : HOME_PICTURE}
         ></HomeImage>
       </HomeImageContainer>
       <HomeImageInformation>
@@ -72,7 +73,6 @@ const HomeListFrame = ({ item }) => {
 export default HomeListFrame;
 
 const Wrapper = styled.View`
-  flex: 1;
   flex-direction: row;
   /* background-color: purple; */
   height: 150px;
