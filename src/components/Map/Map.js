@@ -33,18 +33,18 @@ const Map = ({}) => {
     return navigation.navigate(next);
   };
 
-  const getData = async () => {
-    console.log('get homelist');
-    try {
-      const result = await homeApi.getHome();
-      setHomeList(result);
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  // const getData = async () => {
+  //   console.log('get homelist');
+  //   try {
+  //     const result = await homeApi.getHome();
+  //     setHomeList(result);
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // };
 
   useEffect(() => {
-    getData();
+    //getData();
     navigator.geolocation.getCurrentPosition(
       (position) => {
         //console.log(position);

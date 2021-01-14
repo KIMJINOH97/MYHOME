@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components/native';
 import { Text, View, StyleSheet, StatusBar, FlatList } from 'react-native';
 
@@ -9,37 +9,39 @@ import LookHomeList from '../components/Myhome/LookHomeList';
 import MentoBox from '../components/Myhome/MentoBox';
 import { PRIMARY_NORMAL, LIGHT_GRAY, NK700, NK500 } from '../util/Color';
 import HOMIF from '../../assets/HOMIF.png';
-
-const MENTO_DUMMY = [
-  { id: '1', name: '호미들', comment: '안전한 부동산 거래를 도와드립니다.' },
-  { id: '2', name: '미호들', comment: '안전한 부동산 거래를 도와드립니다.' },
-  { id: '3', name: '들호미', comment: '안전한 부동산 거래를 도와드립니다.' },
-];
-
-const HOME_DUMMY = [
-  {
-    id: '1',
-    name: '신촌스테이하이',
-    money: '1000/60',
-  },
-  {
-    id: '2',
-    name: '홍대스테이하이',
-    money: '1000/60',
-  },
-  {
-    id: '3',
-    name: '서강스테이하이',
-    money: '1000/60',
-  },
-  {
-    id: '4',
-    name: '이대스테이하이',
-    money: '1000/60',
-  },
-];
+import { useRecoilState } from 'recoil';
+import { mentoState } from '../states/MentoState';
+import { mentoApi } from '../api/index';
+import { homeListState } from '../states/HomeListState';
+import { homeApi } from '../api/index';
 
 const HomeScreen = ({ navigation }) => {
+  const [mentoList, setMentoList] = useRecoilState(mentoState);
+  const [home, setHome] = useRecoilState(homeListState);
+
+  const getMento = async () => {
+    try {
+      const result = await mentoApi.getMento();
+      setMentoList(result);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const getHome = async () => {
+    try {
+      const result = await homeApi.getHome();
+      setHome(result);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  useEffect(() => {
+    getMento();
+    getHome();
+  }, []);
+
   return (
     <Wrapper>
       <MyhomeTitle />
@@ -50,36 +52,40 @@ const HomeScreen = ({ navigation }) => {
           <RecommandMento>
             <MyhomeMenuName name="추천 멘토" />
             <FlatList
-              data={MENTO_DUMMY}
+              data={mentoList}
               horizontal={true}
-              renderItem={({ item, index }) => {
+              renderItem={({ item }) => {
                 return (
                   <MentoBox
-                    key={index}
                     name={item.name}
-                    comment={item.comment}
+                    comment={item.introduction}
+                    score={5}
                   />
                 );
               }}
-              keyExtractor={(item) => item.id}
+              keyExtractor={(item) => `${item.id}`}
               showsHorizontalScrollIndicator={false}
             />
           </RecommandMento>
           <LookHome>
-            <MyhomeMenuName name="매물 보기" />
+            <MyhomeMenuName
+              onPress={() => navigation.navigate('HomeList')}
+              name="매물 보기"
+            />
             <FlatList
-              data={HOME_DUMMY}
+              data={home}
               horizontal={true}
               renderItem={({ item, index }) => {
                 return (
                   <LookHomeList
                     key={index}
-                    name={item.name}
-                    money={item.money}
+                    photo={item.photos[0] ? item.photos[0].photo_file : null}
+                    name={'신촌 스테이하이'}
+                    money={`${item.deposit}/${item.monthly_rent}`}
                   />
                 );
               }}
-              keyExtractor={(item) => item.id}
+              keyExtractor={(item) => `${item.id}`}
               showsHorizontalScrollIndicator={false}
             />
           </LookHome>
