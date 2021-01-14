@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components/native';
-import { TouchableHighlight, Modal, StatusBar, View } from 'react-native';
+import { TouchableHighlight, Modal, StatusBar, View, Text } from 'react-native';
 
 import HomeListFrame from '../components/HomeList/HomeListFrame';
 import Title from '../util/Title';
 
 import { useRecoilState } from 'recoil';
 import { homeListState } from '../states/HomeListState';
-import { FilterState } from '../states/FilterState';
+import { FilterListState, FilterState } from '../states/FilterState';
 import { LIGHT_GRAY, LIGHT_GRAY2, NK700, NK500 } from '../util/Color';
 import CompleteButton from '../util/CompleteButton';
 import UtilText from '../util/UtilText';
@@ -16,10 +16,19 @@ import InputSlider from '../components/HomeList/InputSlider';
 import SelectButton from '../components/Enroll/SelectButton';
 import DivideLine from '../util/DivideLine';
 
+const FILTER_DEFAULT = {
+  room_type: '',
+  deposit: 0,
+  monthly_rent: 0,
+  management_fee: 0,
+  space: 0,
+};
+
 const HomeListScreen = ({ navigation }) => {
   const [list, setList] = useRecoilState(homeListState);
   const [isVisible, setIsVisible] = useState(false);
-  const [filter, setFilter] = useRecoilState(FilterState);
+  const [filter, setFilter] = useState(FILTER_DEFAULT);
+  const [filterList, setFilterList] = useRecoilState(FilterListState);
 
   const menu = [
     { title: '원룸' },
@@ -28,6 +37,38 @@ const HomeListScreen = ({ navigation }) => {
     { title: '관리비' },
     { title: '평수' },
   ];
+
+  const filterHomeList = () => {
+    const li = list.filter((v) => v.deposit < filter.deposit);
+    setFilterList(
+      list.filter((v) => {
+        if (filter.room_type !== '' && v.room_type !== filter.room_type) {
+          return false;
+        } else if (filter.deposit !== 0 && v.deposit > filter.deposit) {
+          return false;
+        } else if (
+          filter.monthly_rent !== 0 &&
+          v.monthly_rent > filter.monthly_rent
+        ) {
+          return false;
+        } else if (
+          filter.management_fee !== 0 &&
+          v.management_fee > filter.management_fee
+        ) {
+          return false;
+        } else if (filter.space !== 0 && v.space > filter.space) {
+          return false;
+        }
+        return true;
+      })
+    );
+    setIsVisible(!isVisible);
+    setFilter(FILTER_DEFAULT);
+  };
+
+  useEffect(() => {
+    setFilterList(list);
+  }, []);
 
   return (
     <Wrapper>
@@ -45,7 +86,7 @@ const HomeListScreen = ({ navigation }) => {
             letter="-0.54px"
             size="18px"
           />
-          <DivideLine height="16px" color="white" />
+          <DivideLine height="10px" color="white" />
           <RoomMenu>
             <SelectButton
               onChange={() => setFilter({ ...filter, room_type: '원룸' })}
@@ -69,10 +110,69 @@ const HomeListScreen = ({ navigation }) => {
             letter="-0.54px"
             size="18px"
           />
-          <DivideLine height="16px" color="white" />
-          <InputSlider />
+          <UtilText
+            content={`${Math.round(filter.deposit / 100) * 100}만원`}
+            family={NK700}
+          />
+          <InputSlider
+            min=" 0    "
+            middle=" 2000만원"
+            max="4000만원"
+            maxValue={4000}
+            onChange={(value) => setFilter({ ...filter, deposit: value })}
+          />
+          <UtilText
+            content="월세비"
+            family={NK500}
+            letter="-0.54px"
+            size="18px"
+          />
+          <UtilText
+            content={`${Math.round(filter.monthly_rent / 10) * 10}만원`}
+            family={NK700}
+          />
+          <InputSlider
+            min=" 0    "
+            middle=" 50만원"
+            max="100만원"
+            maxValue={100}
+            onChange={(value) => setFilter({ ...filter, monthly_rent: value })}
+          />
+          <UtilText
+            content="관리비"
+            family={NK500}
+            letter="-0.54px"
+            size="18px"
+          />
+          <UtilText
+            content={`${Math.round(filter.management_fee)}만원`}
+            family={NK700}
+          />
+          <InputSlider
+            min=" 0  "
+            middle=" 10만원"
+            max="20만원"
+            maxValue={20}
+            onChange={(value) =>
+              setFilter({ ...filter, management_fee: value })
+            }
+          />
+          <UtilText
+            content="평수"
+            family={NK500}
+            letter="-0.54px"
+            size="18px"
+          />
+          <UtilText content={`${Math.round(filter.space)}평`} family={NK700} />
+          <InputSlider
+            min=" 0평"
+            middle=" 7평"
+            max="15평"
+            maxValue={15}
+            onChange={(value) => setFilter({ ...filter, space: value })}
+          />
         </ModalContainer>
-        <CompleteButton name="적용하기" />
+        <CompleteButton onPress={filterHomeList} name="적용하기" />
       </Modal>
       <FilterBar>
         <FilterMenuBar>
@@ -103,21 +203,24 @@ const HomeListScreen = ({ navigation }) => {
           </TouchableHighlight>
         </FilterImageView>
       </FilterBar>
-      <HomeList
-        data={list}
-        showsVerticalScrollIndicator={false}
-        renderItem={({ item, index }) => {
-          return (
-            <HomeListButton
-              title="list"
-              onPress={() => navigation.navigate('ListInformation', item)}
-            >
-              <HomeListFrame item={item} />
-            </HomeListButton>
-          );
-        }}
-        keyExtractor={(item) => `${item.id}`}
-      />
+      {
+        <HomeList
+          data={filterList}
+          extraData={filterList}
+          showsVerticalScrollIndicator={false}
+          renderItem={({ item, index }) => {
+            return (
+              <HomeListButton
+                title="list"
+                onPress={() => navigation.navigate('ListInformation', item)}
+              >
+                <HomeListFrame item={item} />
+              </HomeListButton>
+            );
+          }}
+          keyExtractor={(item) => `${item.id}`}
+        />
+      }
     </Wrapper>
   );
 };
@@ -182,13 +285,9 @@ const ModalContainer = styled.View`
 const RoomMenu = styled.View`
   flex-direction: row;
   justify-content: space-between;
-  margin-bottom: 16px;
+  margin-bottom: 10px;
 `;
 
-const HomeList = styled.FlatList`
-  flex: 10;
-`;
+const HomeList = styled.FlatList``;
 
-const HomeListButton = styled.TouchableOpacity`
-  flex: 1;
-`;
+const HomeListButton = styled.TouchableOpacity``;
