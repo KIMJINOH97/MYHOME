@@ -4,8 +4,9 @@ import { TextStyle } from '../../util/TextStyle';
 
 import { PRIMARY_NORMAL, LIGHT_GRAY, NK700, NK500 } from '../../util/Color';
 import my from '../../../assets/my.png';
+import Star from '../../util/Star';
 
-const MentoBox = ({ name, comment }) => {
+const MentoBox = ({ score, name, comment }) => {
   return (
     <Wrapper>
       <Profile>
@@ -19,7 +20,9 @@ const MentoBox = ({ name, comment }) => {
       <CommentView>
         <CommentContent>{comment}</CommentContent>
       </CommentView>
-      <Star></Star>
+      <StarView>
+        <Star width={14} height={14} score={score} />
+      </StarView>
     </Wrapper>
   );
 };
@@ -69,6 +72,7 @@ const ProfileImage = styled.Image`
 const CommentView = styled.View`
   height: 35px;
   padding-left: 2px;
+  margin-bottom: 10px;
 `;
 
 const CommentContent = styled(TextStyle)`
@@ -76,6 +80,7 @@ const CommentContent = styled(TextStyle)`
   font-size: 12px;
 `;
 
-const Star = styled.View`
-  height: 10px;
+const StarView = styled.View`
+  justify-content: center;
+  align-items: flex-start;
 `;
