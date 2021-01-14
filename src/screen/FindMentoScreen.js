@@ -11,12 +11,12 @@ import styled from 'styled-components/native';
 import TabTitle from '../util/TabTitle';
 import { TextStyle } from '../util/TextStyle';
 import { LIGHT_GRAY2, NK400, NK700 } from '../util/Color';
+import { useRecoilState } from 'recoil';
+import { mentoState } from '../states/MentoState';
 
 import my from '../../assets/my.png';
 import MENTO_MAP from '../../assets/MENTO_MAP.png';
-import { useRecoilState } from 'recoil';
-import { mentoState } from '../states/MentoState';
-import { mentoApi } from '../api/index';
+
 import Star from '../util/Star';
 
 export const FindMentoList = ({ item }) => {
@@ -137,18 +137,6 @@ const RegionContent = styled(TextStyle)`
 
 const FindMentoScreen = ({ navigation }) => {
   const [mentoList, setMentoList] = useRecoilState(mentoState);
-
-  const getData = async () => {
-    try {
-      const result = await mentoApi.getMento();
-      setMentoList(result);
-    } catch (e) {
-      console.error(e);
-    }
-  };
-  useEffect(() => {
-    getData();
-  }, []);
 
   return (
     <Wrapper>
