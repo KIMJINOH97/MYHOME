@@ -4,7 +4,7 @@
     "slug": "Myhome_app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/ICON_.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -24,11 +24,12 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "config":{
-        "googleMaps":{
+      "config": {
+        "googleMaps": {
           "apiKey": "AIzaSyAtZKcZUt1NOET2Y5fMcal3up4Fo7o9SHg"
         }
-      }
+      },
+      "package": "ceos.myhome"
     },
     "web": {
       "favicon": "./assets/favicon.png"
