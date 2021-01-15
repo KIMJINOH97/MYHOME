@@ -26,6 +26,8 @@ import ReviewScreen from '../../screen/ReviewScreen';
 import ReserveScreen from '../../screen/ReserveScreen';
 import PayScreen from '../../screen/PayScreen';
 import PayCompleteScreen from '../../screen/PayCompleteScreen';
+import CheckListScreen from '../../screen/CheckListScreen.js';
+import CautionScreen from '../../screen/CautionScreen.js';
 
 const Stack = createStackNavigator();
 const HomeRouter = [
@@ -137,6 +139,16 @@ const HomeRouter = [
   {
     name: 'PayComplete',
     component: PayCompleteScreen,
+    options: { headerShown: false },
+  },
+  {
+    name: 'CheckList',
+    component: CheckListScreen,
+    options: { headerShown: false },
+  },
+  {
+    name: 'Caution',
+    component: CautionScreen,
     options: { headerShown: false },
   },
 ];
