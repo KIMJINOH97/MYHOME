@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { authApi } from '../api/index';
+import { authApi, homeApi } from '../api/index';
 import styled from 'styled-components/native';
 import {
   View,
@@ -18,11 +18,13 @@ import LOGIN_LOGO from '../../assets/LOGIN_LOGO.png';
 import LOGIN_HOME from '../../assets/LOGIN_HOME.png';
 import { useRecoilState } from 'recoil';
 import { userState } from '../states/LoginState';
+import { favoriteHomeState } from '../states/HomeListState';
 
 const LoginScreen = ({ navigation }) => {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
   const [userInfo, setUserInfo] = useRecoilState(userState);
+  const [favList, setFavList] = useRecoilState(favoriteHomeState);
   const [color, setColor] = useState('gray');
 
   const onChangeId = (e) => {
@@ -47,6 +49,8 @@ const LoginScreen = ({ navigation }) => {
     if (result) {
       const { user } = result;
       setUserInfo(user);
+      const res = await homeApi.getFavorite(user.id);
+      setFavList(res);
       navigation.pop();
     } else {
       Alert.alert('로그인 실패', '아이디 및 비밀번호가 일치하지 않습니다.');
