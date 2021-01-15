@@ -21,7 +21,7 @@ import UtilText from '../util/UtilText';
 import UtilButton from '../util/UtilButton';
 import { InputStyle } from '../util/Input';
 
-const PayScreen = () => {
+const PayScreen = ({ navigation }) => {
   return (
     <Wrapper>
       <Title name="결제하기" />
@@ -116,7 +116,10 @@ const PayScreen = () => {
             </InputView>
           </ChangeAddress>
           <ButtonView>
-            <UtilButton name="결제하기" />
+            <UtilButton
+              name="결제하기"
+              onPress={() => navigation.navigate('PayComplete')}
+            />
           </ButtonView>
         </PayContainer>
       </KeyboardAwareScrollView>

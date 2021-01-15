@@ -113,7 +113,9 @@ const SecondRoute = ({ information }) => {
                   </CommentUserProfile>
                   <CommentUserEmail>
                     <EmailContent>{comment.user_email}</EmailContent>
-                    <Star score={comment.rate} />
+                    <StarView>
+                      <Star score={comment.rate} />
+                    </StarView>
                   </CommentUserEmail>
                 </CommentUser>
                 <CommentTitle name="장점" comment={comment.pros} />
@@ -158,6 +160,10 @@ const EmailContent = styled(TextStyle)`
   color: ${DARK_GRAY};
   font-size: 12px;
   letter-spacing: -0.36px;
+`;
+
+const StarView = styled.View`
+  align-items: flex-start;
 `;
 
 const ThirdRoute = ({ information }) => {

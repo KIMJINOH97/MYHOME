@@ -66,7 +66,7 @@ const EnrollAddressScreen = ({ navigation }) => {
               jibunAddress,
               zonecode,
             } = data;
-            console.log({ ...home, address: roadAddress });
+            //console.log({ ...home, address: roadAddress });
             // if (userSelectedType === 'R')
             //   setHome({ ...home, address: roadAddress });
             // else setHome({ ...home, address: jibunAddress });

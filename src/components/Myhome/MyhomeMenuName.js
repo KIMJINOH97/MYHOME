@@ -11,13 +11,13 @@ import {
   LIGHT_GRAY2,
 } from '../../util/Color';
 
-const MyhomeMenuName = ({ name }) => {
+const MyhomeMenuName = ({ name, onPress }) => {
   return (
     <Wrapper>
       <MenuTitle>
         <MenuTitleContent>{name}</MenuTitleContent>
       </MenuTitle>
-      <MoreSee>
+      <MoreSee onPress={onPress}>
         <MoreSeeContent>더 보기</MoreSeeContent>
         <MoreImage source={MORE} />
       </MoreSee>
