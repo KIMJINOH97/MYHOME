@@ -46,6 +46,7 @@ import { useNavigation } from '@react-navigation/native';
 
 const FirstRoute = ({ information }) => {
   const {
+    address,
     room_type,
     deposit,
     monthly_rent,
@@ -74,7 +75,7 @@ const FirstRoute = ({ information }) => {
       <DetailContent name={'가격'} info={`${deposit}/${monthly_rent}`} />
       <DetailContent name={'관리비'} info={`${management_fee}만원`} />
       <DetailContent name={'층수'} info={`${floor}층`} />
-      <DetailContent name={'실평수'} info={`${space}평`} />
+      <DetailContent name={'실평수'} info={`${Math.round(space / 3.3)}평`} />
       <DetailContent name={'준공년도'} info={completion_year} />
       <DetailContent
         alignItem="flex-start"
@@ -87,6 +88,7 @@ const FirstRoute = ({ information }) => {
       />
       <DetailContent name={'보일러'} info={heating} />
       <DetailContent name={'입주가능일'} info={occupancy_date} />
+      <DetailContent name={'주소'} info={address} />
       <DetailContent alignItem="flex-start" name={'상세설명'} info={detail} />
     </DetailInformation>
   );
@@ -183,9 +185,7 @@ const ThirdRoute = ({ information }) => {
             <HostNameContent>{user_name}</HostNameContent>
           </HostName>
           <HostPhone>
-            <HostPhoneContent>
-              {phone.slice(0, 3)}-{phone.slice(3, 7)}-{phone.slice(7, 11)}
-            </HostPhoneContent>
+            <HostPhoneContent>{phone}</HostPhoneContent>
           </HostPhone>
         </ProfileInformation>
       </HostProfile>
@@ -273,6 +273,7 @@ const ListInformationScreen = ({ route }) => {
   };
 
   const {
+    name,
     photos,
     room_type,
     deposit,
@@ -347,11 +348,14 @@ const ListInformationScreen = ({ route }) => {
               <TitleContent>
                 {room_type} {deposit}/{monthly_rent}
               </TitleContent>
-              <SubContent>신촌 신축 원룸</SubContent>
+              <SubContent>{name ? name : '신촌 신축 원룸'}</SubContent>
             </ListTitle>
             <SimpleInformation>
               <SimpleList img={LIST_HOME} info={room_type} />
-              <SimpleList img={LIST_SIZE} info={`${space}평`} />
+              <SimpleList
+                img={LIST_SIZE}
+                info={`${Math.round(space / 3.3)}평`}
+              />
               <SimpleList img={LIST_FLOOR} info={`${floor}층`} />
               <SimpleList img={LIST_MANAGE} info={`${management_fee}만`} />
             </SimpleInformation>
@@ -396,16 +400,6 @@ export default ListInformationScreen;
 
 const Red = styled.View`
   flex: 1;
-`;
-
-const Yellow = styled.View`
-  flex: 1;
-  background-color: yellow;
-`;
-
-const Blue = styled.View`
-  flex: 1;
-  background-color: blue;
 `;
 
 const BackAndHeart = styled.View`
