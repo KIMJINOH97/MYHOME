@@ -17,6 +17,7 @@ import HOME_PICTURE from '../../../assets/HOME_PICTURE.png';
 
 const HomeListFrame = ({ item }) => {
   const {
+    name,
     photos,
     room_type,
     deposit,
@@ -36,7 +37,7 @@ const HomeListFrame = ({ item }) => {
       </HomeImageContainer>
       <HomeImageInformation>
         <HomeImageTitle>
-          <TitleContent>신촌 신축 원룸</TitleContent>
+          <TitleContent>{name ? name : '신촌 신축 원룸'}</TitleContent>
         </HomeImageTitle>
         <HomeImageMoney>
           <MoneyContent>
@@ -45,7 +46,8 @@ const HomeListFrame = ({ item }) => {
         </HomeImageMoney>
         <HomeImageSummaryContent>
           <SummaryContent>
-            {room_type} {floor}층 | {space}평 | 관리비 {management_fee}만
+            {room_type} {floor}층 | {Math.round(space / 3.3)}평 | 관리비
+            {management_fee}만
           </SummaryContent>
         </HomeImageSummaryContent>
         <HomeImageSay>
@@ -75,7 +77,7 @@ export default HomeListFrame;
 const Wrapper = styled.View`
   flex-direction: row;
   /* background-color: purple; */
-  height: 150px;
+  display: flex;
   padding-left: 16px;
   padding-vertical: 10px;
   margin-bottom: 4px;
@@ -151,6 +153,7 @@ const PreTenantImage = styled.Image`
 `;
 
 const PreTenantContentView = styled.View``;
+
 const PreTenantContent = styled(TextStyle)`
   font-family: ${NK500};
   font-size: 12px;
