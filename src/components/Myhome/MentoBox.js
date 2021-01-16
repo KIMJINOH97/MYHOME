@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
+import { StyleSheet } from 'react-native';
 import { TextStyle } from '../../util/TextStyle';
 
 import { PRIMARY_NORMAL, LIGHT_GRAY, NK700, NK500 } from '../../util/Color';
@@ -8,7 +9,7 @@ import Star from '../../util/Star';
 
 const MentoBox = ({ score, name, comment }) => {
   return (
-    <Wrapper>
+    <Wrapper style={styles.container}>
       <Profile>
         <ProfileImageView>
           <ProfileImage source={my} />
@@ -17,22 +18,34 @@ const MentoBox = ({ score, name, comment }) => {
           <MentoNameContent>{name}</MentoNameContent>
         </MentoNameView>
       </Profile>
-      <CommentView>
-        <CommentContent>{comment}</CommentContent>
-      </CommentView>
-      <StarView>
-        <Star width={14} height={14} score={score} />
-      </StarView>
+      <CommentStarView>
+        <CommentView>
+          <CommentContent>{comment}</CommentContent>
+        </CommentView>
+        <StarView>
+          <Star width={14} height={14} score={score} />
+        </StarView>
+      </CommentStarView>
     </Wrapper>
   );
 };
 
 export default MentoBox;
 
+const styles = StyleSheet.create({
+  container: {
+    shadowColor: '#000',
+    shadowOffset: { width: 2, height: 2 },
+    shadowOpacity: 0.4,
+    shadowRadius: 2,
+    elevation: 3,
+  },
+});
+
 const Wrapper = styled.View`
   display: flex;
   width: 150px;
-  height: 120px;
+  height: 130px;
   padding-left: 15px;
   padding-top: 17px;
   background-color: white;
@@ -69,8 +82,12 @@ const ProfileImage = styled.Image`
   border-radius: 40px;
 `;
 
+const CommentStarView = styled.View`
+  height: 60px;
+`;
+
 const CommentView = styled.View`
-  height: 35px;
+  height: 50px;
   padding-left: 2px;
   margin-bottom: 10px;
 `;

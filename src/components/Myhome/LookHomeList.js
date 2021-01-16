@@ -69,6 +69,7 @@ const HomeNameContent = styled(TextStyle)`
 
 const MoneyView = styled.View`
   display: flex;
+  height: 16px;
   align-items: center;
 `;
 
