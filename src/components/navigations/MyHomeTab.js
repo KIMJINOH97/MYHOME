@@ -21,6 +21,7 @@ import MAP_ICON from '../../../assets/MAP_ICON.png';
 import MAP_ICON_FOCUSED from '../../../assets/MAP_ICON_FOCUSED.png';
 import FIND_ICON from '../../../assets/FIND_ICON.png';
 import FIND_ICON_FOCUSED from '../../../assets/FIND_ICON_FOCUSED.png';
+import { TextStyle } from '../../util/TextStyle';
 
 // TabNavigator(RouteConfigs, TabNavigatorConfig)
 
@@ -132,9 +133,8 @@ const Title = styled.View`
   align-items: center;
 `;
 
-const TitleContent = styled.Text`
+const TitleContent = styled(TextStyle)`
   font-family: ${NK500};
   color: ${({ focused }) => (focused ? PRIMARY_NORMAL : LIGHT_GRAY)};
   font-size: 10px;
-  margin-top: -6px;
 `;
