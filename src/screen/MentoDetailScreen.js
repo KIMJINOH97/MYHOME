@@ -61,14 +61,14 @@ const MentoDetailScreen = ({ route, navigation }) => {
                 </MentoComment>
               </MentoContent>
             </MentoProfile>
-            <DivideLine height="1px" color={' rgba(238, 238, 238, 0.5)'} />
+            <DivideLine height="1px" color={'rgba(238, 238, 238, 0.5)'} />
             <MentoringCountBox>
               <MentoringCount>
                 <Count>0회</Count>
                 <Content>멘토링 횟수</Content>
               </MentoringCount>
             </MentoringCountBox>
-            <DivideLine height="8px" color={' rgba(238, 238, 238, 0.5)'} />
+            <DivideLine height="8px" color={'rgba(238, 238, 238, 0.5)'} />
             <CarrerInfoBox>
               <InfoTitle>
                 <TitleContent>경력사항</TitleContent>
@@ -85,7 +85,7 @@ const MentoDetailScreen = ({ route, navigation }) => {
             <DivideLine height="8px" color={' rgba(238, 238, 238, 0.5)'} />
             <ReviewBox>
               <Review name="멘토 후기 " length={reviews.length} review="후기" />
-              {reviews.length &&
+              {reviews.length !== 0 &&
                 reviews.map((list, index) => {
                   return (
                     <ReviewList key={index}>
