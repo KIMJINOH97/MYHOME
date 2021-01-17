@@ -2,7 +2,7 @@ const GEO_API = 'AIzaSyD6RJg-Ul1eU863W7kYa9PDkMJpR1bmUis';
 const URL = `https://maps.googleapis.com/maps/api/geocode/json?address=`;
 
 export default (axios) => ({
-  putHome: async (home) => {
+  putHome: async (home, photo) => {
     try {
       console.log('전송');
       const { data: DD } = await axios.get(
@@ -19,8 +19,33 @@ export default (axios) => ({
         latitude: location.lat,
         longitude: location.lng,
       });
-      if (data) return data;
-      else return false;
+
+      if (data) {
+        console.log(`/api/rooms/${data.id}/post-photo/`, photo);
+        const req = await axios.post(`/api/rooms/${data.id}/post-photo/`, {
+          photo_file: photo,
+        });
+        console.log(req);
+        if (photoData) return data;
+      } else return false;
+    } catch (e) {
+      console.error(e);
+    }
+  },
+
+  postPhoto: async (form) => {
+    try {
+      // for (var pair of form.entries()) {
+      //   console.log(pair[0] + ', ' + pair[1]);
+      // }
+      const { data } = await axios.post(
+        `/api/rooms/2/post-photo/`,
+        { photo_file: form },
+        {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        }
+      );
+      return data;
     } catch (e) {
       console.error(e);
     }

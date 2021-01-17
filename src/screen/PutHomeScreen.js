@@ -9,17 +9,19 @@ import { PRIMARY_NORMAL, LIGHT_GRAY2 } from '../util/Color';
 import CompleteButton from '../util/CompleteButton';
 import { homeApi } from '../api/index';
 import { putHomeState } from '../states/PutHomeState';
+import { photoState } from '../states/PhotoState';
 import { useRecoilState } from 'recoil';
 
 const TITLE_NAME = '집 내놓기';
 
 const PutHomeScreen = ({ navigation }) => {
   const [home, setHome] = useRecoilState(putHomeState);
+  const [photo, setPhoto] = useRecoilState(photoState);
 
   const nextPage = (page) => navigation.push(page);
   const onComplete = async () => {
     // console.log(home);
-    const result = await homeApi.putHome(home);
+    const result = await homeApi.putHome(home, photo);
     if (result) {
       navigation.replace('EnrollComplete');
     } else {
