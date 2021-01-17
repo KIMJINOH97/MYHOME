@@ -27,9 +27,9 @@ const CHECK_LIST = [
     height: '8px',
     content: '직거래 시 주의사항',
     img: MORE_ALERT,
-    page: 'PutHome',
+    page: 'Caution',
   },
-  { content: '직거래 시 체크리스트', img: MORE_CHECK, page: 'PutHome' },
+  { content: '직거래 시 체크리스트', img: MORE_CHECK, page: 'CheckList' },
   { height: '8px', content: '집 내놓기', img: MORE_HOME, page: 'PutHome' },
 ];
 

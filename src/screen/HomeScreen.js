@@ -44,13 +44,16 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <Wrapper>
-      <MyhomeTitle />
-      <HomiImage source={HOMIF} />
       <HomeContainer>
+        <MyhomeTitle />
+        <HomiImage source={HOMIF} />
         <MyhomeSlogan navigation={navigation} />
         <MyhomeMenu>
           <RecommandMento>
-            <MyhomeMenuName name="추천 멘토" />
+            <MyhomeMenuName
+              onPress={() => navigation.navigate('FindMento')}
+              name="추천 멘토"
+            />
             <FlatList
               data={mentoList}
               horizontal={true}
@@ -80,7 +83,7 @@ const HomeScreen = ({ navigation }) => {
                   <LookHomeList
                     key={index}
                     photo={item.photos[0] ? item.photos[0].photo_file : null}
-                    name={'신촌 스테이하이'}
+                    name={item.name ? item.name : '신촌 스테이하이'}
                     money={`${item.deposit}/${item.monthly_rent}`}
                   />
                 );
@@ -101,12 +104,11 @@ const Wrapper = styled.SafeAreaView`
   background-color: white;
   height: 100%;
   flex: 1;
-  padding-left: 16px;
-  padding-right: 15px;
 `;
 
 const HomeContainer = styled.View`
   flex: 10;
+  padding-horizontal: 16px;
 `;
 
 const HomiImage = styled.Image`

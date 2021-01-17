@@ -56,7 +56,10 @@ const HomeListScreen = ({ navigation }) => {
           v.management_fee > filter.management_fee
         ) {
           return false;
-        } else if (filter.space !== 0 && v.space > filter.space) {
+        } else if (
+          filter.space !== 0 &&
+          Math.round(v.space / 3.3) > filter.space
+        ) {
           return false;
         }
         return true;
@@ -165,9 +168,9 @@ const HomeListScreen = ({ navigation }) => {
           />
           <UtilText content={`${Math.round(filter.space)}평`} family={NK700} />
           <InputSlider
-            min=" 0평"
-            middle=" 7평"
-            max="15평"
+            min={` 0평`}
+            middle={` 7평`}
+            max={`15평`}
             maxValue={15}
             onChange={(value) => setFilter({ ...filter, space: value })}
           />
@@ -277,7 +280,7 @@ const FilterImage = styled.Image`
   height: 32px;
 `;
 
-const ModalContainer = styled.View`
+const ModalContainer = styled.SafeAreaView`
   flex: 1;
   padding: 16px;
 `;

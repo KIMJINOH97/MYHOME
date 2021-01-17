@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components/native';
-import { StatusBar, Image } from 'react-native';
+import { StatusBar, Image, Alert } from 'react-native';
 import Title from '../util/Title';
 import Stars from 'react-native-stars';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -17,9 +17,10 @@ import STAR_FULL from '../../assets/STAR_FULL.png';
 import STAR_HALF from '../../assets/STAR_HALF.png';
 import STAR_EMPTY from '../../assets/STAR_EMPTY.png';
 import { homeApi } from '../api';
-import { set } from 'react-native-reanimated';
+import { userState } from '../states/LoginState';
 
 const ReviewScreen = ({ navigation }) => {
+  const [user] = useRecoilState(userState);
   const [score, setScore] = useState(0);
   const [pros, setPros] = useState('');
   const [cons, setCons] = useState('');
@@ -28,6 +29,10 @@ const ReviewScreen = ({ navigation }) => {
 
   const onSubmitReview = async () => {
     try {
+      if (user === null) {
+        Alert.alert('', '로그인 후 이용해주세요.');
+        return;
+      }
       const result = await homeApi.postReview(
         presentHome.id,
         score,
@@ -36,7 +41,7 @@ const ReviewScreen = ({ navigation }) => {
         content
       );
       if (result) {
-        alert('리뷰를 남겼습니다.');
+        Alert.alert('', '리뷰를 남겼습니다.');
         const home = await homeApi.getPresentHome(presentHome.id);
         setPresentHome(home);
         navigation.pop();
