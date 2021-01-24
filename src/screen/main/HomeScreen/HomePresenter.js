@@ -1,57 +1,25 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components/native';
-import { Text, View, StyleSheet, StatusBar, FlatList } from 'react-native';
+import { StatusBar, FlatList } from 'react-native';
 
-import MyhomeTitle from '../components/Myhome/MyhomeTitle';
-import MyhomeSlogan from '../components/Myhome/MyhomeSlogan';
-import MyhomeMenuName from '../components/Myhome/MyhomeMenuName';
-import LookHomeList from '../components/Myhome/LookHomeList';
-import MentoBox from '../components/Myhome/MentoBox';
-import { PRIMARY_NORMAL, LIGHT_GRAY, NK700, NK500 } from '../util/Color';
-import HOMIF from '../../assets/HOMIF.png';
-import { useRecoilState } from 'recoil';
-import { mentoState } from '../states/MentoState';
-import { mentoApi } from '../api/index';
-import { homeListState } from '../states/HomeListState';
-import { homeApi } from '../api/index';
+import MyhomeTitle from '../../../components/Myhome/MyhomeTitle';
+import MyhomeSlogan from '../../../components/Myhome/MyhomeSlogan';
+import MyhomeMenuName from '../../../components/Myhome/MyhomeMenuName';
+import LookHomeList from '../../../components/Myhome/LookHomeList';
+import MentoBox from '../../../components/Myhome/MentoBox';
+import HOMIF from '../../../../assets/HOMIF.png';
 
-const HomeScreen = ({ navigation }) => {
-  const [mentoList, setMentoList] = useRecoilState(mentoState);
-  const [home, setHome] = useRecoilState(homeListState);
-
-  const getMento = async () => {
-    try {
-      const result = await mentoApi.getMento();
-      setMentoList(result);
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
-  const getHome = async () => {
-    try {
-      const result = await homeApi.getHome();
-      setHome(result);
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
-  useEffect(() => {
-    getMento();
-    getHome();
-  }, []);
-
+const HomePresenter = ({ goPage, homeList, mentoList }) => {
   return (
     <Wrapper>
       <HomeContainer>
         <MyhomeTitle />
         <HomiImage source={HOMIF} />
-        <MyhomeSlogan navigation={navigation} />
+        <MyhomeSlogan goPage={goPage} />
         <MyhomeMenu>
           <RecommandMento>
             <MyhomeMenuName
-              onPress={() => navigation.navigate('FindMento')}
+              onPress={() => goPage('FindMento')}
               name="추천 멘토"
             />
             <FlatList
@@ -72,11 +40,11 @@ const HomeScreen = ({ navigation }) => {
           </RecommandMento>
           <LookHome>
             <MyhomeMenuName
-              onPress={() => navigation.navigate('HomeList')}
+              onPress={() => goPage('HomeList')}
               name="매물 보기"
             />
             <FlatList
-              data={home}
+              data={homeList}
               horizontal={true}
               renderItem={({ item, index }) => {
                 return (
@@ -98,7 +66,7 @@ const HomeScreen = ({ navigation }) => {
   );
 };
 
-export default HomeScreen;
+export default HomePresenter;
 
 const Wrapper = styled.SafeAreaView`
   background-color: white;

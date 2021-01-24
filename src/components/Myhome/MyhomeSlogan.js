@@ -1,10 +1,9 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import { TextStyle } from '../../util/TextStyle';
-import { PRIMARY_LIGHT2, DARK_GRAY, NK500, NK700 } from '../../util/Color';
+import { DARK_GRAY, NK500, NK700 } from '../../util/Color';
 
-const MyhomeSlogan = ({ navigation }) => {
-  const nextPage = (page) => navigation.push(page);
+const MyhomeSlogan = ({ goPage }) => {
   return (
     <Wrapper>
       <SloganView>
@@ -17,7 +16,7 @@ const MyhomeSlogan = ({ navigation }) => {
           </SloganContentSecond>
         </SloganContentView>
         <MentoApplyButtonView>
-          <MentoApplyButton onPress={() => nextPage('ApplyMento')}>
+          <MentoApplyButton onPress={() => goPage('ApplyMento')}>
             <MentoApplyButtonContent>멘토신청하기</MentoApplyButtonContent>
           </MentoApplyButton>
         </MentoApplyButtonView>
