@@ -1,34 +1,26 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components/native';
-import { StatusBar, Text, View, Platform } from 'react-native';
+import { StatusBar, Platform } from 'react-native';
 
-import TabTitle from '../util/TabTitle';
-import { TextStyle } from '../util/TextStyle';
-import { useRecoilState } from 'recoil';
-import { userState } from '../states/LoginState';
-import { homeApi } from '../api/index';
-import { LIGHT_GRAY, NK500 } from '../util/Color';
-import HomeListFrame from '../components/HomeList/HomeListFrame';
+import TabTitle from '../../../util/TabTitle';
+import HomeListFrame from '../../../components/HomeList/HomeListFrame';
+import { TextStyle } from '../../../util/TextStyle';
+import { LIGHT_GRAY, NK500 } from '../../../util/Color';
+import PLEASE_LOGIN from '../../../../assets/PLEASE_LOGIN.png';
 
-import PLEASE_LOGIN from '../../assets/PLEASE_LOGIN.png';
-import { favoriteHomeState } from '../states/HomeListState';
-
-const FavoriteScreen = ({ navigation }) => {
-  const [user] = useRecoilState(userState);
-  const [list, setList] = useRecoilState(favoriteHomeState);
-
+const FavoriteScreenPresenter = ({ goPage, user, favoriteList }) => {
   return (
     <Wrapper>
       <TabTitle name="관심매물" />
       <FavoriteContainer>
         {user ? (
-          list &&
-          list.map((v, i) => {
+          favoriteList &&
+          favoriteList.map((v, i) => {
             return (
               <HomeListButton
                 key={i}
                 title="list"
-                onPress={() => navigation.navigate('ListInformation', v)}
+                onPress={() => goPage('ListInformation', v)}
               >
                 <HomeListFrame item={v} />
               </HomeListButton>
@@ -49,7 +41,7 @@ const FavoriteScreen = ({ navigation }) => {
   );
 };
 
-export default FavoriteScreen;
+export default FavoriteScreenPresenter;
 
 const Wrapper = styled.SafeAreaView`
   padding-top: ${Platform.OS === 'ios' ? 0 : StatusBar.currentHeight}px;
