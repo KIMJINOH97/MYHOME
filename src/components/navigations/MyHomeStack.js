@@ -2,7 +2,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 //   StackViewTransitionConfigs
-import HomeScreen from '../../screen/HomeScreen.js';
+import HomeScreen from '../../screen/main/HomeScreen/index.js';
 import MapScreen from '../../screen/MapScreen.js';
 import HomeListScreen from '../../screen/HomeListScreen.js';
 import HomeListFrame from '../../components/HomeList/HomeListFrame';
@@ -12,7 +12,7 @@ import SignUpScreen from '../../screen/SignUpScreen';
 import FindPasswordScreen from '../../screen/FindPasswordScreen';
 
 import MyHomeTab from './MyHomeTab.js';
-import FavoriteScreen from '../../screen/FavoriteScreen.js';
+import FavoriteScreen from '../../screen/main/FavoriteScreen/index';
 import MoreScreen from '../../screen/MoreScreen.js';
 import FindMentoScreen from '../../screen/FindMentoScreen.js';
 import PutHomeScreen from '../../screen/PutHomeScreen.js';

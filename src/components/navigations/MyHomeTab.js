@@ -2,12 +2,11 @@ import React from 'react';
 import styled from 'styled-components/native';
 import { Platform, View, Text, Image } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Ionicons } from 'react-native-vector-icons';
 
 import MapScreen from '../../screen/MapScreen';
-import HomeScreen from '../../screen/HomeScreen';
+import HomeScreen from '../../screen/main/HomeScreen/index';
 import MoreScreen from '../../screen/MoreScreen';
-import FavoriteScreen from '../../screen/FavoriteScreen';
+import FavoriteScreen from '../../screen/main/FavoriteScreen/index';
 import FindMentoScreen from '../../screen/FindMentoScreen';
 import { LIGHT_GRAY, NK500, PRIMARY_NORMAL } from '../../util/Color';
 
