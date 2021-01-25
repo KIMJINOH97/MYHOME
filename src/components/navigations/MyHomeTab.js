@@ -5,7 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import MapScreen from '../../screen/main/MapScreen/index';
 import HomeScreen from '../../screen/main/HomeScreen/index';
-import MoreScreen from '../../screen/MoreScreen';
+import MoreScreen from '../../screen/main/MoreScreen/index';
 import FavoriteScreen from '../../screen/main/FavoriteScreen/index';
 import FindMentoScreen from '../../screen/main/MentoScreen/FindMentoScreen/index';
 import { LIGHT_GRAY, NK500, PRIMARY_NORMAL } from '../../util/Color';
@@ -94,9 +94,7 @@ const MyHomeTab = () => {
               tabBarIcon: ({ focused, title }) => {
                 return (
                   <IconContainer focused={focused}>
-                    <IconImage
-                      source={focused ? tab.icon.focus : tab.icon.non}
-                    />
+                    <IconImage source={focused ? tab.icon.focus : tab.icon.non} />
                     <Title>
                       <TitleContent focused={focused}>{tab.title}</TitleContent>
                     </Title>

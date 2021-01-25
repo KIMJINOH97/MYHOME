@@ -14,7 +14,7 @@ const DetailMentoContainer = ({ route, navigation }) => {
     try {
       const result = await mentoApi.getPresentMento(route.params.id);
       if (result) {
-        //console.log('결과', result);
+        // console.log('결과', result);
         setMento(result);
       }
     } catch (e) {

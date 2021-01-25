@@ -3,30 +3,30 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 //   StackViewTransitionConfigs
 import HomeScreen from '../../screen/main/HomeScreen/index';
-import MapScreen from '../../screen/main/MapScreen/index';
-import HomeListScreen from '../../screen/HomeListScreen.js';
-import ListInformationScreen from '../../screen/ListInformationScreen';
-import LoginScreen from '../../screen/LoginScreen';
-import SignUpScreen from '../../screen/SignUpScreen';
-import FindPasswordScreen from '../../screen/FindPasswordScreen';
-
-import MyHomeTab from './MyHomeTab.js';
 import FavoriteScreen from '../../screen/main/FavoriteScreen/index';
-import MoreScreen from '../../screen/MoreScreen.js';
+import MapScreen from '../../screen/main/MapScreen/index';
 import FindMentoScreen from '../../screen/main/MentoScreen/FindMentoScreen/index';
-import PutHomeScreen from '../../screen/PutHomeScreen.js';
-import EnrollPictureScreen from '../../screen/EnrollPictureScreen';
-import EnrollAddressScreen from '../../screen/EnrollAddressScreen';
-import EnrollDetailsScreen from '../../screen/EnrollDetailsScreen';
-import EnrollCompleteScreen from '../../screen/EnrollCompleteScreen';
-import ApplyMentoScreen from '../../screen/ApplyMentoScreen';
+import MoreScreen from '../../screen/main/MoreScreen/index';
+import HomeListScreen from '../../screen/main/HomeListScreen/index';
+import ApplyMentoScreen from '../../screen/main/MentoScreen/ApplyMentoScreen/index';
 import MentoDetailScreen from '../../screen/main/MentoScreen/DetailMentoScreen/index';
+import ListInformationScreen from '../../screen/main/HomeListScreen/HomeInformationScreen/index';
+import LoginScreen from '../../screen/auth/LoginScreen/index';
+import SignUpScreen from '../../screen/auth/SignUpScreen/index';
+import FindPasswordScreen from '../../screen/auth/FindPasswordScreen/index';
+import PutHomeScreen from '../../screen/main/PutHomeScreen/index';
+import EnrollAddressScreen from '../../screen/main/PutHomeScreen/EnrollAddressScreen/index';
+import EnrollDetailsScreen from '../../screen/main/PutHomeScreen/EnrollDetailsScreen/index';
+import EnrollPictureScreen from '../../screen/main/PutHomeScreen/EnrollPictureScreen/index';
+
+import EnrollCompleteScreen from '../../screen/EnrollCompleteScreen';
 import ReviewScreen from '../../screen/ReviewScreen';
 import ReserveScreen from '../../screen/ReserveScreen';
 import PayScreen from '../../screen/PayScreen';
 import PayCompleteScreen from '../../screen/PayCompleteScreen';
-import CheckListScreen from '../../screen/CheckListScreen.js';
-import CautionScreen from '../../screen/CautionScreen.js';
+import CheckListScreen from '../../screen/CheckListScreen';
+import CautionScreen from '../../screen/CautionScreen';
+import MyHomeTab from './MyHomeTab';
 
 const Stack = createStackNavigator();
 const HomeRouter = [
