@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import { Platform, View, Text, Image } from 'react-native';
+import { Platform } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import MapScreen from '../../screen/MapScreen';
+import MapScreen from '../../screen/main/MapScreen/index';
 import HomeScreen from '../../screen/main/HomeScreen/index';
 import MoreScreen from '../../screen/MoreScreen';
 import FavoriteScreen from '../../screen/main/FavoriteScreen/index';
-import FindMentoScreen from '../../screen/FindMentoScreen';
+import FindMentoScreen from '../../screen/main/MentoScreen/FindMentoScreen/index';
 import { LIGHT_GRAY, NK500, PRIMARY_NORMAL } from '../../util/Color';
 
 import HOME_ICON_FOCUSED from '../../../assets/HOME_ICON_FOCUSED.png';
