@@ -1,26 +1,20 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import { useRecoilState, useResetRecoilState } from 'recoil';
-import { userState } from '../states/LoginState';
-import { putHomeState } from '../states/PutHomeState';
-import {
-  Alert,
-  Text,
-  StatusBar,
-  Platform,
-  TouchableOpacity,
-} from 'react-native';
+import { useRecoilState } from 'recoil';
+import { Alert, Text, StatusBar, Platform, TouchableOpacity } from 'react-native';
+import { userState } from '../../../states/LoginState';
+import { putHomeState } from '../../../states/PutHomeState';
 
-import { authApi } from '../api/index';
-import TabTitle from '../util/TabTitle';
-import { LIGHT_GRAY, LIGHT_GRAY2, MEDIUM_GRAY, NK500 } from '../util/Color';
-import { TextStyle } from '../util/TextStyle';
-import CheckList from '../components/More/CheckList';
+import { authApi } from '../../../api/index';
+import TabTitle from '../../../util/TabTitle';
+import { LIGHT_GRAY, MEDIUM_GRAY, NK500 } from '../../../util/Color';
+import { TextStyle } from '../../../util/TextStyle';
+import CheckList from '../../../components/More/CheckList';
 
-import my from '../../assets/my.png';
-import MORE_CHECK from '../../assets/MORE_CHECK.png';
-import MORE_ALERT from '../../assets/MORE_ALERT.png';
-import MORE_HOME from '../../assets/MORE_HOME.png';
+import my from '../../../../assets/my.png';
+import MORE_CHECK from '../../../../assets/MORE_CHECK.png';
+import MORE_ALERT from '../../../../assets/MORE_ALERT.png';
+import MORE_HOME from '../../../../assets/MORE_HOME.png';
 
 const CHECK_LIST = [
   {
@@ -33,8 +27,7 @@ const CHECK_LIST = [
   { height: '8px', content: '집 내놓기', img: MORE_HOME, page: 'PutHome' },
 ];
 
-const MoreScreen = ({ navigation }) => {
-  const nextPage = (page) => navigation.push(page);
+const MorePresenter = ({ goPage }) => {
   const [user, setUser] = useRecoilState(userState);
   const [putHome, setPutHome] = useRecoilState(putHomeState);
 
@@ -45,7 +38,6 @@ const MoreScreen = ({ navigation }) => {
         onPress: () => {
           authApi.logout();
           setUser(null);
-          return;
         },
       },
       { text: '아니오' },
@@ -59,7 +51,6 @@ const MoreScreen = ({ navigation }) => {
         onPress: () => {
           authApi.withdraw(user.id);
           setUser(null);
-          return;
         },
       },
       { text: '아니오' },
@@ -73,12 +64,12 @@ const MoreScreen = ({ navigation }) => {
         <UserContainer>
           <MyProfile>
             <MyProfilePicture>
-              <ProfilePicture source={my}></ProfilePicture>
+              <ProfilePicture source={my} />
             </MyProfilePicture>
           </MyProfile>
           <ProfileInformation>
             <MemberInformation>
-              <Text></Text>
+              <Text />
             </MemberInformation>
             <LoginInformation>
               {user ? (
@@ -86,18 +77,16 @@ const MoreScreen = ({ navigation }) => {
               ) : (
                 <LoginButton
                   onPress={() => {
-                    nextPage('Login');
+                    goPage('Login');
                   }}
                 >
-                  <LoginContent>로그인 {'&'} 가입하기</LoginContent>
+                  <LoginContent>로그인 & 가입하기</LoginContent>
                 </LoginButton>
               )}
             </LoginInformation>
             <MoreInformation>
               <MoreContent>
-                {user
-                  ? user.email
-                  : `로그인하고 마이홈 서비스를 ${'\n'}자유롭게 이용해보세요`}
+                {user ? user.email : `로그인하고 마이홈 서비스를 ${'\n'}자유롭게 이용해보세요`}
               </MoreContent>
             </MoreInformation>
           </ProfileInformation>
@@ -105,7 +94,7 @@ const MoreScreen = ({ navigation }) => {
         <CheckContainer>
           {CHECK_LIST.map((list, index) => {
             return (
-              <TouchableOpacity key={index} onPress={() => nextPage(list.page)}>
+              <TouchableOpacity key={index} onPress={() => goPage(list.page)}>
                 <CheckList
                   height={list.height ? list.height : '1px'}
                   content={list.content}
@@ -134,7 +123,7 @@ const MoreScreen = ({ navigation }) => {
   );
 };
 
-export default MoreScreen;
+export default MorePresenter;
 
 const Wrapper = styled.SafeAreaView`
   padding-top: ${Platform.OS === 'ios' ? 0 : StatusBar.currentHeight}px;
