@@ -2,27 +2,25 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components/native';
 import { StatusBar } from 'react-native';
 import { useRecoilState } from 'recoil';
-import { presentMentoState } from '../states/MentoState';
-import { mentoApi } from '../api/index';
-
-import { TextStyle } from '../util/TextStyle';
+import { presentMentoState } from '../../../../states/MentoState';
+import { mentoApi } from '../../../../api/index';
+import { TextStyle } from '../../../../util/TextStyle';
 import {
   DARK_GRAY,
-  LIGHT_GRAY2,
   MEDIUM_GRAY,
   NK400,
   NK500,
   PRIMARY_NORMAL,
-} from '../util/Color';
+} from '../../../../util/Color';
 
-import MENTO_IMAGE from '../../assets/MENTO_IMAGE.png';
-import MENTO_AWARD from '../../assets/MENTO_AWARD.png';
-import Title from '../util/Title';
-import DivideLine from '../util/DivideLine';
-import Review from '../util/Review';
-import Star from '../util/Star';
+import MENTO_IMAGE from '../../../../../assets/MENTO_IMAGE.png';
+import MENTO_AWARD from '../../../../../assets/MENTO_AWARD.png';
+import Title from '../../../../util/Title';
+import DivideLine from '../../../../util/DivideLine';
+import Review from '../../../../util/Review';
+import Star from '../../../../util/Star';
 
-const MentoDetailScreen = ({ route, navigation }) => {
+const DetailMentoPresenter = ({ route, goPage }) => {
   const { reviews, name, introduction } = route.params;
   const [mento, setMento] = useRecoilState(presentMentoState);
 
@@ -101,7 +99,7 @@ const MentoDetailScreen = ({ route, navigation }) => {
             </ReviewBox>
           </MentoDetailContainer>
           <ReserveButtonView>
-            <ReserveButton onPress={() => navigation.navigate('Reserve')}>
+            <ReserveButton onPress={() => goPage('Reserve')}>
               <ButtonContent>예약하기</ButtonContent>
             </ReserveButton>
           </ReserveButtonView>
@@ -111,7 +109,7 @@ const MentoDetailScreen = ({ route, navigation }) => {
   );
 };
 
-export default MentoDetailScreen;
+export default DetailMentoPresenter;
 
 const Wrapper = styled.SafeAreaView`
   padding-top: ${Platform.OS === 'ios' ? 0 : StatusBar.currentHeight}px;
