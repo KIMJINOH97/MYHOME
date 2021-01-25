@@ -1,53 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import styled from 'styled-components/native';
-import { View, Text, ActivityIndicator } from 'react-native';
+import { View, ActivityIndicator } from 'react-native';
 import MapView from 'react-native-map-clustering';
 import { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 
 import { TextStyle } from '../../util/TextStyle';
-import { NK500, NK700 } from '../../util/Color';
+import { NK500 } from '../../util/Color';
 
 import { useRecoilState } from 'recoil';
 import { homeListState } from '../../states/HomeListState';
-import { homeApi } from '../../api/index';
 import MAP_PIN from '../../../assets/MAP_PIN.png';
 
-// https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=
-/*componentDidMount() {
-  setLat(37.566535)
-  setLong(126.977969);
-}*/
-const GEO_API = 'AIzaSyD6RJg-Ul1eU863W7kYa9PDkMJpR1bmUis';
-const URL = `https://maps.googleapis.com/maps/api/geocode/json?address=서울시 마포구 독막로19길 30,+CA&key=${GEO_API}`;
-
-const Map = ({}) => {
+const Map = ({ goPage }) => {
   const [lat, setLat] = useState();
   const [long, setLong] = useState();
   const [homeList, setHomeList] = useRecoilState(homeListState);
-  const navigation = useNavigation();
-
-  const pushPage = (next) => {
-    return navigation.navigate(next);
-  };
-
-  // const getData = async () => {
-  //   console.log('get homelist');
-  //   try {
-  //     const result = await homeApi.getHome();
-  //     setHomeList(result);
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
 
   useEffect(() => {
-    //getData();
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        //console.log(position);
         setLong(position.coords.longitude);
         setLat(position.coords.latitude);
       },
@@ -112,7 +84,7 @@ const Map = ({}) => {
             {markers}
           </MapView>
           <ShowButtonBox>
-            <ShowButton onPress={() => pushPage('HomeList')}>
+            <ShowButton onPress={() => goPage('HomeList')}>
               <ButtonContent>이 지역 매물보기</ButtonContent>
             </ShowButton>
           </ShowButtonBox>
@@ -123,15 +95,6 @@ const Map = ({}) => {
 };
 
 export default Map;
-
-// const Wrapper = styled.View`
-//   flex: 1;
-// `;
-// const MapBox = styled.MapView`
-//   flex: 1;
-//   height: 100%;
-//   width: 100%;
-// `;
 
 const ShowButtonBox = styled.View`
   width: 90%;
