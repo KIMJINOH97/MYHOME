@@ -1,25 +1,23 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   FlatList,
-  SafeAreaView,
   StyleSheet,
   StatusBar,
-  Image,
   TouchableHighlight,
 } from 'react-native';
 import styled from 'styled-components/native';
-import TabTitle from '../util/TabTitle';
-import { TextStyle } from '../util/TextStyle';
-import { LIGHT_GRAY2, NK400, NK700 } from '../util/Color';
+import TabTitle from '../../../../util/TabTitle';
+import { TextStyle } from '../../../../util/TextStyle';
+import { NK400, NK700 } from '../../../../util/Color';
 import { useRecoilState } from 'recoil';
-import { mentoState } from '../states/MentoState';
+import { mentoState } from '../../../../states/MentoState';
 
-import my from '../../assets/my.png';
-import MENTO_MAP from '../../assets/MENTO_MAP.png';
+import my from '../../../../../assets/my.png';
+import MENTO_MAP from '../../../../../assets/MENTO_MAP.png';
 
-import Star from '../util/Star';
+import Star from '../../../../util/Star';
 
-export const FindMentoList = ({ item }) => {
+export const FindMentoList = ({ item, goPage }) => {
   const { name, introduction } = item;
   return (
     <FindMentoListFrame style={styles.container}>
@@ -135,8 +133,8 @@ const RegionContent = styled(TextStyle)`
   font-size: 12px;
 `;
 
-const FindMentoScreen = ({ navigation }) => {
-  const [mentoList, setMentoList] = useRecoilState(mentoState);
+const FindMentoScreen = ({ goPage }) => {
+  const [mentoList] = useRecoilState(mentoState);
 
   return (
     <Wrapper>
@@ -150,7 +148,7 @@ const FindMentoScreen = ({ navigation }) => {
               return (
                 <TouchableHighlight
                   underlayColor="white"
-                  onPress={() => navigation.push('MentoDetail', item)}
+                  onPress={() => goPage('MentoDetail', item)}
                 >
                   <FindMentoList key={index} item={item} />
                 </TouchableHighlight>
