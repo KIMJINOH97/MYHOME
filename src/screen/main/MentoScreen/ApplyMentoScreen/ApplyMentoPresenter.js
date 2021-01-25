@@ -1,22 +1,20 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import { StatusBar, StyleSheet, Text } from 'react-native';
-import { TextStyle } from '../util/TextStyle';
-import { NK700, NK500, NK100, LIGHT_GRAY2, DARK_GRAY } from '../util/Color';
-import Title from '../util/Title';
-import WantListFrame from '../components/ApplyMento/WantListFrame';
+import { StatusBar, Platform } from 'react-native';
+import { TextStyle } from '../../../../util/TextStyle';
+import { NK700, NK500, LIGHT_GRAY2, DARK_GRAY } from '../../../../util/Color';
+import Title from '../../../../util/Title';
+import WantListFrame from '../../../../components/ApplyMento/WantListFrame';
 
-import APPLY_MAIL from '../../assets/APPLY_MAIL.png';
+import APPLY_MAIL from '../../../../../assets/APPLY_MAIL.png';
 
-const ApplyMento = () => {
+const ApplyMentoPresenter = () => {
   return (
     <Wrapper>
-      <Title name="멘토 등록하기"></Title>
+      <Title name="멘토 등록하기" />
       <ApplyContainer>
         <ApplyTitle>
-          <ApplyContent>
-            멘토 등록을 위해서{'\n'}아래 이메일로 문의 바랍니다.
-          </ApplyContent>
+          <ApplyContent>멘토 등록을 위해서{'\n'}아래 이메일로 문의 바랍니다.</ApplyContent>
         </ApplyTitle>
         <Mail>
           <MailAddress>
@@ -45,7 +43,7 @@ const ApplyMento = () => {
   );
 };
 
-export default ApplyMento;
+export default ApplyMentoPresenter;
 
 const Wrapper = styled.SafeAreaView`
   padding-top: ${Platform.OS === 'ios' ? 0 : StatusBar.currentHeight}px;
