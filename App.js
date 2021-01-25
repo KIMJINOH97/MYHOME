@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import styled from 'styled-components/native';
-import { StatusBar } from 'expo-status-bar';
 import AppLoading from 'expo-app-loading';
-import MyHomeStack from './src/components/navigations/MyHomeStack.js';
 import {
   useFonts,
   NotoSansKR_100Thin,
@@ -15,6 +13,7 @@ import {
 } from '@expo-google-fonts/noto-sans-kr';
 
 import { RecoilRoot } from 'recoil';
+import MyHomeStack from './src/components/navigations/MyHomeStack';
 import SPLASH_ from './assets/SPLASH_.png';
 
 // const getFonts = () =>
@@ -23,7 +22,7 @@ import SPLASH_ from './assets/SPLASH_.png';
 //   });
 
 export default function App() {
-  let [fontsLoaded] = useFonts({
+  const [fontsLoaded] = useFonts({
     NotoSansKR_100Thin,
     NotoSansKR_300Light,
     NotoSansKR_400Regular,
@@ -52,9 +51,8 @@ export default function App() {
         )}
       </RecoilRoot>
     );
-  } else {
-    return <AppLoading />;
   }
+  return <AppLoading />;
 }
 
 const Wrapper = styled.View`
@@ -62,8 +60,6 @@ const Wrapper = styled.View`
   align-items: center;
   justify-content: center;
 `;
-
-const LogoImageView = styled.View``;
 
 const LogoImage = styled.Image`
   width: 83px;
