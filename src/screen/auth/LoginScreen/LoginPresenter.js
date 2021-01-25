@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { authApi, homeApi } from '../api/index';
 import styled from 'styled-components/native';
 import {
   View,
@@ -8,24 +7,26 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Alert,
+  Platform,
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import Title from '../util/Title';
-import { InputStyle } from '../util/Input';
-import { TextStyle } from '../util/TextStyle';
-import { NK500, PRIMARY_NORMAL, LIGHT_GRAY, MEDIUM_GRAY } from '../util/Color';
-import LOGIN_LOGO from '../../assets/LOGIN_LOGO.png';
-import LOGIN_HOME from '../../assets/LOGIN_HOME.png';
 import { useRecoilState } from 'recoil';
-import { userState } from '../states/LoginState';
-import { favoriteHomeState } from '../states/HomeListState';
+import { authApi, homeApi } from '../../../api/index';
+import Title from '../../../util/Title';
+import { InputStyle } from '../../../util/Input';
+import { TextStyle } from '../../../util/TextStyle';
+import { NK500, PRIMARY_NORMAL, LIGHT_GRAY, MEDIUM_GRAY } from '../../../util/Color';
+import LOGIN_LOGO from '../../../../assets/LOGIN_LOGO.png';
+import LOGIN_HOME from '../../../../assets/LOGIN_HOME.png';
+import { userState } from '../../../states/LoginState';
+import { favoriteHomeState } from '../../../states/HomeListState';
 
-const LoginScreen = ({ navigation }) => {
+const LoginPresenter = ({ goPage, goBack }) => {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
-  const [userInfo, setUserInfo] = useRecoilState(userState);
-  const [favList, setFavList] = useRecoilState(favoriteHomeState);
-  const [color, setColor] = useState('gray');
+  const [, setUserInfo] = useRecoilState(userState);
+  const [, setFavList] = useRecoilState(favoriteHomeState);
+  const [color] = useState('gray');
 
   const onChangeId = (e) => {
     setId(e);
@@ -40,7 +41,8 @@ const LoginScreen = ({ navigation }) => {
     if (!id) {
       Alert.alert('로그인 실패', '이메일을 입력해주세요.');
       return;
-    } else if (!password) {
+    }
+    if (!password) {
       Alert.alert('로그인 실패', '비밀번호를 입력해주세요');
       return;
     }
@@ -51,13 +53,11 @@ const LoginScreen = ({ navigation }) => {
       setUserInfo(user);
       const res = await homeApi.getFavorite(user.id);
       setFavList(res);
-      navigation.pop();
+      goBack();
     } else {
       Alert.alert('로그인 실패', '아이디 및 비밀번호가 일치하지 않습니다.');
     }
   };
-
-  const nextPage = (page) => navigation.navigate(page);
 
   return (
     <TouchableWithoutFeedback
@@ -88,30 +88,25 @@ const LoginScreen = ({ navigation }) => {
               <PasswordBox>
                 <Input
                   inputType="password"
-                  secureTextEntry={true}
+                  secureTextEntry
                   placeholder="비밀번호"
                   onChangeText={onChangePassword}
                 />
               </PasswordBox>
               <SubmitLoginBox>
-                <SubmitButton
-                  id={id}
-                  password={password}
-                  color={color}
-                  onPress={handleOnLogin}
-                >
+                <SubmitButton id={id} password={password} color={color} onPress={handleOnLogin}>
                   <ButtonContent>로그인</ButtonContent>
                 </SubmitButton>
               </SubmitLoginBox>
               <DivideLine />
               <SignUpFindButtonContainer>
-                <SignUpFindPwButton onPress={() => nextPage('SignUp')}>
+                <SignUpFindPwButton onPress={() => goPage('SignUp')}>
                   <SignUpFindPwContent>회원가입 </SignUpFindPwContent>
                 </SignUpFindPwButton>
                 <View>
-                  <Text style={{ color: MEDIUM_GRAY }}>{'|'}</Text>
+                  <Text style={{ color: MEDIUM_GRAY }}>|</Text>
                 </View>
-                <SignUpFindPwButton onPress={() => nextPage('FindPassword')}>
+                <SignUpFindPwButton onPress={() => goPage('FindPassword')}>
                   <SignUpFindPwContent> 비밀번호 찾기</SignUpFindPwContent>
                 </SignUpFindPwButton>
               </SignUpFindButtonContainer>
@@ -123,7 +118,7 @@ const LoginScreen = ({ navigation }) => {
   );
 };
 
-export default LoginScreen;
+export default LoginPresenter;
 
 const Wrapper = styled.SafeAreaView`
   flex: 1;
@@ -189,9 +184,7 @@ const SubmitButton = styled.TouchableOpacity`
   height: 48px;
   padding: 6px;
   background-color: ${(props) => {
-    return props.id !== '' && props.password !== ''
-      ? PRIMARY_NORMAL
-      : LIGHT_GRAY;
+    return props.id !== '' && props.password !== '' ? PRIMARY_NORMAL : LIGHT_GRAY;
   }};
   border: 1px ${LIGHT_GRAY};
   border-radius: 5px;

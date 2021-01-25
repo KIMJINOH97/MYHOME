@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 import styled from 'styled-components/native';
-import { Alert, Text, StatusBar } from 'react-native';
+import { Alert, StatusBar, Platform } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
-import Title from '../util/Title';
-import { InputStyle } from '../util/Input';
-import InfoText from '../util/InfoText';
-import { NK500, LIGHT_GRAY2, MEDIUM_GRAY, PRIMARY_NORMAL } from '../util/Color';
-import { TextStyle } from '../util/TextStyle';
-import UtilButton from '../util/UtilButton';
+import Title from '../../../util/Title';
+import { InputStyle } from '../../../util/Input';
+import InfoText from '../../../util/InfoText';
+import { NK500, LIGHT_GRAY2, MEDIUM_GRAY, PRIMARY_NORMAL } from '../../../util/Color';
+import { TextStyle } from '../../../util/TextStyle';
+import UtilButton from '../../../util/UtilButton';
 
-import { authApi } from '../api/index';
+import { authApi } from '../../../api/index';
 
 const TITLE_NAME = '회원가입';
 
-const SignUpScreen = ({ navigation }) => {
+const SignUpPresenter = ({ goBack }) => {
   const [user, setUser] = useState({
     email: '',
     password: '',
@@ -30,13 +30,11 @@ const SignUpScreen = ({ navigation }) => {
 
   const onChangePassword = (password) => setUser({ ...user, password });
 
-  const onChangePasswordCheck = (passwordCheck) =>
-    setUser({ ...user, passwordCheck });
+  const onChangePasswordCheck = (passwordCheck) => setUser({ ...user, passwordCheck });
 
   const onChangeName = (name) => setUser({ ...user, name });
 
-  const onChangePhoneNumber = (phoneNumber) =>
-    setUser({ ...user, phoneNumber });
+  const onChangePhoneNumber = (phoneNumber) => setUser({ ...user, phoneNumber });
 
   const onChangeBirth = (birth) => setUser({ ...user, birth });
 
@@ -44,19 +42,24 @@ const SignUpScreen = ({ navigation }) => {
     if (!user.email) {
       Alert.alert('', '이메일을 입력해주세요');
       return;
-    } else if (!user.password) {
+    }
+    if (!user.password) {
       Alert.alert('', '비밀번호를 입력해주세요');
       return;
-    } else if (!user.name) {
+    }
+    if (!user.name) {
       Alert.alert('', '이름을 입력해주세요');
       return;
-    } else if (!user.birth) {
+    }
+    if (!user.birth) {
       Alert.alert('', '생일을 입력해주세요');
       return;
-    } else if (!user.gender) {
+    }
+    if (!user.gender) {
       Alert.alert('', '성별을 입력해주세요');
       return;
-    } else if (!user.phoneNumber) {
+    }
+    if (!user.phoneNumber) {
       Alert.alert('', '휴대폰 번호를 입력해주세요');
       return;
     }
@@ -64,7 +67,8 @@ const SignUpScreen = ({ navigation }) => {
     if (user.password !== user.passwordCheck) {
       Alert.alert('', '비밀번호와 비밀번호 확인이 일치하지 않습니다.');
       return;
-    } else if (user.phoneNumber.length !== 11) {
+    }
+    if (user.phoneNumber.length !== 11) {
       Alert.alert('', '휴대폰 번호를 확인해주세요.');
       return;
     }
@@ -72,9 +76,8 @@ const SignUpScreen = ({ navigation }) => {
     const result = await authApi.signup(user);
     if (result) {
       Alert.alert('회원가입에 성공하였습니다.');
-      navigation.pop();
+      goBack();
     }
-    return;
   };
 
   return (
@@ -83,21 +86,17 @@ const SignUpScreen = ({ navigation }) => {
       <KeyboardAwareScrollView>
         <SignUpContainer>
           <InfoText name="이메일" />
-          <Input
-            inputType="email"
-            placeholder="hello@myhome.com"
-            onChangeText={onChangeId}
-          />
+          <Input inputType="email" placeholder="hello@myhome.com" onChangeText={onChangeId} />
           <InfoText name="비밀번호" />
           <Input
             inputType="password"
-            secureTextEntry={true}
+            secureTextEntry
             placeholder="8자리 이상 영문자, 숫자, 특수문자를 포함"
             onChangeText={onChangePassword}
           />
           <Input
             inputType="password"
-            secureTextEntry={true}
+            secureTextEntry
             placeholder="비밀번호 확인"
             onChangeText={onChangePasswordCheck}
           />
@@ -116,24 +115,20 @@ const SignUpScreen = ({ navigation }) => {
           <InfoText name="성별" />
           <ButtonBox>
             <Button
-              who={user.gender === '여성' ? true : false}
+              who={user.gender === '여성'}
               onPress={() => setUser({ ...user, gender: '여성' })}
             >
               <ButtonContent>여성</ButtonContent>
             </Button>
             <Button
-              who={user.gender === '남성' ? true : false}
+              who={user.gender === '남성'}
               onPress={() => setUser({ ...user, gender: '남성' })}
             >
               <ButtonContent>남성</ButtonContent>
             </Button>
           </ButtonBox>
           <InfoText name="휴대폰 번호" />
-          <Input
-            inputType="phone"
-            placeholder="-없이 입력"
-            onChangeText={onChangePhoneNumber}
-          />
+          <Input inputType="phone" placeholder="-없이 입력" onChangeText={onChangePhoneNumber} />
           <UtilButton name="회원가입" onPress={handleOnSignUp} />
         </SignUpContainer>
       </KeyboardAwareScrollView>
@@ -141,7 +136,7 @@ const SignUpScreen = ({ navigation }) => {
   );
 };
 
-export default SignUpScreen;
+export default SignUpPresenter;
 
 const Wrapper = styled.SafeAreaView`
   flex: 1;
