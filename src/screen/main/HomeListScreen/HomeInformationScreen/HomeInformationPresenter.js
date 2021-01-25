@@ -1,24 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  Dimensions,
-  Image,
-  View,
-  Alert,
-} from 'react-native';
+import { SafeAreaView, ScrollView, Dimensions, Image, View, Alert } from 'react-native';
 import styled from 'styled-components/native';
 import Swiper from 'react-native-swiper';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import { useRecoilState } from 'recoil';
-import { presentHomeState, favoriteHomeState } from '../states/HomeListState';
-import { userState } from '../states/LoginState';
-import { authApi, homeApi } from '../api/index';
+import { useNavigation } from '@react-navigation/native';
+import { presentHomeState, favoriteHomeState } from '../../../../states/HomeListState';
+import { userState } from '../../../../states/LoginState';
+import { authApi, homeApi } from '../../../../api/index';
 
-import DetailContent from '../components/ListInfromation/DetailContent';
-import SimpleList from '../components/ListInfromation/SimpleList';
-import DivideLine from '../util/DivideLine';
-import { TextStyle } from '../util/TextStyle';
+import DetailContent from '../../../../components/ListInfromation/DetailContent';
+import SimpleList from '../../../../components/ListInfromation/SimpleList';
+import DivideLine from '../../../../util/DivideLine';
+import { TextStyle } from '../../../../util/TextStyle';
 import {
   LIGHT_GRAY2,
   MEDIUM_GRAY,
@@ -27,22 +21,21 @@ import {
   NK400,
   NK700,
   PRIMARY_NORMAL,
-} from '../util/Color';
+} from '../../../../util/Color';
 
-import CommentTitle from '../components/ListInfromation/CommentTitle';
-import Review from '../util/Review';
-import Star from '../util/Star';
-import my from '../../assets/my.png';
-import LIST_HOME from '../../assets/LIST_HOME.png';
-import LIST_MANAGE from '../../assets/LIST_MANAGE.png';
-import LIST_SIZE from '../../assets/LIST_SIZE.png';
-import LIST_FLOOR from '../../assets/LIST_FLOOR.png';
-import FAVORATE from '../../assets/FAVORATE.png';
-import FAVORATE_FILLED from '../../assets/FAVORATE_FILLED.png';
-import BACK from '../../assets/BACK.png';
-import INFO_PICTURE from '../../assets/INFO_PICTURE.png';
-import HOST from '../../assets/HOST.png';
-import { useNavigation } from '@react-navigation/native';
+import CommentTitle from '../../../../components/ListInfromation/CommentTitle';
+import Review from '../../../../util/Review';
+import Star from '../../../../util/Star';
+import my from '../../../../../assets/my.png';
+import LIST_HOME from '../../../../../assets/LIST_HOME.png';
+import LIST_MANAGE from '../../../../../assets/LIST_MANAGE.png';
+import LIST_SIZE from '../../../../../assets/LIST_SIZE.png';
+import LIST_FLOOR from '../../../../../assets/LIST_FLOOR.png';
+import FAVORATE from '../../../../../assets/FAVORATE.png';
+import FAVORATE_FILLED from '../../../../../assets/FAVORATE_FILLED.png';
+import BACK from '../../../../../assets/BACK.png';
+import INFO_PICTURE from '../../../../../assets/INFO_PICTURE.png';
+import HOST from '../../../../../assets/HOST.png';
 
 const FirstRoute = ({ information }) => {
   const {
@@ -70,26 +63,24 @@ const FirstRoute = ({ information }) => {
         <DetailTitleContent>상세정보</DetailTitleContent>
       </DetailTitle>
       <DivideLine height="1px" color={LIGHT_GRAY2} />
-      <DivideLine height="15px" color={'white'} />
-      <DetailContent name={'방종류'} info={room_type} />
-      <DetailContent name={'가격'} info={`${deposit}/${monthly_rent}`} />
-      <DetailContent name={'관리비'} info={`${management_fee}만원`} />
-      <DetailContent name={'층수'} info={`${floor}층`} />
-      <DetailContent name={'실평수'} info={`${Math.round(space / 3.3)}평`} />
-      <DetailContent name={'준공년도'} info={completion_year} />
+      <DivideLine height="15px" color="white" />
+      <DetailContent name="방종류" info={room_type} />
+      <DetailContent name="가격" info={`${deposit}/${monthly_rent}`} />
+      <DetailContent name="관리비" info={`${management_fee}만원`} />
+      <DetailContent name="층수" info={`${floor}층`} />
+      <DetailContent name="실평수" info={`${Math.round(space / 3.3)}평`} />
+      <DetailContent name="준공년도" info={completion_year} />
       <DetailContent
         alignItem="flex-start"
-        name={'추가옵션'}
-        info={`${desk ? '책상 ' : ''}${refrigerator ? '냉장고 ' : ''}${
-          washer ? '세탁기 ' : ''
-        }${elevator ? '엘리베이터 ' : ''}${
-          air_conditioner ? '에어컨 ' : ''
-        }있음`}
+        name="추가옵션"
+        info={`${desk ? '책상 ' : ''}${refrigerator ? '냉장고 ' : ''}${washer ? '세탁기 ' : ''}${
+          elevator ? '엘리베이터 ' : ''
+        }${air_conditioner ? '에어컨 ' : ''}있음`}
       />
-      <DetailContent name={'보일러'} info={heating} />
-      <DetailContent name={'입주가능일'} info={occupancy_date} />
-      <DetailContent name={'주소'} info={address} />
-      <DetailContent alignItem="flex-start" name={'상세설명'} info={detail} />
+      <DetailContent name="보일러" info={heating} />
+      <DetailContent name="입주가능일" info={occupancy_date} />
+      <DetailContent name="주소" info={address} />
+      <DetailContent alignItem="flex-start" name="상세설명" info={detail} />
     </DetailInformation>
   );
 };
@@ -99,11 +90,7 @@ const SecondRoute = ({ information }) => {
   const navigation = useNavigation();
   return (
     <DetailInformation>
-      <Review
-        name="거주후기 "
-        length={comments.length}
-        onPress={() => navigation.push('Review')}
-      />
+      <Review name="거주후기 " length={comments.length} onPress={() => navigation.push('Review')} />
       {comments.length ? (
         comments.map((comment, index) => {
           return (
@@ -123,7 +110,7 @@ const SecondRoute = ({ information }) => {
                 <CommentTitle name="장점" comment={comment.pros} />
                 <CommentTitle name="단점" comment={comment.cons} />
                 <CommentTitle name="한줄 평" comment={comment.content} />
-                <DivideLine height="5px" color={'white'} />
+                <DivideLine height="5px" color="white" />
               </CommentContainer>
               <DivideLine height="1px" color={LIGHT_GRAY2} />
             </View>
@@ -231,16 +218,16 @@ const HostPhoneContent = styled(TextStyle)`
 
 const initialLayout = { width: Dimensions.get('window').width };
 
-const ListInformationScreen = ({ route }) => {
+const HomeInformationPresenter = ({ route, homeId }) => {
   const [presenthome, setPresentHome] = useRecoilState(presentHomeState);
-  const [favList, setFavList] = useRecoilState(favoriteHomeState);
+  const [, setFavList] = useRecoilState(favoriteHomeState);
 
   const [user, setUser] = useRecoilState(userState);
 
   const getData = async () => {
     try {
       console.log('매물 상세정보');
-      const home = await homeApi.getPresentHome(route.params.id);
+      const home = await homeApi.getPresentHome(homeId);
       setPresentHome(home);
     } catch (e) {
       console.error(e);
@@ -249,7 +236,6 @@ const ListInformationScreen = ({ route }) => {
 
   useEffect(() => {
     getData();
-    //setPresentHome(route.params);
   }, []);
 
   const postFavorate = async () => {
@@ -259,7 +245,7 @@ const ListInformationScreen = ({ route }) => {
         return;
       }
       console.log('좋아요');
-      const result = await homeApi.postFavorate(route.params.id);
+      const result = await homeApi.postFavorate(homeId);
       if (result) {
         const res = await homeApi.getFavorite(user.id);
         const u = await authApi.getUser(user.id);
@@ -315,7 +301,7 @@ const ListInformationScreen = ({ route }) => {
                 <ButtonImage
                   source={
                     user
-                      ? user.interest_rooms.includes(route.params.id)
+                      ? user.interest_rooms.includes(homeId)
                         ? FAVORATE_FILLED
                         : FAVORATE
                       : FAVORATE
@@ -336,10 +322,7 @@ const ListInformationScreen = ({ route }) => {
               ))
             ) : (
               <Red>
-                <Image
-                  source={INFO_PICTURE}
-                  style={{ width: '100%', height: '100%' }}
-                />
+                <Image source={INFO_PICTURE} style={{ width: '100%', height: '100%' }} />
               </Red>
             )}
           </Swiper>
@@ -348,14 +331,11 @@ const ListInformationScreen = ({ route }) => {
               <TitleContent>
                 {room_type} {deposit}/{monthly_rent}
               </TitleContent>
-              <SubContent>{name ? name : '신촌 신축 원룸'}</SubContent>
+              <SubContent>{name || '신촌 신축 원룸'}</SubContent>
             </ListTitle>
             <SimpleInformation>
               <SimpleList img={LIST_HOME} info={room_type} />
-              <SimpleList
-                img={LIST_SIZE}
-                info={`${Math.round(space / 3.3)}평`}
-              />
+              <SimpleList img={LIST_SIZE} info={`${Math.round(space / 3.3)}평`} />
               <SimpleList img={LIST_FLOOR} info={`${floor}층`} />
               <SimpleList img={LIST_MANAGE} info={`${management_fee}만`} />
             </SimpleInformation>
@@ -396,7 +376,7 @@ const ListInformationScreen = ({ route }) => {
   );
 };
 
-export default ListInformationScreen;
+export default HomeInformationPresenter;
 
 const Red = styled.View`
   flex: 1;

@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components/native';
-import { TouchableHighlight, Modal, StatusBar, View, Text } from 'react-native';
-
-import HomeListFrame from '../components/HomeList/HomeListFrame';
-import Title from '../util/Title';
+import { TouchableHighlight, Modal, StatusBar, View, Platform } from 'react-native';
 
 import { useRecoilState } from 'recoil';
-import { homeListState } from '../states/HomeListState';
-import { FilterListState, FilterState } from '../states/FilterState';
-import { LIGHT_GRAY, LIGHT_GRAY2, NK700, NK500 } from '../util/Color';
-import CompleteButton from '../util/CompleteButton';
-import UtilText from '../util/UtilText';
-import LIST_FILTER from '../../assets/LIST_FILTER.png';
-import InputSlider from '../components/HomeList/InputSlider';
-import SelectButton from '../components/Enroll/SelectButton';
-import DivideLine from '../util/DivideLine';
+import HomeListFrame from '../../../components/HomeList/HomeListFrame';
+import Title from '../../../util/Title';
+
+import { homeListState } from '../../../states/HomeListState';
+import { FilterListState } from '../../../states/FilterState';
+import { LIGHT_GRAY, LIGHT_GRAY2, NK700, NK500 } from '../../../util/Color';
+import CompleteButton from '../../../util/CompleteButton';
+import UtilText from '../../../util/UtilText';
+import LIST_FILTER from '../../../../assets/LIST_FILTER.png';
+import InputSlider from '../../../components/HomeList/InputSlider';
+import SelectButton from '../../../components/Enroll/SelectButton';
+import DivideLine from '../../../util/DivideLine';
 
 const FILTER_DEFAULT = {
   room_type: '',
@@ -24,8 +24,8 @@ const FILTER_DEFAULT = {
   space: 0,
 };
 
-const HomeListScreen = ({ navigation }) => {
-  const [list, setList] = useRecoilState(homeListState);
+const HomeListScreen = ({ goPage }) => {
+  const [list] = useRecoilState(homeListState);
   const [isVisible, setIsVisible] = useState(false);
   const [filter, setFilter] = useState(FILTER_DEFAULT);
   const [filterList, setFilterList] = useRecoilState(FilterListState);
@@ -44,22 +44,17 @@ const HomeListScreen = ({ navigation }) => {
       list.filter((v) => {
         if (filter.room_type !== '' && v.room_type !== filter.room_type) {
           return false;
-        } else if (filter.deposit !== 0 && v.deposit > filter.deposit) {
+        }
+        if (filter.deposit !== 0 && v.deposit > filter.deposit) {
           return false;
-        } else if (
-          filter.monthly_rent !== 0 &&
-          v.monthly_rent > filter.monthly_rent
-        ) {
+        }
+        if (filter.monthly_rent !== 0 && v.monthly_rent > filter.monthly_rent) {
           return false;
-        } else if (
-          filter.management_fee !== 0 &&
-          v.management_fee > filter.management_fee
-        ) {
+        }
+        if (filter.management_fee !== 0 && v.management_fee > filter.management_fee) {
           return false;
-        } else if (
-          filter.space !== 0 &&
-          Math.round(v.space / 3.3) > filter.space
-        ) {
+        }
+        if (filter.space !== 0 && Math.round(v.space / 3.3) > filter.space) {
           return false;
         }
         return true;
@@ -77,18 +72,9 @@ const HomeListScreen = ({ navigation }) => {
     <Wrapper>
       <Title name="매물" />
       <Modal visible={isVisible} animationType="slide">
-        <Title
-          name="필터"
-          close={true}
-          onPress={() => setIsVisible(!isVisible)}
-        />
+        <Title name="필터" close onPress={() => setIsVisible(!isVisible)} />
         <ModalContainer>
-          <UtilText
-            content="방종류"
-            family={NK500}
-            letter="-0.54px"
-            size="18px"
-          />
+          <UtilText content="방종류" family={NK500} letter="-0.54px" size="18px" />
           <DivideLine height="10px" color="white" />
           <RoomMenu>
             <SelectButton
@@ -107,16 +93,8 @@ const HomeListScreen = ({ navigation }) => {
               name="쓰리룸"
             />
           </RoomMenu>
-          <UtilText
-            content="보증금"
-            family={NK500}
-            letter="-0.54px"
-            size="18px"
-          />
-          <UtilText
-            content={`${Math.round(filter.deposit / 100) * 100}만원`}
-            family={NK700}
-          />
+          <UtilText content="보증금" family={NK500} letter="-0.54px" size="18px" />
+          <UtilText content={`${Math.round(filter.deposit / 100) * 100}만원`} family={NK700} />
           <InputSlider
             min=" 0    "
             middle=" 2000만원"
@@ -124,16 +102,8 @@ const HomeListScreen = ({ navigation }) => {
             maxValue={4000}
             onChange={(value) => setFilter({ ...filter, deposit: value })}
           />
-          <UtilText
-            content="월세비"
-            family={NK500}
-            letter="-0.54px"
-            size="18px"
-          />
-          <UtilText
-            content={`${Math.round(filter.monthly_rent / 10) * 10}만원`}
-            family={NK700}
-          />
+          <UtilText content="월세비" family={NK500} letter="-0.54px" size="18px" />
+          <UtilText content={`${Math.round(filter.monthly_rent / 10) * 10}만원`} family={NK700} />
           <InputSlider
             min=" 0    "
             middle=" 50만원"
@@ -141,36 +111,21 @@ const HomeListScreen = ({ navigation }) => {
             maxValue={100}
             onChange={(value) => setFilter({ ...filter, monthly_rent: value })}
           />
-          <UtilText
-            content="관리비"
-            family={NK500}
-            letter="-0.54px"
-            size="18px"
-          />
-          <UtilText
-            content={`${Math.round(filter.management_fee)}만원`}
-            family={NK700}
-          />
+          <UtilText content="관리비" family={NK500} letter="-0.54px" size="18px" />
+          <UtilText content={`${Math.round(filter.management_fee)}만원`} family={NK700} />
           <InputSlider
             min=" 0  "
             middle=" 10만원"
             max="20만원"
             maxValue={20}
-            onChange={(value) =>
-              setFilter({ ...filter, management_fee: value })
-            }
+            onChange={(value) => setFilter({ ...filter, management_fee: value })}
           />
-          <UtilText
-            content="평수"
-            family={NK500}
-            letter="-0.54px"
-            size="18px"
-          />
+          <UtilText content="평수" family={NK500} letter="-0.54px" size="18px" />
           <UtilText content={`${Math.round(filter.space)}평`} family={NK700} />
           <InputSlider
             min={` 0평`}
             middle={` 7평`}
-            max={`15평`}
+            max="15평"
             maxValue={15}
             onChange={(value) => setFilter({ ...filter, space: value })}
           />
@@ -179,10 +134,7 @@ const HomeListScreen = ({ navigation }) => {
       </Modal>
       <FilterBar>
         <FilterMenuBar>
-          <FilterScroll
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-          >
+          <FilterScroll horizontal showsHorizontalScrollIndicator={false}>
             {menu.map((list, index) => (
               <FilterMenu key={index}>
                 <UtilText
@@ -198,32 +150,24 @@ const HomeListScreen = ({ navigation }) => {
           </FilterScroll>
         </FilterMenuBar>
         <FilterImageView>
-          <TouchableHighlight
-            onPress={() => setIsVisible(!isVisible)}
-            underlayColor={LIGHT_GRAY2}
-          >
+          <TouchableHighlight onPress={() => setIsVisible(!isVisible)} underlayColor={LIGHT_GRAY2}>
             <FilterImage source={LIST_FILTER} />
           </TouchableHighlight>
         </FilterImageView>
       </FilterBar>
-      {
-        <HomeList
-          data={filterList}
-          extraData={filterList}
-          showsVerticalScrollIndicator={false}
-          renderItem={({ item, index }) => {
-            return (
-              <HomeListButton
-                title="list"
-                onPress={() => navigation.navigate('ListInformation', item)}
-              >
-                <HomeListFrame item={item} />
-              </HomeListButton>
-            );
-          }}
-          keyExtractor={(item) => `${item.id}`}
-        />
-      }
+      <HomeList
+        data={filterList}
+        extraData={filterList}
+        showsVerticalScrollIndicator={false}
+        renderItem={({ item, index }) => {
+          return (
+            <HomeListButton title="list" onPress={() => goPage('ListInformation', item)}>
+              <HomeListFrame item={item} />
+            </HomeListButton>
+          );
+        }}
+        keyExtractor={(item) => `${item.id}`}
+      />
     </Wrapper>
   );
 };
