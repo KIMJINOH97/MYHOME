@@ -3,19 +3,11 @@ import styled from 'styled-components/native';
 import { StatusBar, Text, Platform } from 'react-native';
 
 import Title from '../util/Title';
-import { FindMentoList } from './FindMentoScreen';
+import { FindMentoList } from './main/MentoScreen/FindMentoScreen/FindMentoPresenter';
 import { TextStyle } from '../util/TextStyle';
 import { useRecoilState } from 'recoil';
 import { presentMentoState } from '../states/MentoState';
-import {
-  DARK_GRAY,
-  LIGHT_GRAY,
-  LIGHT_GRAY2,
-  NK400,
-  NK500,
-  NK700,
-  PRIMARY_NORMAL,
-} from '../util/Color';
+import { DARK_GRAY, NK400, NK700, PRIMARY_NORMAL } from '../util/Color';
 import DivideLine from '../util/DivideLine';
 import UtilText from '../util/UtilText';
 import UtilButton from '../util/UtilButton';
