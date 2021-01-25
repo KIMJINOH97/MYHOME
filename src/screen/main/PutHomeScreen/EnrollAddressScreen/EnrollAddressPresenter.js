@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components/native';
 import {
   Alert,
@@ -6,77 +6,60 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   StatusBar,
+  Platform,
 } from 'react-native';
 import Postcode from 'react-native-daum-postcode';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-
-import Title from '../util/Title';
-import InfoText from '../util/InfoText';
-import { InputStyle } from '../util/Input';
-import CompleteButton from '../util/CompleteButton';
-
 import { useRecoilState } from 'recoil';
-import {
-  putHomeState,
-  addressState,
-  postNumberState,
-  detailAddressState,
-} from '../states/PutHomeState';
-import { TextStyle } from '../util/TextStyle';
-import { PRIMARY_NORMAL, MEDIUM_GRAY, LIGHT_GRAY } from '../util/Color';
 
-const EnrollAddressScreen = ({ navigation }) => {
-  const [detailAddress, setDetailAddress] = useRecoilState(detailAddressState);
-  const [address, setAddress] = useRecoilState(addressState);
-  const [postNumber, setPostNumber] = useRecoilState(postNumberState);
+import Title from '../../../../util/Title';
+import InfoText from '../../../../util/InfoText';
+import { InputStyle } from '../../../../util/Input';
+import CompleteButton from '../../../../util/CompleteButton';
+
+import { putHomeState } from '../../../../states/PutHomeState';
+import { TextStyle } from '../../../../util/TextStyle';
+import { PRIMARY_NORMAL, MEDIUM_GRAY, LIGHT_GRAY } from '../../../../util/Color';
+
+const EnrollAddressPresenter = ({ goBack, handleFindAddress, isOpen }) => {
   const [home, setHome] = useRecoilState(putHomeState);
-  const [isOpen, setIsOpen] = useState(false);
-  const [detail, setDetail] = useState('');
 
   const onChangeDetail = (detail) => {
     setHome({ ...home, address_detail: detail });
   };
 
-  const writeAddr = async () => {
+  const writeAddr = () => {
     console.log(home.address, home.zip_code);
-    if (
-      home.address === '주소지를 입력해주세요.' ||
-      home.zip_code === '우편번호'
-    ) {
+    if (home.address === '주소지를 입력해주세요.' || home.zip_code === '우편번호') {
       Alert.alert('', '우편번호 찾기로 주소를 입력해주세요');
       return;
-    } else if (home.detailAddress === '') {
+    }
+    if (home.detailAddress === '') {
       Alert.alert('', '상세주소를 입력해주세요.');
       return;
     }
-    navigation.pop();
+    goBack();
   };
 
   return (
     <Wrapper>
-      <Title name="주소 등록"></Title>
+      <Title name="주소 등록" />
       {isOpen ? (
         <Postcode
           style={{ width: '100%', height: '100%' }}
           jsOptions={{ animated: true }}
           onSelected={(data) => {
-            const {
-              userSelectedType,
-              roadAddress,
-              jibunAddress,
-              zonecode,
-            } = data;
-            //console.log({ ...home, address: roadAddress });
+            const { userSelectedType, roadAddress, jibunAddress, zonecode } = data;
+            // console.log({ ...home, address: roadAddress });
             // if (userSelectedType === 'R')
             //   setHome({ ...home, address: roadAddress });
             // else setHome({ ...home, address: jibunAddress });
-            setIsOpen(!isOpen);
+            handleFindAddress();
             setHome({
               ...home,
               address: userSelectedType === 'R' ? roadAddress : jibunAddress,
               zip_code: zonecode,
             });
-            return;
           }}
         />
       ) : (
@@ -91,7 +74,7 @@ const EnrollAddressScreen = ({ navigation }) => {
                       flexDirection: 'row',
                       justifyContent: 'space-between',
                     }}
-                    onPress={() => setIsOpen(!isOpen)}
+                    onPress={() => handleFindAddress()}
                   >
                     <PostNumberView>
                       <PostNumberText>{home.zip_code}</PostNumberText>
@@ -121,7 +104,7 @@ const EnrollAddressScreen = ({ navigation }) => {
   );
 };
 
-export default EnrollAddressScreen;
+export default EnrollAddressPresenter;
 const Wrapper = styled.SafeAreaView`
   padding-top: ${Platform.OS === 'ios' ? 0 : StatusBar.currentHeight}px;
   background-color: white;

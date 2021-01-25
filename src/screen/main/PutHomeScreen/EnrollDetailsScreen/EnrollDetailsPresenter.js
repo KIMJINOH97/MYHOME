@@ -1,41 +1,31 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components/native';
-import {
-  View,
-  Alert,
-  StatusBar,
-  TouchableWithoutFeedback,
-  Keyboard,
-} from 'react-native';
+import { View, Alert, StatusBar, TouchableWithoutFeedback, Keyboard, Platform } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import Title from '../util/Title';
-import InfoText from '../util/InfoText';
-import { InputStyle } from '../util/Input';
-import CompleteButton from '../util/CompleteButton';
-import InputInText from '../components/Enroll/InputInText';
-import SelectButton from '../components/Enroll/SelectButton';
-
 import { useRecoilState } from 'recoil';
-import { putHomeState } from '../states/PutHomeState';
+import Title from '../../../../util/Title';
+import InfoText from '../../../../util/InfoText';
+import { InputStyle } from '../../../../util/Input';
+import CompleteButton from '../../../../util/CompleteButton';
+import InputInText from '../../../../components/Enroll/InputInText';
+import SelectButton from '../../../../components/Enroll/SelectButton';
 
-const EnrollDetailsScreen = ({ navigation }) => {
+import { putHomeState } from '../../../../states/PutHomeState';
+
+const EnrollDetailsPresenter = ({ goBack }) => {
   const [home, setHome] = useRecoilState(putHomeState);
 
   const onChangeDeposit = (e) => setHome({ ...home, deposit: parseInt(e) });
 
-  const onChangeMonthly = (e) =>
-    setHome({ ...home, monthly_rent: parseInt(e) });
+  const onChangeMonthly = (e) => setHome({ ...home, monthly_rent: parseInt(e) });
 
-  const onChangeManage = (e) =>
-    setHome({ ...home, management_fee: parseInt(e) });
+  const onChangeManage = (e) => setHome({ ...home, management_fee: parseInt(e) });
 
-  const onChangeTotalFloor = (e) =>
-    setHome({ ...home, total_floor: parseInt(e) });
+  const onChangeTotalFloor = (e) => setHome({ ...home, total_floor: parseInt(e) });
 
   const onChangeFloor = (e) => setHome({ ...home, floor: parseInt(e) });
 
-  const onChangeCompletion = (e) =>
-    setHome({ ...home, completion_year: parseInt(e) });
+  const onChangeCompletion = (e) => setHome({ ...home, completion_year: parseInt(e) });
 
   const onChangeSpace = (e) => setHome({ ...home, space: parseInt(e) });
 
@@ -44,47 +34,53 @@ const EnrollDetailsScreen = ({ navigation }) => {
     if (home.room_type === '') {
       Alert.alert('', '방종류를 선택해주세요.');
       return;
-    } else if (
-      home.deposit === null ||
-      home.management_fee === null ||
-      home.monthly_rent === null
-    ) {
+    }
+    if (home.deposit === null || home.management_fee === null || home.monthly_rent === null) {
       Alert.alert('', '가격 및 관리비를 입력해주세요.');
       return;
-    } else if (home.floor === null || home.total_floor === null) {
+    }
+    if (home.floor === null || home.total_floor === null) {
       Alert.alert('', '층수를 입력해주세요.');
       return;
-    } else if (home.space === null) {
+    }
+    if (home.space === null) {
       Alert.alert('', '전용면적을 입력해주세요.');
       return;
-    } else if (home.completion_year === null) {
+    }
+    if (home.completion_year === null) {
       Alert.alert('', '준공년도를 입력해주세요.');
       return;
-    } else if (home.heating === '') {
+    }
+    if (home.heating === '') {
       Alert.alert('', '난방을 선택해주세요.');
       return;
-    } else if (home.occupancy_date === '') {
+    }
+    if (home.occupancy_date === '') {
       Alert.alert('', '입주가능일을 입력해주세요.');
       return;
-    } else if (home.detail === '') {
+    }
+    if (home.detail === '') {
       Alert.alert('', '상세설명을 입력해주세요.');
       return;
-    } else if (home.introduction === '') {
+    }
+    if (home.introduction === '') {
       Alert.alert('', '한줄 소개를 입력해주세요.');
       return;
-    } else if (home.host_name === '') {
+    }
+    if (home.host_name === '') {
       Alert.alert('', '집주인을 입력해주세요.');
       return;
-    } else if (home.host_phone === '') {
+    }
+    if (home.host_phone === '') {
       Alert.alert('', '집주인 전화번호를 입력해주세요.');
       return;
     }
-    navigation.pop();
+    goBack();
   };
 
   return (
     <Wrapper>
-      <Title name="상세 정보 등록"></Title>
+      <Title name="상세 정보 등록" />
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <KeyboardAwareScrollView>
           <DetailContainer>
@@ -150,11 +146,7 @@ const EnrollDetailsScreen = ({ navigation }) => {
             </HomeFloor>
             <HomeSize>
               <InfoText name="전용 면적(실평수)" />
-              <InputInText
-                value={home.space}
-                onChangeText={onChangeSpace}
-                content={'m\xB2'}
-              />
+              <InputInText value={home.space} onChangeText={onChangeSpace} content={'m\xB2'} />
             </HomeSize>
             <CompletionYear>
               <InfoText name="준공년도" />
@@ -178,41 +170,31 @@ const EnrollDetailsScreen = ({ navigation }) => {
                   name="침대"
                 />
                 <SelectButton
-                  onChange={() =>
-                    setHome({ ...home, short_term: !home.short_term })
-                  }
+                  onChange={() => setHome({ ...home, short_term: !home.short_term })}
                   data={home.short_term}
                   name="단기임대"
                 />
               </ButtonBox>
               <ButtonBox>
                 <SelectButton
-                  onChange={() =>
-                    setHome({ ...home, air_conditioner: !home.air_conditioner })
-                  }
+                  onChange={() => setHome({ ...home, air_conditioner: !home.air_conditioner })}
                   data={home.air_conditioner}
                   name="에어컨"
                 />
                 <SelectButton
-                  onChange={() =>
-                    setHome({ ...home, induction: !home.induction })
-                  }
+                  onChange={() => setHome({ ...home, induction: !home.induction })}
                   data={home.induction}
                   name="인덕션"
                 />
                 <SelectButton
-                  onChange={() =>
-                    setHome({ ...home, elevator: !home.elevator })
-                  }
+                  onChange={() => setHome({ ...home, elevator: !home.elevator })}
                   data={home.elevator}
                   name="엘리베이터"
                 />
               </ButtonBox>
               <ButtonBox>
                 <SelectButton
-                  onChange={() =>
-                    setHome({ ...home, refrigerator: !home.refrigerator })
-                  }
+                  onChange={() => setHome({ ...home, refrigerator: !home.refrigerator })}
                   data={home.refrigerator}
                   name="냉장고"
                 />
@@ -245,9 +227,7 @@ const EnrollDetailsScreen = ({ navigation }) => {
               <InfoText name="입주가능일" />
               <Input
                 defaultValue={home.occupancy_date ? home.occupancy_date : ''}
-                onChangeText={(occupancy_date) =>
-                  setHome({ ...home, occupancy_date })
-                }
+                onChangeText={(occupancy_date) => setHome({ ...home, occupancy_date })}
                 placeholder="2010-10-10형식"
               />
             </MoveIn>
@@ -257,7 +237,7 @@ const EnrollDetailsScreen = ({ navigation }) => {
                 defaultValue={home.detail ? home.detail : ''}
                 style={{ textAlignVertical: 'top' }}
                 onChangeText={(detail) => setHome({ ...home, detail })}
-                multiline={true}
+                multiline
                 height="180px"
                 placeholder="일조량, 보안, 리모델링 여부, 교통 및 주변 편의시설 관련 정보 작성"
               />
@@ -266,10 +246,8 @@ const EnrollDetailsScreen = ({ navigation }) => {
               <InfoText name="한줄소개" />
               <Input
                 defaultValue={home.introduction ? home.introduction : ''}
-                onChangeText={(introduction) =>
-                  setHome({ ...home, introduction })
-                }
-                multiline={true}
+                onChangeText={(introduction) => setHome({ ...home, introduction })}
+                multiline
                 placeholder="ex) 햇빛 좋은 방"
               />
             </OneLineInfo>
@@ -278,7 +256,7 @@ const EnrollDetailsScreen = ({ navigation }) => {
               <Input
                 defaultValue={home.host_name ? home.host_name : ''}
                 onChangeText={(host_name) => setHome({ ...home, host_name })}
-                multiline={true}
+                multiline
                 placeholder="한글 또는 영문만 입력 가능"
               />
             </HostName>
@@ -298,7 +276,7 @@ const EnrollDetailsScreen = ({ navigation }) => {
   );
 };
 
-export default EnrollDetailsScreen;
+export default EnrollDetailsPresenter;
 const Wrapper = styled.SafeAreaView`
   padding-top: ${Platform.OS === 'ios' ? 0 : StatusBar.currentHeight}px;
   background-color: white;
@@ -319,7 +297,7 @@ const DetailExplain = styled.View``;
 
 const Input = styled(InputStyle)`
   justify-content: flex-start;
-  height: ${({ height }) => (height ? height : '40px')};
+  height: ${({ height }) => height || '40px'};
 `;
 
 const OneLineInfo = styled.View``;

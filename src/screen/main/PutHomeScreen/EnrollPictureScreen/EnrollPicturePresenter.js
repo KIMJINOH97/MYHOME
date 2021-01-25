@@ -1,52 +1,34 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components/native';
-import { Alert, ImagePickerIOS, StatusBar } from 'react-native';
-import {
-  launchImageLibraryAsync,
-  MediaTypeOptions,
-  PermissionStatus,
-} from 'expo-image-picker';
+import { Alert, StatusBar, Platform } from 'react-native';
+import { launchImageLibraryAsync, MediaTypeOptions, PermissionStatus } from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
-import {
-  permissionCameraState,
-  photoState,
-  formPhotoState,
-} from '../states/PhotoState';
 import { useRecoilState } from 'recoil';
-import { homeApi } from '../api/index';
+import { permissionCameraState, photoState, formPhotoState } from '../../../../states/PhotoState';
 
-import Title from '../util/Title';
-import UtilText from '../util/UtilText';
-import DivideLine from '../util/DivideLine';
+import Title from '../../../../util/Title';
+import UtilText from '../../../../util/UtilText';
+import DivideLine from '../../../../util/DivideLine';
+import CompleteButton from '../../../../util/CompleteButton';
 import {
   NK500,
-  NK400,
   LIGHT_GRAY,
   LIGHT_GRAY2,
   PRIMARY_NORMAL,
   MEDIUM_GRAY,
-} from '../util/Color';
+} from '../../../../util/Color';
 
-import CAMERA_PLUS from '../../assets/CAMERA_PLUS.png';
-import DELETE_PHOTO from '../../assets/DELETE_PHOTO.png';
-import CompleteButton from '../util/CompleteButton';
+import CAMERA_PLUS from '../../../../../assets/CAMERA_PLUS.png';
+import DELETE_PHOTO from '../../../../../assets/DELETE_PHOTO.png';
 
 const RuleContent = ({ content }) => {
   return (
-    <UtilText
-      content={content}
-      size="14px"
-      letter="-0.14px"
-      family={NK500}
-      color={MEDIUM_GRAY}
-    />
+    <UtilText content={content} size="14px" letter="-0.14px" family={NK500} color={MEDIUM_GRAY} />
   );
 };
 
-const EnrollPictureScreen = ({ navigation }) => {
-  const [permissionCamera, setPermissionCamera] = useRecoilState(
-    permissionCameraState
-  );
+const EnrollPicturePresenter = ({ goBack }) => {
+  const [permissionCamera, setPermissionCamera] = useRecoilState(permissionCameraState);
 
   const [photo, setPhoto] = useRecoilState(photoState);
   const [formPhoto, setFormPhoto] = useRecoilState(formPhotoState);
@@ -70,7 +52,7 @@ const EnrollPictureScreen = ({ navigation }) => {
   }, []);
 
   const pickImage = async () => {
-    let result = await launchImageLibraryAsync({
+    const result = await launchImageLibraryAsync({
       mediaTypes: MediaTypeOptions.All,
       allowsEditing: true,
       aspect: [4, 3],
@@ -80,9 +62,9 @@ const EnrollPictureScreen = ({ navigation }) => {
     if (!result.cancelled) {
       console.log(result.uri);
       const { uri } = result;
-      let uriParts = uri.split('.');
-      let fileType = uriParts[uriParts.length - 1];
-      let fd = new FormData();
+      const uriParts = uri.split('.');
+      const fileType = uriParts[uriParts.length - 1];
+      const fd = new FormData();
       fd.append('photo', {
         uri,
         name: `photo.${fileType}`,
@@ -96,13 +78,13 @@ const EnrollPictureScreen = ({ navigation }) => {
       // };
       console.log(fileType);
       setPhoto([...photo, uri]);
-      //onSubmit(fd);
+      // onSubmit(fd);
     }
   };
 
   const pushPhoto = async () => {
     try {
-      if (permissionCamera == false) {
+      if (permissionCamera === false) {
         Alert.alert('', '설정에서 갤러리 접근 권한을 활성화 해주세요.');
         return;
       }
@@ -117,23 +99,18 @@ const EnrollPictureScreen = ({ navigation }) => {
   };
 
   const onSubmit = async (fd) => {
-    //const result = await homeApi.postPhoto(fd);
-    //console.log(result);
-    navigation.pop();
+    // const result = await homeApi.postPhoto(fd);
+    // console.log(result);
+    goBack();
   };
 
   return (
     <Wrapper>
-      <Title name="사진등록"></Title>
+      <Title name="사진등록" />
       <PhotoContainer>
         <PhotoRule>
           <PhotoTitle>
-            <UtilText
-              content="사진 등록기준"
-              size="16px"
-              letter="-0.48px"
-              family={NK500}
-            />
+            <UtilText content="사진 등록기준" size="16px" letter="-0.48px" family={NK500} />
           </PhotoTitle>
           <DivideLine height="1px" color={LIGHT_GRAY2} />
           <RuleContentView>
@@ -174,7 +151,7 @@ const EnrollPictureScreen = ({ navigation }) => {
   );
 };
 
-export default EnrollPictureScreen;
+export default EnrollPicturePresenter;
 const Wrapper = styled.SafeAreaView`
   padding-top: ${Platform.OS === 'ios' ? 0 : StatusBar.currentHeight}px;
   background-color: white;
