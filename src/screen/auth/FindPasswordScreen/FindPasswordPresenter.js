@@ -1,22 +1,21 @@
 import React from 'react';
-import { View, StatusBar, Text } from 'react-native';
+import { StatusBar, Platform } from 'react-native';
 import styled from 'styled-components/native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
-import Title from '../util/Title';
+import Title from '../../../util/Title';
 
-const TITLE_NAME = '비밀번호 찾기';
-const FindPasswordScreen = () => {
+const FindPasswordPresenter = () => {
   return (
     <Wrapper>
       <KeyboardAwareScrollView style={{ flexGrow: 1, flexShrink: 0 }}>
-        <Title name={TITLE_NAME} />
+        <Title name="비밀번호 찾기" />
       </KeyboardAwareScrollView>
     </Wrapper>
   );
 };
 
-export default FindPasswordScreen;
+export default FindPasswordPresenter;
 
 const Wrapper = styled.SafeAreaView`
   flex: 1;
