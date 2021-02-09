@@ -17,11 +17,7 @@ const FavoriteScreenPresenter = ({ goPage, user, favoriteList }) => {
           favoriteList &&
           favoriteList.map((v, i) => {
             return (
-              <HomeListButton
-                key={i}
-                title="list"
-                onPress={() => goPage('ListInformation', v)}
-              >
+              <HomeListButton key={i} title="list" onPress={() => goPage('ListInformation', v)}>
                 <HomeListFrame item={v} />
               </HomeListButton>
             );

@@ -1,17 +1,10 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components/native';
-import { StatusBar } from 'react-native';
+import { StatusBar, Platform } from 'react-native';
 import { useRecoilState } from 'recoil';
 import { presentMentoState } from '../../../../states/MentoState';
 import { mentoApi } from '../../../../api/index';
-import { TextStyle } from '../../../../util/TextStyle';
-import {
-  DARK_GRAY,
-  MEDIUM_GRAY,
-  NK400,
-  NK500,
-  PRIMARY_NORMAL,
-} from '../../../../util/Color';
+import { DARK_GRAY, MEDIUM_GRAY, NK400 } from '../../../../util/Color';
 
 import MENTO_IMAGE from '../../../../../assets/MENTO_IMAGE.png';
 import MENTO_AWARD from '../../../../../assets/MENTO_AWARD.png';
@@ -19,6 +12,8 @@ import Title from '../../../../util/Title';
 import DivideLine from '../../../../util/DivideLine';
 import Review from '../../../../util/Review';
 import Star from '../../../../util/Star';
+import UtilText from '../../../../util/UtilText';
+import UtilButton from '../../../../util/UtilButton';
 
 const DetailMentoPresenter = ({ route, goPage }) => {
   const { reviews, name, introduction } = route.params;
@@ -28,7 +23,7 @@ const DetailMentoPresenter = ({ route, goPage }) => {
     try {
       const result = await mentoApi.getPresentMento(route.params.id);
       if (result) {
-        //console.log('결과', result);
+        // console.log('결과', result);
         setMento(result);
       }
     } catch (e) {
@@ -51,36 +46,39 @@ const DetailMentoPresenter = ({ route, goPage }) => {
                 <ProfileImage source={MENTO_IMAGE} />
               </ProfileImageView>
               <MentoContent>
-                <MentoName>
-                  <Name>{name} 멘토</Name>
-                </MentoName>
-                <MentoComment>
-                  <Comment>{introduction}</Comment>
-                </MentoComment>
+                <UtilText content={`${name} 멘토`} size="20px" letter="-0.8px" />
+                <UtilText
+                  content={`${introduction}`}
+                  size="14px"
+                  letter="-0.14px"
+                  color={MEDIUM_GRAY}
+                />
               </MentoContent>
             </MentoProfile>
-            <DivideLine height="1px" color={'rgba(238, 238, 238, 0.5)'} />
+            <DivideLine height="1px" color="rgba(238, 238, 238, 0.5)" />
             <MentoringCountBox>
               <MentoringCount>
-                <Count>0회</Count>
-                <Content>멘토링 횟수</Content>
+                <UtilText content="0 회" color="#494949" size="18px" letter="-0.8px" />
+                <UtilText content="멘토링 횟수" color={DARK_GRAY} size="12px" />
               </MentoringCount>
             </MentoringCountBox>
-            <DivideLine height="8px" color={'rgba(238, 238, 238, 0.5)'} />
+            <DivideLine height="8px" color="rgba(238, 238, 238, 0.5)" />
             <CarrerInfoBox>
-              <InfoTitle>
-                <TitleContent>경력사항</TitleContent>
-              </InfoTitle>
+              <UtilText style={{ marginBottom: 12 }} content="경력사항" size="16px" />
               <InfoView>
                 <AwardImageView>
                   <AwardImage source={MENTO_AWARD} />
                 </AwardImageView>
-                <AwardInfo>
-                  <AwardInfoContent>공인중개사 획득</AwardInfoContent>
-                </AwardInfo>
+                <UtilText
+                  content="공인중개사 획득"
+                  size="14px"
+                  letter="-0.14px"
+                  color={DARK_GRAY}
+                  family={NK400}
+                />
               </InfoView>
             </CarrerInfoBox>
-            <DivideLine height="8px" color={' rgba(238, 238, 238, 0.5)'} />
+            <DivideLine height="8px" color=" rgba(238, 238, 238, 0.5)" />
             <ReviewBox>
               <Review name="멘토 후기 " length={reviews.length} review="후기" />
               {reviews.length !== 0 &&
@@ -90,18 +88,20 @@ const DetailMentoPresenter = ({ route, goPage }) => {
                       <StarView>
                         <Star score={list.rate} width={24} height={24} />
                       </StarView>
-                      <ReviewContentView>
-                        <ReviewContentText>{list.content}</ReviewContentText>
-                      </ReviewContentView>
+                      <UtilText
+                        content={`${list.content}`}
+                        size="14px"
+                        family={NK400}
+                        color={DARK_GRAY}
+                        letter="-0.14px"
+                      />
                     </ReviewList>
                   );
                 })}
             </ReviewBox>
           </MentoDetailContainer>
           <ReserveButtonView>
-            <ReserveButton onPress={() => goPage('Reserve')}>
-              <ButtonContent>예약하기</ButtonContent>
-            </ReserveButton>
+            <UtilButton onPress={() => goPage('Reserve')} name="예약하기" />
           </ReserveButtonView>
         </>
       )}
@@ -140,23 +140,6 @@ const MentoContent = styled.View`
   justify-content: center;
 `;
 
-const MentoName = styled.View``;
-
-const Name = styled(TextStyle)`
-  font-family: ${NK500};
-  font-size: 20px;
-  letter-spacing: -0.8px;
-`;
-
-const MentoComment = styled.View``;
-
-const Comment = styled(TextStyle)`
-  font-family: ${NK400};
-  font-size: 14px;
-  letter-spacing: -0.14px;
-  color: ${MEDIUM_GRAY};
-`;
-
 const MentoringCountBox = styled.View`
   padding-vertical: 10px;
   padding-horizontal: 20px;
@@ -171,30 +154,8 @@ const MentoringCount = styled.View`
   align-items: center;
 `;
 
-const Count = styled(TextStyle)`
-  font-family: ${NK500};
-  font-size: 18px;
-  letter-spacing: -0.8px;
-  color: #494949;
-`;
-
-const Content = styled(TextStyle)`
-  font-family: ${NK500};
-  color: ${DARK_GRAY};
-  font-size: 12px;
-`;
-
 const CarrerInfoBox = styled.View`
   padding: 16px;
-`;
-
-const InfoTitle = styled.View`
-  margin-bottom: 12px;
-`;
-
-const TitleContent = styled(TextStyle)`
-  font-family: ${NK500};
-  font-size: 16px;
 `;
 
 const InfoView = styled.View`
@@ -212,15 +173,6 @@ const AwardImage = styled.Image`
   width: 100%;
 `;
 
-const AwardInfo = styled.View``;
-
-const AwardInfoContent = styled(TextStyle)`
-  font-family: ${NK400};
-  color: ${DARK_GRAY};
-  letter-spacing: -0.14px;
-  font-size: 14px;
-`;
-
 const ReviewBox = styled.View`
   padding-horizontal: 16px;
   padding-vertical: 15px;
@@ -235,34 +187,10 @@ const StarView = styled.View`
   margin-bottom: 15px;
 `;
 
-const ReviewContentView = styled.View``;
-
-const ReviewContentText = styled(TextStyle)`
-  font-family: ${NK400};
-  font-size: 14px;
-  color: ${DARK_GRAY};
-  letter-spacing: -0.14px;
-`;
-
 const ReserveButtonView = styled.View`
   position: absolute;
   width: 90%;
   left: 16px;
   right: 16px;
   bottom: 3%;
-`;
-
-const ReserveButton = styled.TouchableOpacity`
-  justify-content: center;
-  align-items: center;
-  background-color: ${PRIMARY_NORMAL};
-  border-radius: 8px;
-  height: 48px;
-`;
-
-const ButtonContent = styled(TextStyle)`
-  font-family: ${NK500};
-  font-size: 18px;
-  letter-spacing: -0.54px;
-  color: white;
 `;

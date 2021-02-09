@@ -2,6 +2,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 //   StackViewTransitionConfigs
+import MyHomeTab from './MyHomeTab';
 import HomeScreen from '../../screen/main/HomeScreen/index';
 import FavoriteScreen from '../../screen/main/FavoriteScreen/index';
 import MapScreen from '../../screen/main/MapScreen/index';
@@ -26,7 +27,6 @@ import PayScreen from '../../screen/PayScreen';
 import PayCompleteScreen from '../../screen/PayCompleteScreen';
 import CheckListScreen from '../../screen/CheckListScreen';
 import CautionScreen from '../../screen/CautionScreen';
-import MyHomeTab from './MyHomeTab';
 
 const Stack = createStackNavigator();
 const HomeRouter = [

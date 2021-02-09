@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import { StatusBar, Text, Platform } from 'react-native';
+import { StatusBar, Platform } from 'react-native';
+import { useRecoilState } from 'recoil';
 
 import Title from '../util/Title';
 import { FindMentoList } from './main/MentoScreen/FindMentoScreen/FindMentoPresenter';
 import { TextStyle } from '../util/TextStyle';
-import { useRecoilState } from 'recoil';
 import { presentMentoState } from '../states/MentoState';
 import { DARK_GRAY, NK400, NK700, PRIMARY_NORMAL } from '../util/Color';
 import DivideLine from '../util/DivideLine';
@@ -13,7 +13,7 @@ import UtilText from '../util/UtilText';
 import UtilButton from '../util/UtilButton';
 
 const ReserveScreen = ({ navigation }) => {
-  const [mento, setMento] = useRecoilState(presentMentoState);
+  const [mento] = useRecoilState(presentMentoState);
 
   return (
     <Wrapper>
@@ -22,7 +22,7 @@ const ReserveScreen = ({ navigation }) => {
         <SummaryMento>
           <FindMentoList item={mento} />
         </SummaryMento>
-        <DivideLine height="8px" color={'rgba(238, 238, 238, 0.5)'} />
+        <DivideLine height="8px" color='rgba(238, 238, 238, 0.5)' />
         <MoneyBox>
           <MoneyContentBox>
             <UtilText

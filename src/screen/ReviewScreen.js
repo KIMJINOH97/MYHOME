@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import styled from 'styled-components/native';
-import { StatusBar, Image, Alert } from 'react-native';
-import Title from '../util/Title';
+import { StatusBar, Platform, Alert } from 'react-native';
 import Stars from 'react-native-stars';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useRecoilState } from 'recoil';
+import Title from '../util/Title';
 
 import { TextStyle } from '../util/TextStyle';
-import { NK500, NK700, PRIMARY_NORMAL } from '../util/Color';
+import { NK500, PRIMARY_NORMAL } from '../util/Color';
 import InfoText from '../util/InfoText';
 import { InputStyle } from '../util/Input';
 import UtilButton from '../util/UtilButton';
-import { useRecoilState } from 'recoil';
 import { presentHomeState } from '../states/HomeListState';
 
 import STAR_FULL from '../../assets/STAR_FULL.png';
@@ -33,13 +33,7 @@ const ReviewScreen = ({ navigation }) => {
         Alert.alert('', '로그인 후 이용해주세요.');
         return;
       }
-      const result = await homeApi.postReview(
-        presentHome.id,
-        score,
-        pros,
-        cons,
-        content
-      );
+      const result = await homeApi.postReview(presentHome.id, score, pros, cons, content);
       if (result) {
         Alert.alert('', '리뷰를 남겼습니다.');
         const home = await homeApi.getPresentHome(presentHome.id);
@@ -53,7 +47,7 @@ const ReviewScreen = ({ navigation }) => {
 
   return (
     <Wrapper>
-      <Title name="리뷰 작성"></Title>
+      <Title name="리뷰 작성" />
       <KeyboardAwareScrollView>
         <ReviewContainer>
           <ReviewStar>
@@ -62,7 +56,7 @@ const ReviewScreen = ({ navigation }) => {
               <Stars
                 default={0}
                 count={5}
-                half={true}
+                half
                 starSize={36}
                 fullStar={<StarImage source={STAR_FULL} />}
                 emptyStar={<StarImage source={STAR_EMPTY} />}
@@ -73,15 +67,9 @@ const ReviewScreen = ({ navigation }) => {
             </StarContent>
           </ReviewStar>
           <InfoText name="장점" />
-          <Input
-            onChangeText={(e) => setPros(e)}
-            placeholder="이 집의 장점을 입력해주세요"
-          />
+          <Input onChangeText={(e) => setPros(e)} placeholder="이 집의 장점을 입력해주세요" />
           <InfoText name="단점" />
-          <Input
-            onChangeText={(e) => setCons(e)}
-            placeholder="이 집의 단점을 입력해주세요"
-          />
+          <Input onChangeText={(e) => setCons(e)} placeholder="이 집의 단점을 입력해주세요" />
           <InfoText name="한줄 평" />
           <Input
             style={{ height: 128 }}

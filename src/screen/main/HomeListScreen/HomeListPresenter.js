@@ -39,7 +39,6 @@ const HomeListScreen = ({ goPage }) => {
   ];
 
   const filterHomeList = () => {
-    const li = list.filter((v) => v.deposit < filter.deposit);
     setFilterList(
       list.filter((v) => {
         if (filter.room_type !== '' && v.room_type !== filter.room_type) {
@@ -159,7 +158,7 @@ const HomeListScreen = ({ goPage }) => {
         data={filterList}
         extraData={filterList}
         showsVerticalScrollIndicator={false}
-        renderItem={({ item, index }) => {
+        renderItem={({ item }) => {
           return (
             <HomeListButton title="list" onPress={() => goPage('ListInformation', item)}>
               <HomeListFrame item={item} />

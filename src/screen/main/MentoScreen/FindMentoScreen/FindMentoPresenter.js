@@ -1,46 +1,41 @@
 import React from 'react';
-import {
-  FlatList,
-  StyleSheet,
-  StatusBar,
-  TouchableHighlight,
-} from 'react-native';
+import { FlatList, StyleSheet, StatusBar, TouchableHighlight } from 'react-native';
 import styled from 'styled-components/native';
-import TabTitle from '../../../../util/TabTitle';
-import { TextStyle } from '../../../../util/TextStyle';
-import { NK400, NK700 } from '../../../../util/Color';
 import { useRecoilState } from 'recoil';
+import TabTitle from '../../../../util/TabTitle';
+import { NK400, NK700 } from '../../../../util/Color';
 import { mentoState } from '../../../../states/MentoState';
 
 import my from '../../../../../assets/my.png';
 import MENTO_MAP from '../../../../../assets/MENTO_MAP.png';
 
 import Star from '../../../../util/Star';
+import UtilText from '../../../../util/UtilText';
 
 export const FindMentoList = ({ item, goPage }) => {
   const { name, introduction } = item;
   return (
     <FindMentoListFrame style={styles.container}>
-      <FindMentoComment>
-        <CommentContent>{introduction}</CommentContent>
-      </FindMentoComment>
+      <UtilText content={`${introduction}`} family={NK700} size="14px" />
       <ProfileBox>
         <FindMentoProfile>
           <MentoProfile>
             <ProfileImage source={my} />
           </MentoProfile>
-          <MentoName>
-            <MentoNameContent>{name}</MentoNameContent>
-          </MentoName>
+          <UtilText
+            style={{ marginHorizontal: 10 }}
+            content={`${name}`}
+            family={NK400}
+            size="14px"
+            color="#333333"
+          />
           <Star score={4.5} />
         </FindMentoProfile>
         <RegionView>
           <MapPinView>
             <MapPinImage source={MENTO_MAP} />
           </MapPinView>
-          <RegionContentView>
-            <RegionContent>신촌</RegionContent>
-          </RegionContentView>
+          <UtilText content="신촌" family={NK400} size="12px" />
         </RegionView>
       </ProfileBox>
     </FindMentoListFrame>
@@ -70,13 +65,6 @@ const FindMentoListFrame = styled.View`
   justify-content: space-between;
 `;
 
-const FindMentoComment = styled.View``;
-
-const CommentContent = styled(TextStyle)`
-  font-family: ${NK700};
-  font-size: 14px;
-`;
-
 const ProfileBox = styled.View`
   flex: 1;
   flex-direction: row;
@@ -99,16 +87,6 @@ const ProfileImage = styled.Image`
   height: 100%;
 `;
 
-const MentoName = styled.View`
-  margin-horizontal: 10px;
-`;
-
-const MentoNameContent = styled(TextStyle)`
-  font-family: ${NK400};
-  font-size: 14px;
-  color: #333333;
-`;
-
 const RegionView = styled.View`
   flex-direction: row;
   background-color: rgba(248, 248, 248, 1);
@@ -124,13 +102,6 @@ const MapPinView = styled.View``;
 const MapPinImage = styled.Image`
   width: 16px;
   height: 15px;
-`;
-
-const RegionContentView = styled.View``;
-
-const RegionContent = styled(TextStyle)`
-  font-family: ${NK400};
-  font-size: 12px;
 `;
 
 const FindMentoScreen = ({ goPage }) => {

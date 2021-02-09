@@ -1,21 +1,11 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import { StatusBar, Text, Platform, Dimensions } from 'react-native';
+import { StatusBar, Platform, Dimensions } from 'react-native';
 
-import Title from '../util/Title';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { TextStyle } from '../util/TextStyle';
+import Title from '../util/Title';
 
-import {
-  DARK_GRAY,
-  LIGHT_GRAY,
-  LIGHT_GRAY2,
-  MEDIUM_GRAY,
-  NK400,
-  NK500,
-  NK700,
-  PRIMARY_NORMAL,
-} from '../util/Color';
+import { DARK_GRAY, MEDIUM_GRAY, NK500, NK700, PRIMARY_NORMAL } from '../util/Color';
 import DivideLine from '../util/DivideLine';
 import UtilText from '../util/UtilText';
 import UtilButton from '../util/UtilButton';
@@ -29,12 +19,7 @@ const PayScreen = ({ navigation }) => {
         <PayContainer>
           <PayBox>
             <TotalPayMoney>
-              <UtilText
-                content="총 결제금액"
-                size="16px"
-                family={NK500}
-                letter="-0.48px"
-              />
+              <UtilText content="총 결제금액" size="16px" family={NK500} letter="-0.48px" />
               <MoneyBox>
                 <UtilText
                   content="30,000"
@@ -44,16 +29,11 @@ const PayScreen = ({ navigation }) => {
                   color={PRIMARY_NORMAL}
                 />
                 <MoneyContent>
-                  <UtilText
-                    content="원"
-                    size="24px"
-                    family={NK700}
-                    letter="-1.2px"
-                  />
+                  <UtilText content="원" size="24px" family={NK700} letter="-1.2px" />
                 </MoneyContent>
               </MoneyBox>
             </TotalPayMoney>
-            <DivideLine height="8px" color={'rgba(238, 238, 238, 0.5)'} />
+            <DivideLine height="8px" color="rgba(238, 238, 238, 0.5)" />
             <AddressBox>
               <AddressInfo>
                 <UtilText
@@ -99,7 +79,7 @@ const PayScreen = ({ navigation }) => {
                 <Input width="136px" placeholder="이름" />
               </AddressInfo>
             </AddressBox>
-            <DivideLine height="1px" color={'rgba(238, 238, 238, 0.5)'} />
+            <DivideLine height="1px" color="rgba(238, 238, 238, 0.5)" />
           </PayBox>
           <ChangeAddress>
             <CheckView>
@@ -116,10 +96,7 @@ const PayScreen = ({ navigation }) => {
             </InputView>
           </ChangeAddress>
           <ButtonView>
-            <UtilButton
-              name="결제하기"
-              onPress={() => navigation.navigate('PayComplete')}
-            />
+            <UtilButton name="결제하기" onPress={() => navigation.navigate('PayComplete')} />
           </ButtonView>
         </PayContainer>
       </KeyboardAwareScrollView>
@@ -164,7 +141,7 @@ const AddressBox = styled.View`
 const AddressInfo = styled.View`
   flex-direction: row;
   justify-content: space-between;
-  align-items: ${({ align }) => (align ? align : 'center')};
+  align-items: ${({ align }) => align || 'center'};
   margin-bottom: 10px;
 `;
 
@@ -179,7 +156,7 @@ const ChangeAddress = styled.View`
 `;
 
 const Input = styled(InputStyle)`
-  width: ${({ width }) => (width ? width : '100%')};
+  width: ${({ width }) => width || '100%'};
 `;
 
 const CheckView = styled.View`

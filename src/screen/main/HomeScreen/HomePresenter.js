@@ -18,34 +18,22 @@ const HomePresenter = ({ goPage, homeList, mentoList }) => {
         <MyhomeSlogan goPage={goPage} />
         <MyhomeMenu>
           <RecommandMento>
-            <MyhomeMenuName
-              onPress={() => goPage('FindMento')}
-              name="추천 멘토"
-            />
+            <MyhomeMenuName onPress={() => goPage('FindMento')} name="추천 멘토" />
             <FlatList
               data={mentoList}
-              horizontal={true}
+              horizontal
               renderItem={({ item }) => {
-                return (
-                  <MentoBox
-                    name={item.name}
-                    comment={item.introduction}
-                    score={5}
-                  />
-                );
+                return <MentoBox name={item.name} comment={item.introduction} score={5} />;
               }}
               keyExtractor={(item) => `${item.id}`}
               showsHorizontalScrollIndicator={false}
             />
           </RecommandMento>
           <LookHome>
-            <MyhomeMenuName
-              onPress={() => goPage('HomeList')}
-              name="매물 보기"
-            />
+            <MyhomeMenuName onPress={() => goPage('HomeList')} name="매물 보기" />
             <FlatList
               data={homeList}
-              horizontal={true}
+              horizontal
               renderItem={({ item, index }) => {
                 return (
                   <LookHomeList

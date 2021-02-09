@@ -2,18 +2,27 @@ import React from 'react';
 import styled from 'styled-components/native';
 import { TextStyle } from '../../util/TextStyle';
 import { DARK_GRAY, NK500, NK700 } from '../../util/Color';
+import UtilText from '../../util/UtilText';
 
 const MyhomeSlogan = ({ goPage }) => {
   return (
     <Wrapper>
       <SloganView>
         <SloganContentView>
-          <SloganContentFirst>
-            멘토와 함께라면{'\n'}직거래도 무섭지 않아
-          </SloganContentFirst>
-          <SloganContentSecond>
-            매물 찾기부터 계약까지{'\n'}A to Z 도우미 서비스.
-          </SloganContentSecond>
+          <UtilText
+            style={{ marginBottom: 8 }}
+            content={`멘토와 함께라면${'\n'}직거래도 무섭지 않아`}
+            family={NK700}
+            letter="-1.1px"
+            size="22px"
+          />
+          <UtilText
+            content={`매물 찾기부터 계약까지${'\n'}A to Z 도우미 서비스.`}
+            family={NK500}
+            color={DARK_GRAY}
+            letter="-0.17px"
+            size="15px"
+          />
         </SloganContentView>
         <MentoApplyButtonView>
           <MentoApplyButton onPress={() => goPage('ApplyMento')}>
@@ -41,20 +50,6 @@ const SloganView = styled.View`
   border-radius: 6px;
   justify-content: space-between;
   margin-bottom: 16px;
-`;
-
-const SloganContentFirst = styled(TextStyle)`
-  font-family: ${NK700};
-  font-size: 22px;
-  letter-spacing: -1.1px;
-  margin-bottom: 8px;
-`;
-
-const SloganContentSecond = styled(TextStyle)`
-  font-family: ${NK500};
-  font-size: 15px;
-  letter-spacing: -0.17px;
-  color: ${DARK_GRAY};
 `;
 
 const SloganContentView = styled.View``;

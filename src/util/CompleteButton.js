@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components/native';
 
-import { TextStyle } from '../util/TextStyle';
-import { NK500, PRIMARY_NORMAL } from '../util/Color';
+import { TextStyle } from './TextStyle';
+import { NK500, PRIMARY_NORMAL } from './Color';
+
 const CompleteButton = ({ name, onPress }) => {
   return (
     <PutHomeButtonBox>

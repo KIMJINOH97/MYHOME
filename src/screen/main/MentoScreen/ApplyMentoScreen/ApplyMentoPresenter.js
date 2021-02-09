@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import { StatusBar, Platform } from 'react-native';
-import { TextStyle } from '../../../../util/TextStyle';
-import { NK700, NK500, LIGHT_GRAY2, DARK_GRAY } from '../../../../util/Color';
+import { NK700, LIGHT_GRAY2, DARK_GRAY } from '../../../../util/Color';
 import Title from '../../../../util/Title';
 import WantListFrame from '../../../../components/ApplyMento/WantListFrame';
 
 import APPLY_MAIL from '../../../../../assets/APPLY_MAIL.png';
+import UtilText from '../../../../util/UtilText';
 
 const ApplyMentoPresenter = () => {
   return (
@@ -14,22 +14,34 @@ const ApplyMentoPresenter = () => {
       <Title name="멘토 등록하기" />
       <ApplyContainer>
         <ApplyTitle>
-          <ApplyContent>멘토 등록을 위해서{'\n'}아래 이메일로 문의 바랍니다.</ApplyContent>
+          <UtilText
+            style={{ marginBottom: 8 }}
+            content={`멘토 등록을 위해서${'\n'}아래 이메일로 문의 바랍니다.`}
+            family={NK700}
+            letter="0.48px"
+            size="24px"
+          />
         </ApplyTitle>
         <Mail>
           <MailAddress>
             <MailIcon>
               <MailIconImage source={APPLY_MAIL} />
             </MailIcon>
-            <MailAddressView>
-              <MailAddressContnet>myhome.go.seoul@gmail.com</MailAddressContnet>
-            </MailAddressView>
+            <UtilText
+              content="myhome.go.seoul@gmail.com"
+              color={DARK_GRAY}
+              letter="0.48px"
+              size="16px"
+            />
           </MailAddress>
         </Mail>
         <WantPerson>
-          <WantTitle>
-            <WantContent>이런 분을 원해요!</WantContent>
-          </WantTitle>
+          <UtilText
+            style={{ marginBottom: 16 }}
+            content="이런 분을 원해요!"
+            size="18px"
+            letter="-0.54px"
+          />
           <WantList>
             <WantListFrame content="공인중개사 자격증을 소지한 분" />
             <WantListFrame content="개업 공인중개사가 아닌 분" />
@@ -61,12 +73,6 @@ const ApplyTitle = styled.View`
   flex: 1;
 `;
 
-const ApplyContent = styled(TextStyle)`
-  font-family: ${NK700};
-  letter-spacing: -1.2px;
-  font-size: 24px;
-`;
-
 const Mail = styled.View`
   flex: 1;
 `;
@@ -93,28 +99,8 @@ const MailIconImage = styled.Image`
   height: 100%;
 `;
 
-const MailAddressView = styled.View``;
-
-const MailAddressContnet = styled(TextStyle)`
-  font-family: ${NK500};
-  font-size: 16px;
-  color: ${DARK_GRAY};
-  letter-spacing: -0.48px;
-`;
-
 const WantPerson = styled.View`
   flex: 4.5;
-`;
-
-const WantTitle = styled.View`
-  height: 24px;
-  margin-bottom: 16px;
-`;
-
-const WantContent = styled(TextStyle)`
-  font-family: ${NK500};
-  font-size: 18px;
-  letter-spacing: -0.54px;
 `;
 
 const WantList = styled.View`
