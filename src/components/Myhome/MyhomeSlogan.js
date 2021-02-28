@@ -11,7 +11,7 @@ const MyhomeSlogan = ({ goPage }) => {
         <SloganContentView>
           <UtilText
             style={{ marginBottom: 8 }}
-            content={`멘토와 함께라면${'\n'}직거래도 무섭지 않아`}
+            content={`요즘 부동산 거래는${'\n'}비대면으로도 가능하다며?`}
             family={NK700}
             letter="-1.1px"
             size="22px"
@@ -26,7 +26,7 @@ const MyhomeSlogan = ({ goPage }) => {
         </SloganContentView>
         <MentoApplyButtonView>
           <MentoApplyButton onPress={() => goPage('ApplyMento')}>
-            <MentoApplyButtonContent>멘토신청하기</MentoApplyButtonContent>
+            <MentoApplyButtonContent>자세히 알아보기</MentoApplyButtonContent>
           </MentoApplyButton>
         </MentoApplyButtonView>
       </SloganView>
