@@ -8,6 +8,10 @@ import MyhomeMenuName from '../../../components/Myhome/MyhomeMenuName';
 import LookHomeList from '../../../components/Myhome/LookHomeList';
 import MentoBox from '../../../components/Myhome/MentoBox';
 import HOMIF from '../../../../assets/HOMIF.png';
+import VRIMAGE from '../../../../assets/VR.png';
+import MOREIMAGE from '../../../../assets/MORE.png';
+import UtilText from '../../../util/UtilText';
+import { NK500, NK700, PRIMARY_NORMAL, MEDIUM_GRAY } from '../../../util/Color';
 
 const HomePresenter = ({ goPage, homeList, mentoList }) => {
   return (
@@ -17,7 +21,7 @@ const HomePresenter = ({ goPage, homeList, mentoList }) => {
         <HomiImage source={HOMIF} />
         <MyhomeSlogan goPage={goPage} />
         <MyhomeMenu>
-          <RecommandMento>
+          {/* <RecommandMento>
             <MyhomeMenuName onPress={() => goPage('FindMento')} name="추천 멘토" />
             <FlatList
               data={mentoList}
@@ -28,9 +32,9 @@ const HomePresenter = ({ goPage, homeList, mentoList }) => {
               keyExtractor={(item) => `${item.id}`}
               showsHorizontalScrollIndicator={false}
             />
-          </RecommandMento>
+          </RecommandMento> */}
           <LookHome>
-            <MyhomeMenuName onPress={() => goPage('HomeList')} name="매물 보기" />
+            <MyhomeMenuName onPress={() => goPage('HomeList')} name="같이 둘러볼까요?" />
             <FlatList
               data={homeList}
               horizontal
@@ -48,6 +52,22 @@ const HomePresenter = ({ goPage, homeList, mentoList }) => {
               showsHorizontalScrollIndicator={false}
             />
           </LookHome>
+          <UtilText family={NK700} size="16px" content="VR 키트 신청하기" color={PRIMARY_NORMAL} />
+          <VRBox>
+            <VRImageView>
+              <VRImage source={VRIMAGE} />
+            </VRImageView>
+            <VRComment>
+              <UtilText family={NK700} size="30px" content="VR 키트" />
+              <UtilText family={NK700} size="24px" content="받아보기" />
+              <ConnectButton>
+                <UtilText family={NK500} color={MEDIUM_GRAY} size="16px" content="상담사 연결" />
+                <MoreView>
+                  <MoreImage source={MOREIMAGE} />
+                </MoreView>
+              </ConnectButton>
+            </VRComment>
+          </VRBox>
         </MyhomeMenu>
       </HomeContainer>
     </Wrapper>
@@ -87,3 +107,40 @@ const RecommandMento = styled.View`
 const LookHome = styled.View`
   flex: 1;
 `;
+
+const VRBox = styled.View`
+  margin-top: 8px;
+  padding-top: 13px;
+  padding-left: 8px;
+  height: 160px;
+  elevation: 5;
+  flex-direction: row;
+`;
+
+const VRImageView = styled.View`
+  margin-right: 24px;
+`;
+
+const VRImage = styled.Image`
+  height: 140px;
+  width: 160px;
+`;
+
+const ConnectButton = styled.TouchableOpacity`
+  margin-top: 20px;
+  flex-direction: row;
+`;
+
+const MoreView = styled.View`
+  margin-left: 10px;
+  height: 24px;
+  width: 12px;
+  justify-content: center;
+`;
+
+const MoreImage = styled.Image`
+  height: 20px;
+  width: 12px;
+`;
+
+const VRComment = styled.View``;
