@@ -17,22 +17,10 @@ const HomePresenter = ({ goPage, homeList, mentoList }) => {
   return (
     <Wrapper>
       <HomeContainer>
-        <MyhomeTitle />
-        <HomiImage source={HOMIF} />
-        <MyhomeSlogan goPage={goPage} />
         <MyhomeMenu>
-          {/* <RecommandMento>
-            <MyhomeMenuName onPress={() => goPage('FindMento')} name="추천 멘토" />
-            <FlatList
-              data={mentoList}
-              horizontal
-              renderItem={({ item }) => {
-                return <MentoBox name={item.name} comment={item.introduction} score={5} />;
-              }}
-              keyExtractor={(item) => `${item.id}`}
-              showsHorizontalScrollIndicator={false}
-            />
-          </RecommandMento> */}
+          <MyhomeTitle />
+          <HomiImage source={HOMIF} />
+          <MyhomeSlogan goPage={goPage} />
           <LookHome>
             <MyhomeMenuName onPress={() => goPage('HomeList')} name="같이 둘러볼까요?" />
             <FlatList
@@ -45,6 +33,7 @@ const HomePresenter = ({ goPage, homeList, mentoList }) => {
                     photo={item.photos[0] ? item.photos[0].photo_file : null}
                     name={item.name ? item.name : '신촌 스테이하이'}
                     money={`${item.deposit}/${item.monthly_rent}`}
+                    room_type={item.room_type}
                   />
                 );
               }}
@@ -52,7 +41,16 @@ const HomePresenter = ({ goPage, homeList, mentoList }) => {
               showsHorizontalScrollIndicator={false}
             />
           </LookHome>
-          <UtilText family={NK700} size="16px" content="VR 키트 신청하기" color={PRIMARY_NORMAL} />
+        </MyhomeMenu>
+        <VRContainer>
+          <VRMenu>
+            <UtilText
+              family={NK700}
+              size="16px"
+              content="VR 키트 신청하기"
+              color={PRIMARY_NORMAL}
+            />
+          </VRMenu>
           <VRBox>
             <VRImageView>
               <VRImage source={VRIMAGE} />
@@ -68,7 +66,7 @@ const HomePresenter = ({ goPage, homeList, mentoList }) => {
               </ConnectButton>
             </VRComment>
           </VRBox>
-        </MyhomeMenu>
+        </VRContainer>
       </HomeContainer>
     </Wrapper>
   );
@@ -79,46 +77,50 @@ export default HomePresenter;
 const Wrapper = styled.SafeAreaView`
   background-color: white;
   height: 100%;
-  flex: 1;
+  padding-top: 15px;
 `;
 
-const HomeContainer = styled.View`
-  flex: 10;
-  padding-horizontal: 16px;
-`;
+const HomeContainer = styled.ScrollView``;
 
 const HomiImage = styled.Image`
   height: 168px;
   width: 133px;
   position: absolute;
-  top: 95px;
-  right: 6%;
+  top: 80px;
+  right: 0.5%;
   z-index: 999;
 `;
 
 const MyhomeMenu = styled.View`
-  flex: 6.2;
+  padding-horizontal: 16px;
 `;
 
-const RecommandMento = styled.View`
-  flex: 1;
+const LookHome = styled.View``;
+
+const VRContainer = styled.View`
+  padding-horizontal: 10px;
 `;
 
-const LookHome = styled.View`
-  flex: 1;
+const VRMenu = styled.View`
+  padding-horizontal: 6px;
 `;
 
 const VRBox = styled.View`
-  margin-top: 8px;
-  padding-top: 13px;
-  padding-left: 8px;
+  shadow-color: #000;
+  shadow-opacity: 0.9;
+  border-radius: 10px;
+  margin: 5px;
+  padding-top: 9px;
+  margin-horizontal: 16px;
+  background-color: white;
   height: 160px;
-  elevation: 5;
+  elevation: 3;
   flex-direction: row;
 `;
 
 const VRImageView = styled.View`
   margin-right: 24px;
+  justify-content: flex-end;
 `;
 
 const VRImage = styled.Image`

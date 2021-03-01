@@ -1,15 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
 import styled from 'styled-components/native';
 import MORE from '../../../assets/MORE.png';
 import { TextStyle } from '../../util/TextStyle';
-import {
-  PRIMARY_NORMAL,
-  LIGHT_GRAY,
-  NK700,
-  NK500,
-  LIGHT_GRAY2,
-} from '../../util/Color';
+import { PRIMARY_NORMAL, LIGHT_GRAY, NK700 } from '../../util/Color';
 
 const MyhomeMenuName = ({ name, onPress }) => {
   return (

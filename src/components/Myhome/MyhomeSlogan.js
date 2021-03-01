@@ -13,7 +13,7 @@ const MyhomeSlogan = ({ goPage }) => {
             style={{ marginBottom: 8 }}
             content={`요즘 부동산 거래는${'\n'}비대면으로도 가능하다며?`}
             family={NK700}
-            letter="-1.1px"
+            letter="-1.2px"
             size="22px"
           />
           <UtilText
@@ -36,9 +36,7 @@ const MyhomeSlogan = ({ goPage }) => {
 
 export default MyhomeSlogan;
 
-const Wrapper = styled.View`
-  flex: 4.3;
-`;
+const Wrapper = styled.View``;
 
 const SloganView = styled.View`
   display: flex;
@@ -69,6 +67,6 @@ const MentoApplyButton = styled.TouchableOpacity`
 
 const MentoApplyButtonContent = styled(TextStyle)`
   align-items: center;
-  font-family: ${NK700};
+  font-family: ${NK500};
   font-size: 16px;
 `;
