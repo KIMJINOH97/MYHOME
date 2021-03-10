@@ -19,6 +19,7 @@ import PutHomeScreen from '../../screen/main/PutHomeScreen/index';
 import EnrollAddressScreen from '../../screen/main/PutHomeScreen/EnrollAddressScreen/index';
 import EnrollDetailsScreen from '../../screen/main/PutHomeScreen/EnrollDetailsScreen/index';
 import EnrollPictureScreen from '../../screen/main/PutHomeScreen/EnrollPictureScreen/index';
+import ContractScreen from '../../screen/main/ContractScreen/index';
 
 import EnrollCompleteScreen from '../../screen/EnrollCompleteScreen';
 import ReviewScreen from '../../screen/ReviewScreen';
@@ -148,6 +149,11 @@ const HomeRouter = [
   {
     name: 'Caution',
     component: CautionScreen,
+    options: { headerShown: false },
+  },
+  {
+    name: 'Contract',
+    component: ContractScreen,
     options: { headerShown: false },
   },
 ];

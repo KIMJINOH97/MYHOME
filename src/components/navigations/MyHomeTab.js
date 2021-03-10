@@ -7,7 +7,8 @@ import MapScreen from '../../screen/main/MapScreen/index';
 import HomeScreen from '../../screen/main/HomeScreen/index';
 import MoreScreen from '../../screen/main/MoreScreen/index';
 import FavoriteScreen from '../../screen/main/FavoriteScreen/index';
-import FindMentoScreen from '../../screen/main/MentoScreen/FindMentoScreen/index';
+// import FindMentoScreen from '../../screen/main/MentoScreen/FindMentoScreen/index';
+import ReservationScreen from '../../screen/main/ReservationScreen/index';
 import { LIGHT_GRAY, NK500, PRIMARY_NORMAL } from '../../util/Color';
 
 import HOME_ICON_FOCUSED from '../../../assets/HOME_ICON_FOCUSED.png';
@@ -18,8 +19,8 @@ import MORE_ICON from '../../../assets/MORE_ICON.png';
 import MORE_ICON_FOCUSED from '../../../assets/MORE_ICON_FOCUSED.png';
 import MAP_ICON from '../../../assets/MAP_ICON.png';
 import MAP_ICON_FOCUSED from '../../../assets/MAP_ICON_FOCUSED.png';
-import FIND_ICON from '../../../assets/FIND_ICON.png';
-import FIND_ICON_FOCUSED from '../../../assets/FIND_ICON_FOCUSED.png';
+import BOOK_ICON from '../../../assets/BOOK_ICON.png';
+import BOOK_ICON_FOCUSED from '../../../assets/BOOK_ICON_FOCUSED.png';
 import { TextStyle } from '../../util/TextStyle';
 
 // TabNavigator(RouteConfigs, TabNavigatorConfig)
@@ -46,10 +47,10 @@ const bottomTab = [
     icon: { focus: MAP_ICON_FOCUSED, non: MAP_ICON },
   },
   {
-    name: 'FindMento',
-    component: FindMentoScreen,
-    title: '멘토찾기',
-    icon: { focus: FIND_ICON_FOCUSED, non: FIND_ICON },
+    name: 'Reservation',
+    component: ReservationScreen,
+    title: '예약 확인',
+    icon: { focus: BOOK_ICON_FOCUSED, non: BOOK_ICON },
   },
 
   {
