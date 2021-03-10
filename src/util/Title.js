@@ -3,22 +3,26 @@ import React from 'react';
 import styled from 'styled-components/native';
 import { View } from 'react-native';
 
-import { TextStyle } from '../util/TextStyle';
-import { NK500 } from '../util/Color';
+import { TextStyle } from './TextStyle';
+import { NK700 } from './Color';
 import LEFT from '../../assets/LEFT.png';
 import CLOSE from '../../assets/CLOSE.png';
 
-const Title = ({ name, onPress = null, close = false }) => {
+const Title = ({ back = true, name, onPress = null, close = false }) => {
   const navigation = useNavigation();
   return (
     <Wrapper>
-      <UtilButton onPress={onPress ? onPress : () => navigation.pop()}>
-        <BackContent source={close ? CLOSE : LEFT} />
-      </UtilButton>
+      {back ? (
+        <UtilButton onPress={onPress || (() => navigation.pop())}>
+          <BackContent source={close ? CLOSE : LEFT} />
+        </UtilButton>
+      ) : (
+        <View style={{ width: 24 }} />
+      )}
       <TitleName>
         <TitleContent> {name} </TitleContent>
       </TitleName>
-      <View style={{ width: 24 }}></View>
+      <View style={{ width: 24 }} />
     </Wrapper>
   );
 };
@@ -49,6 +53,6 @@ const BackContent = styled.Image`
 const TitleName = styled.View``;
 
 const TitleContent = styled(TextStyle)`
-  font-family: ${NK500};
+  font-family: ${NK700};
   font-size: 20px;
 `;

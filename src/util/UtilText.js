@@ -11,9 +11,10 @@ const UtilText = ({
   family = NK500,
   letter,
   style = {},
+  justify,
 }) => {
   return (
-    <Wrapper>
+    <Wrapper justify={justify}>
       <Content color={color} size={size} family={family} letter={letter} style={style}>
         {content}
       </Content>
@@ -25,6 +26,7 @@ export default UtilText;
 
 const Wrapper = styled.View`
   ${({ height }) => height && `height : ${height}`}
+  ${({ justify }) => justify && `justify-content : ${justify}`}
 `;
 
 const Content = styled(TextStyle)`
