@@ -15,6 +15,7 @@ import {
 import { RecoilRoot } from 'recoil';
 import MyHomeStack from './src/components/navigations/MyHomeStack';
 import SPLASH_ from './assets/SPLASH_.png';
+import Onboarding from './src/screen/main/OnboardingScreen/index';
 
 // const getFonts = () =>
 //   Font.loadAsync({
@@ -32,6 +33,11 @@ export default function App() {
   });
 
   const [ready, setReady] = useState(false);
+  const [isOnboard, setIsOnboard] = useState(true);
+
+  const toggle = () => {
+    setIsOnboard(false);
+  };
 
   setTimeout(() => {
     setReady(true);
@@ -42,7 +48,7 @@ export default function App() {
       <RecoilRoot>
         {ready ? (
           <SafeAreaProvider>
-            <MyHomeStack />
+            {isOnboard ? <Onboarding toggle={toggle} /> : <MyHomeStack />}
           </SafeAreaProvider>
         ) : (
           <Wrapper>
