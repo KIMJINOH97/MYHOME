@@ -36,6 +36,7 @@ import FAVORATE_FILLED from '../../../../../assets/FAVORATE_FILLED.png';
 import BACK from '../../../../../assets/BACK.png';
 import INFO_PICTURE from '../../../../../assets/INFO_PICTURE.png';
 import HOST from '../../../../../assets/HOST.png';
+import CompleteButton from '../../../../util/CompleteButton';
 
 const FirstRoute = ({ information }) => {
   const {
@@ -218,7 +219,7 @@ const HostPhoneContent = styled(TextStyle)`
 
 const initialLayout = { width: Dimensions.get('window').width };
 
-const HomeInformationPresenter = ({ route, homeId }) => {
+const HomeInformationPresenter = ({ route, homeId, goPage }) => {
   const [presenthome, setPresentHome] = useRecoilState(presentHomeState);
   const [, setFavList] = useRecoilState(favoriteHomeState);
 
@@ -368,6 +369,11 @@ const HomeInformationPresenter = ({ route, homeId }) => {
               })}
               onIndexChange={setIndex}
               initialLayout={initialLayout}
+            />
+            <CompleteButton
+              name="비대면 계약하기"
+              height="60px"
+              onPress={() => goPage('Contract')}
             />
           </InfromationContainer>
         </ScrollView>
