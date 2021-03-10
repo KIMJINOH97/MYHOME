@@ -4,10 +4,10 @@ import styled from 'styled-components/native';
 import { TextStyle } from './TextStyle';
 import { NK500, PRIMARY_NORMAL } from './Color';
 
-const CompleteButton = ({ name, onPress }) => {
+const CompleteButton = ({ height = '80px', name, onPress }) => {
   return (
     <PutHomeButtonBox>
-      <PutHomeButton onPress={onPress}>
+      <PutHomeButton height={height} onPress={onPress}>
         <ButtonContent>{name}</ButtonContent>
       </PutHomeButton>
     </PutHomeButtonBox>
@@ -23,7 +23,7 @@ const PutHomeButtonBox = styled.View`
 
 const PutHomeButton = styled.TouchableOpacity`
   width: 100%;
-  height: 80px;
+  height: ${({ height }) => height};
   align-items: center;
   padding-top: 10px;
   background-color: ${PRIMARY_NORMAL};
