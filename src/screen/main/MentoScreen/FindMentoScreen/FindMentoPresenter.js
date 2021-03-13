@@ -109,7 +109,7 @@ const FindMentoScreen = ({ goPage }) => {
 
   return (
     <Wrapper>
-      <TabTitle name="멘토찾기" />
+      <TabTitle name="예약 확인" />
       <MentoListContainer>
         {mentoList ? (
           <FlatList

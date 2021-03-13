@@ -9,7 +9,7 @@ const MyhomeTitle = ({}) => {
     <Wrapper>
       <TitleContainer>
         <MyhomeIcon>
-          <MyhomeLogo source={HOME_LOGO}></MyhomeLogo>
+          <MyhomeLogo source={HOME_LOGO} />
         </MyhomeIcon>
         <TitleIcon>
           <TitleContent source={HOME_NAME} />
@@ -22,7 +22,6 @@ const MyhomeTitle = ({}) => {
 export default MyhomeTitle;
 
 const Wrapper = styled.View`
-  flex: 1;
   flex-direction: row;
   margin-top: 12px;
   margin-bottom: 16px;

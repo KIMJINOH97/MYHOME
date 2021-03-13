@@ -1,17 +1,11 @@
 import React from 'react';
 import styled from 'styled-components/native';
 
-import {
-  PRIMARY_NORMAL,
-  MEDIUM_GRAY,
-  NK700,
-  NK500,
-  NK100,
-} from '../../util/Color';
+import { MEDIUM_GRAY, NK500, NK400 } from '../../util/Color';
 import HOME_PICTURE from '../../../assets/HOME_PICTURE.png';
 import { TextStyle } from '../../util/TextStyle';
 
-const LookHome = ({ name, money, photo }) => {
+const LookHome = ({ name, money, photo, room_type }) => {
   return (
     <Wrapper>
       <Profile>
@@ -23,7 +17,7 @@ const LookHome = ({ name, money, photo }) => {
         <HomeNameContent>{name}</HomeNameContent>
       </HomeNameView>
       <MoneyView>
-        <MoneyContent>{money}</MoneyContent>
+        <MoneyContent>월세 {money}</MoneyContent>
       </MoneyView>
     </Wrapper>
   );
@@ -33,18 +27,18 @@ export default LookHome;
 
 const Wrapper = styled.View`
   width: 110px;
-  height: 120px;
+  height: 150px;
   margin-top: 5px;
   margin-right: 10px;
   border-radius: 10px;
 `;
 
 const Profile = styled.View`
-  height: 90px;
+  height: 100px;
 `;
 
 const ProfileImageView = styled.View`
-  height: 90px;
+  height: 95px;
   width: 110px;
   margin-right: 8px;
 `;
@@ -62,18 +56,21 @@ const HomeNameView = styled.View`
 `;
 
 const HomeNameContent = styled(TextStyle)`
-  font-family: ${NK500};
-  font-size: 12px;
+  font-family: ${NK400};
+  font-size: 14px;
   color: ${MEDIUM_GRAY};
+  letter-spacing: -1px;
 `;
 
 const MoneyView = styled.View`
   display: flex;
-  height: 16px;
+  height: 30px;
   align-items: center;
+  justify-content: center;
 `;
 
 const MoneyContent = styled(TextStyle)`
   font-family: ${NK500};
   font-size: 16px;
+  letter-spacing: -0.2px;
 `;

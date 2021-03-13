@@ -12,13 +12,7 @@ import DivideLine from '../util/DivideLine';
 const PayInformation = ({ title, content }) => {
   return (
     <PayInfo>
-      <UtilText
-        content={title}
-        size="16px"
-        letter="-0.48px"
-        color={DARK_GRAY}
-        family={NK500}
-      />
+      <UtilText content={title} size="16px" letter="-0.48px" color={DARK_GRAY} family={NK500} />
       <UtilText content={content} size="16px" letter="-0.48px" family={NK500} />
     </PayInfo>
   );
@@ -27,25 +21,21 @@ const PayInformation = ({ title, content }) => {
 const PayCompleteScreen = ({ navigation }) => {
   return (
     <Wrapper>
-      <Title
-        close={true}
-        onPress={() => navigation.popToTop()}
-        name="예약완료"
-      ></Title>
+      <Title close onPress={() => navigation.popToTop()} name="계약완료" />
       <CompleteContainer>
         <CheckImageView>
           <CheckImage source={PLEASE_LOGIN} />
         </CheckImageView>
         <CompleteMessageView>
           <UtilText
-            content="예약이 완료되었습니다."
+            content="계약이 완료되었습니다."
             size="24px"
             letter="-1.2px"
             color={PRIMARY_NORMAL}
             family={NK700}
           />
           <DivideLine height="10px" color="white" />
-          <UtilText
+          {/* <UtilText
             content="베타테스트 기간임으로 도우미와"
             size="16px"
             letter="-0.48px"
@@ -58,7 +48,7 @@ const PayCompleteScreen = ({ navigation }) => {
             letter="-0.48px"
             color={DARK_GRAY}
             family={NK500}
-          />
+          /> */}
         </CompleteMessageView>
         <DivideLine height="16px" color="rgba(238,238,238,0.5)" />
         <PayBox>
